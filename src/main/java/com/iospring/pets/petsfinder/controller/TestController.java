@@ -23,25 +23,24 @@ public class TestController {
         if (file == null) {
             return "파일 안왔어용";
         }
-
         return file.getOriginalFilename();
     }
 
     @PostMapping("/images2")
     public String getImages(MultipartFile file) {
         if (file == null) {
-            return "파일 안왔어용";
+            return "파일 안왔어요";
         }
         String uploadFileName = file.getOriginalFilename();
         File saveFile = new File(FILE_PATH, uploadFileName);
-        try{
+        try {
             file.transferTo(saveFile);
             return saveFile.getAbsolutePath();
         } catch (IOException e) {
-            System.out.println("e.getMessage() = " + e.getMessage());
             e.printStackTrace();
+            return e.getMessage();
         }
-        return file.getOriginalFilename();
+
     }
 }
 
