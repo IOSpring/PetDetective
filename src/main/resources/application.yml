@@ -5,3 +5,6 @@ spring:
     username: ${CLEARDB_DATABASE_USERNAME}
     password: ${CLEARDB_DATABASE_PASSWORD}
 
+
+  mvc:
+    static-path-pattern: /resources/**
