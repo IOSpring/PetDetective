@@ -36,9 +36,10 @@ public class TeachableController {
     String testUploadMultipart(MultipartFile uploadFile) {
         System.out.println("uploadFile.getOriginalFilename() = " + uploadFile.getOriginalFilename());
         return uploadFile.getOriginalFilename();
+
     }
 
-@GetMapping(value = "/teachable")
+@GetMapping(value = "/teachable2")
 public List<PredictDTO2>  ttest(
         @RequestParam(value = "pre1") String pre1,
         @RequestParam(value = "score1") String score1,
@@ -54,5 +55,20 @@ public List<PredictDTO2>  ttest(
     }
     return predictDTO2s;
 }
+
+
+    @PostMapping(value = "/teachable")
+    public List<PredictDTO2> test(@RequestBody Map<String, List<PredictDTO2>> predictions) {
+        System.out.println("predictions = " + predictions);
+        List<PredictDTO2> predictDTO2s = predictions.get("predictions");
+
+        for (PredictDTO2 predictDTO2 : predictDTO2s) {
+            System.out.println("predictDTO2.getPrediction() = " + predictDTO2.getPrediction());
+            System.out.println("predictDTO2.getScore() = " + predictDTO2.getScore());
+        }
+
+
+        return predictDTO2s;
+    }
 
 }
