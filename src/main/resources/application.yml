@@ -12,3 +12,15 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    database: mysql
+
+logging:
+  level:
+    org.hibernate.SQL: debug
