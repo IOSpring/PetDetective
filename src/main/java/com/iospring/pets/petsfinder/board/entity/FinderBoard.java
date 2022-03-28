@@ -21,12 +21,12 @@ public class FinderBoard extends BaseEntity {
     @Column(name = "finder_board_id")
     private Long id;
 
-    @JoinColumn(name = "F_board_user_id")
+    @JoinColumn(name = "F_board_user_fk")
     @ManyToOne
     private User user;
 
     @OneToOne
-    @JoinColumn(name = "F_board_pet_id")
+    @JoinColumn(name = "F_board_pet_fk")
     private Pet pet;
 
     @Column(length = 50)

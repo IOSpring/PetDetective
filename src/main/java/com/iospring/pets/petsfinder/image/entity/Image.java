@@ -24,4 +24,7 @@ public class Image extends BaseEntity {
 
     @Column(length = 20, nullable = false)
     private String color;
+
+    @Column
+    private String url;
 }

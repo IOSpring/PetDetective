@@ -40,9 +40,5 @@ public class Pet extends BaseEntity {
     private Image image;
 
 
-    @OneToOne
-    private FinderBoard finderBoard;
 
-    @OneToOne
-    private DetectiveBoard detectiveBoard;
 }

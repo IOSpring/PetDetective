@@ -22,12 +22,12 @@ public class DetectiveBoard extends BaseEntity {
     @Column(name = "detective_board_id")
     private Long id;
 
-    @JoinColumn(name = "D_board_user_id")
+    @JoinColumn(name = "D_board_user_fk")
     @ManyToOne
     private User user;
 
     @OneToOne
-    @JoinColumn(name = "D_board_pet_id")
+    @JoinColumn(name = "D_board_pet_fk")
     private Pet pet;
 
     @Column(length = 50)
