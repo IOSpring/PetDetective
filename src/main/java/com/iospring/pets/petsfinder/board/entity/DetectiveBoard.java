@@ -42,6 +42,6 @@ public class DetectiveBoard extends BaseEntity {
     private Status status;
 
 
-    @Column(columnDefinition = "varchar(2) not null default 'F'")
+    @Column(columnDefinition = "bool not null default false")
     private boolean isCare;
 }

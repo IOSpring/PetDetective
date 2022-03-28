@@ -38,9 +38,9 @@ public class FinderBoard extends BaseEntity {
     private LocalDateTime uploadTime;
 
 
-        @Column(columnDefinition = "varchar(12) default 'inprogress'")
+    @Column(columnDefinition = "varchar(12) default 'inprogress'")
     private Status status;
-    @Column(columnDefinition = "varchar(2) not null default 'F'")
+    @Column(columnDefinition = "bool not null default false")
     private boolean isCare;
 
     @Column
