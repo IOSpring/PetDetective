@@ -35,6 +35,9 @@ public class Pet extends BaseEntity {
     private Integer age;
 
 
+    @Column(columnDefinition = "bool")
+    private boolean isOperation;
+
     @JoinColumn(name = "pet_image_fk")
     @OneToOne
     private Image image;
