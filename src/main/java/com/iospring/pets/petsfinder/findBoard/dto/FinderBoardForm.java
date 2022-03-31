@@ -1,12 +1,18 @@
-package com.iospring.pets.petsfinder.board.dto;
+package com.iospring.pets.petsfinder.findBoard.dto;
 
 
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
+
+
 
 @Data
 public class FinderBoardForm {
-    private String missingDay;
+    private String breed;
+    private String color;
+    private String url;
+
+    private boolean isCare;
+
     private String missingTime;
     private String missingLocation;
     private String feature; // sepc -> feature 수정 요청
@@ -17,3 +23,4 @@ public class FinderBoardForm {
     private int age;
 
 }
+

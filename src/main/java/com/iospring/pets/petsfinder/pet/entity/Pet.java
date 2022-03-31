@@ -1,18 +1,18 @@
 package com.iospring.pets.petsfinder.pet.entity;
 
 
-import com.iospring.pets.petsfinder.board.entity.DetectiveBoard;
-import com.iospring.pets.petsfinder.board.entity.FinderBoard;
 import com.iospring.pets.petsfinder.commond.entity.BaseEntity;
 import com.iospring.pets.petsfinder.image.entity.Image;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
 @Entity
 @Setter
+@NoArgsConstructor
 @Getter
 public class Pet extends BaseEntity {
 
@@ -22,8 +22,10 @@ public class Pet extends BaseEntity {
     private Long id;
 
 
+
     @Column(length = 5)
     private String gender;
+
 
     @Column // 255
     private String disease;
@@ -43,5 +45,12 @@ public class Pet extends BaseEntity {
     private Image image;
 
 
-
+    @Builder
+    public Pet(String gender, String disease, String feature, Integer age, boolean isOperation) {
+        this.gender = gender;
+        this.disease = disease;
+        this.feature = feature;
+        this.age = age;
+        this.isOperation = isOperation;
+    }
 }

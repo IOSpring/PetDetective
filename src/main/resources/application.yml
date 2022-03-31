@@ -1,4 +1,9 @@
+
 spring:
+  profiles:
+    include:
+      - aws
+      - credentials
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${CLEARDB_DATABASE_URL}
@@ -15,12 +20,25 @@ spring:
       max-request-size: 50MB
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         show_sql: true
         format_sql: true
     database: mysql
+
+cloud:
+  aws:
+    s3:
+      bucket: iospring
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      accessKey: ${AWS_ACCESS}
+      secretKey: ${AWS_SECRET}
+
 
 logging:
   level:
