@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 @Getter
 public class DetectiveBoard extends BaseEntity {
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "detective_board_id")
