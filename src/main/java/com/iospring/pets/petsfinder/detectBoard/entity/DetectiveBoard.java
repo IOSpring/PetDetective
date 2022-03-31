@@ -1,4 +1,4 @@
-package com.iospring.pets.petsfinder.board.entity;
+package com.iospring.pets.petsfinder.detectBoard.entity;
 
 
 import com.iospring.pets.petsfinder.commond.entity.BaseEntity;
@@ -14,19 +14,19 @@ import java.time.LocalDateTime;
 @Entity
 @Setter
 @Getter
-public class FinderBoard extends BaseEntity {
+public class DetectiveBoard extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "finder_board_id")
+    @Column(name = "detective_board_id")
     private Long id;
 
-    @JoinColumn(name = "F_board_user_fk")
+    @JoinColumn(name = "D_board_user_fk")
     @ManyToOne
     private User user;
 
     @OneToOne
-    @JoinColumn(name = "F_board_pet_fk")
+    @JoinColumn(name = "D_board_pet_fk")
     private Pet pet;
 
     @Column(length = 50)
@@ -37,15 +37,10 @@ public class FinderBoard extends BaseEntity {
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime uploadTime;
 
-
     @Column(columnDefinition = "varchar(12) default 'inprogress'")
     private Status status;
+
+
     @Column(columnDefinition = "bool not null default false")
     private boolean isCare;
-
-    @Column
-    private Integer money;
-
-    @Column(columnDefinition = "text")
-    private String content;
 }

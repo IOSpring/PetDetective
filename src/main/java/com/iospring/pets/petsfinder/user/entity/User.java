@@ -1,13 +1,11 @@
 package com.iospring.pets.petsfinder.user.entity;
 
 
-import com.iospring.pets.petsfinder.board.entity.DetectiveBoard;
-import com.iospring.pets.petsfinder.board.entity.FinderBoard;
+import com.iospring.pets.petsfinder.detectBoard.entity.DetectiveBoard;
+import com.iospring.pets.petsfinder.findBoard.entity.FinderBoard;
 import com.iospring.pets.petsfinder.commond.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Comment;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
 import java.util.ArrayList;
