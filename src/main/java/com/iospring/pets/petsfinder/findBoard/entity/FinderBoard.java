@@ -32,7 +32,6 @@ public class FinderBoard extends BaseEntity {
     @Column(length = 50)
     private String location;
 
-
     @Column
     private String missingTime;
 

@@ -9,6 +9,7 @@ import lombok.Data;
 public class FinderBoardForm {
     private String breed;
     private String color;
+
     private String url;
 
     private boolean isCare;
