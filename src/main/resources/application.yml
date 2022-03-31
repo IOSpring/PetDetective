@@ -27,6 +27,8 @@ spring:
         format_sql: true
     database: mysql
 
+
+
 cloud:
   aws:
     s3:
