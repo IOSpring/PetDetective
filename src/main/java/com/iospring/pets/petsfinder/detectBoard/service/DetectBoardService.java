@@ -2,6 +2,7 @@ package com.iospring.pets.petsfinder.detectBoard.service;
 
 import com.iospring.pets.petsfinder.config.file.FileUploadService;
 import com.iospring.pets.petsfinder.config.s3.S3Service;
+import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDetailDTO;
 import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardForm;
 import com.iospring.pets.petsfinder.detectBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.detectBoard.repository.DetectBoardRepository;
@@ -60,5 +61,34 @@ public class DetectBoardService {
         return detectiveBoard;
     }
 
+
+    public DetectBoardDetailDTO getDetailDetectBoard(Long boardId) {
+        DetectiveBoard detectiveBoard = detectBoardRepository.getById(boardId);
+        System.out.println("detectiveBoard.getMoney() = " + detectiveBoard.getMoney());
+
+
+        Pet pet = detectiveBoard.getPet();
+        Image image = pet.getImage();
+
+        DetectBoardDetailDTO detectBoardDetailDTO = DetectBoardDetailDTO.builder()
+                .id(detectiveBoard.getId())
+                .breed(image.getBreed())
+                .color(image.getColor())
+                .mainImageUrl(image.getUrl())
+                .missingTime(detectiveBoard.getMissingTime())
+                .missingLocation(detectiveBoard.getMissLocation())
+                .money(detectiveBoard.getMoney())
+                .content(detectiveBoard.getContent())
+                .isOperation(pet.isOperation())
+                .age(pet.getAge())
+                .feature(pet.getFeature())
+                .disease(pet.getDisease())
+                .gender(pet.getGender())
+                .build();
+
+
+        return detectBoardDetailDTO;
+
+    }
 
 }

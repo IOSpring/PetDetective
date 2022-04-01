@@ -30,15 +30,20 @@ public class Pet extends BaseEntity {
     @Column // 255
     private String disease;
 
+
     @Column(columnDefinition = "text")
     private String feature;
+
 
     @Column(columnDefinition = "int(2)")
     private Integer age;
 
 
+
     @Column(columnDefinition = "bool")
     private boolean isOperation;
+
+
 
     @JoinColumn(name = "pet_image_fk")
     @OneToOne(fetch = FetchType.LAZY)

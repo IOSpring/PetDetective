@@ -2,6 +2,7 @@ package com.iospring.pets.petsfinder.detectBoard.repository;
 
 
 import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDTO;
+import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDetailDTO;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
@@ -39,8 +40,9 @@ public class DetectBoardRepositoryCustomImpl implements DetectBoardRepositoryCus
                 .setFirstResult((page - 1) * SHOW_BOARD_COUNT)
                 .setMaxResults(SHOW_BOARD_COUNT)
                 .getResultList();
-
         return createDetectBoardDTO(list);
-
     }
+
+
+
 }
