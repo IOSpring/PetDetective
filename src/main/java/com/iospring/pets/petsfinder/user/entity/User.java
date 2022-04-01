@@ -38,10 +38,10 @@ public class User extends BaseEntity {
     private int alterCount;
 
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     List<DetectiveBoard> detectiveBoards = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     List<FinderBoard> finderBoards = new ArrayList<>();
 
 }

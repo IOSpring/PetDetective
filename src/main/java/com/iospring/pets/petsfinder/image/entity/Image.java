@@ -25,4 +25,6 @@ public class Image extends BaseEntity {
     @Column
     private String url;
 
+    @Column
+    private String fileName;
 }

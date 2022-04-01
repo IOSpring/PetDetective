@@ -19,9 +19,12 @@ public class FinderController {
     @PostMapping("/find")
     public String addFinderBoarder(FinderBoardForm finderBoardForm, MultipartFile file, @RequestHeader("Host") String host) {
         System.out.println("file.getContentType() = " + file.getContentType());
-        String fileUrl = fileUploadService.s3Upload(file);
-        Long aLong = finderBoardService.addFindBoard(finderBoardForm,fileUrl);
+//        String fileUrl = fileUploadService.s3Upload(file);
+//        Long aLong = finderBoardService.addFindBoard(finderBoardForm,fileUrl);
 
+
+        // TODO
+        // DTO
         return "Success";
 
 

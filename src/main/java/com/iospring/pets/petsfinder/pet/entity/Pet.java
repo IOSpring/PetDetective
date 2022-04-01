@@ -41,7 +41,7 @@ public class Pet extends BaseEntity {
     private boolean isOperation;
 
     @JoinColumn(name = "pet_image_fk")
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Image image;
 
 

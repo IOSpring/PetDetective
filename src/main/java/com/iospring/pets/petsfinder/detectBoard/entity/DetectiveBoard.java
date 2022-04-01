@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Setter
@@ -24,25 +23,32 @@ public class DetectiveBoard extends BaseEntity {
     private Long id;
 
     @JoinColumn(name = "D_board_user_fk")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "D_board_pet_fk")
     private Pet pet;
 
     @Column(length = 50)
-    private String location;
+    private String missLocation;
+
+    private Double missingLatitude;
+    private Double missingLongitude;
+
+    @Column
+    private Integer money;
+
+    @Column
+    private String missingTime;
 
 
-    @Column(insertable = false, updatable = false,
-            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private LocalDateTime uploadTime;
 
     @Column(columnDefinition = "varchar(12) default 'inprogress'")
     private Status status;
 
+    @Column(columnDefinition = "text")
+    private String content;
 
-    @Column(columnDefinition = "bool not null default false")
-    private boolean isCare;
+
 }

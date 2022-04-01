@@ -41,8 +41,8 @@ public class FinderBoardService {
 
         FinderBoard finderBoard = new FinderBoard();
         finderBoard.setCare(finderBoardForm.isCare());
-        finderBoard.setLocation(finderBoardForm.getMissingLocation());
-        finderBoard.setMoney(finderBoardForm.getMoney());
+        finderBoard.setMissLocation(finderBoardForm.getMissingLocation());
+        finderBoard.setCare(finderBoardForm.isCare());
         finderBoard.setMissingTime(finderBoardForm.getMissingTime());
         finderBoard.setPet(pet);
 
