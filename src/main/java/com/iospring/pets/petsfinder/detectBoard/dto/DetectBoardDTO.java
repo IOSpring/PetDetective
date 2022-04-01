@@ -14,6 +14,9 @@ public class DetectBoardDTO {
         detectBoardDTO.setMoney(detectiveBoard.getMoney());
         detectBoardDTO.setMainImageUrl(url);
         detectBoardDTO.setMissingLocation(detectiveBoard.getMissLocation());
+        detectBoardDTO.setMissingLongitude(detectiveBoard.getMissingLongitude());
+        detectBoardDTO.setMissingLatitude(detectiveBoard.getMissingLatitude());
+        detectBoardDTO.setMissingTime(detectiveBoard.getMissingTime());
 
         return detectBoardDTO;
     }
@@ -22,5 +25,8 @@ public class DetectBoardDTO {
     private String missingLocation;
     private Long id;
     private Integer money;
+    private Double missingLatitude;
+    private Double missingLongitude;
+    private String missingTime;
 
 }

@@ -13,6 +13,11 @@ public class DetectBoardForm {
     private String missingTime;
     private String missingLocation;
 
+    private Double missingLatitude;
+    private Double missingLongitude;
+
+
+    private String content;
     private String feature; // sepc -> feature 수정 요청
 
     private int money;

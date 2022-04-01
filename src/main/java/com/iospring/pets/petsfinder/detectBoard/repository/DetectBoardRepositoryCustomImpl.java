@@ -13,6 +13,7 @@ public class DetectBoardRepositoryCustomImpl implements DetectBoardRepositoryCus
 
     private final EntityManager em;
     private final int SHOW_BOARD_COUNT = 3;
+
     private List<DetectBoardDTO> createDetectBoardDTO(List<Object[]> list) {
         List<DetectBoardDTO> resultList = new ArrayList<>();
         for (Object[] objects : list) {
@@ -21,7 +22,9 @@ public class DetectBoardRepositoryCustomImpl implements DetectBoardRepositoryCus
             detectBoardDTO.setMissingLocation((String) objects[1]);
             detectBoardDTO.setMoney((Integer) objects[2]);
             detectBoardDTO.setMainImageUrl((String) objects[3]);
-
+            detectBoardDTO.setMissingLatitude((Double) objects[4]);
+            detectBoardDTO.setMissingLongitude((Double) objects[5]);
+            detectBoardDTO.setMissingTime((String) objects[6]);
             resultList.add(detectBoardDTO);
         }
 
@@ -32,7 +35,7 @@ public class DetectBoardRepositoryCustomImpl implements DetectBoardRepositoryCus
 
     @Override
     public List<DetectBoardDTO> findAllDetectBoardDTO(int page) {
-        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url from DetectiveBoard d join d.pet p join p.image i")
+        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime from DetectiveBoard d join d.pet p join p.image i")
                 .setFirstResult((page - 1) * SHOW_BOARD_COUNT)
                 .setMaxResults(SHOW_BOARD_COUNT)
                 .getResultList();

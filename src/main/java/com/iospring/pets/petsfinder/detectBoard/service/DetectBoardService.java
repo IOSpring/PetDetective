@@ -38,17 +38,8 @@ public class DetectBoardService {
                 .isOperation(detectBoardForm.isOperation())
                 .build();
 
-//        String fileUrl = fileUploadService.s3Upload(file);
-
-//        Image image = new Image();
-//
-//        image.setBreed(detectBoardForm.getBreed());
-//        image.setColor(detectBoardForm.getColor());
-//        image.setUrl(fileUrl);
-//        image.setFileName();
-
         Image image = fileUploadService.s3UploadAndCreateImage(file, detectBoardForm.getBreed(), detectBoardForm.getColor());
-        System.out.println("image.getUrl() = " + image.getUrl());
+
         imageRepository.save(image);
 
         pet.setImage(image);
@@ -56,9 +47,12 @@ public class DetectBoardService {
 
         DetectiveBoard detectiveBoard = new DetectiveBoard();
         detectiveBoard.setMoney(detectBoardForm.getMoney());
+        detectiveBoard.setContent(detectBoardForm.getContent());
         detectiveBoard.setMissLocation(detectBoardForm.getMissingLocation());
         detectiveBoard.setMoney(detectBoardForm.getMoney());
         detectiveBoard.setMissingTime(detectBoardForm.getMissingTime());
+        detectiveBoard.setMissingLatitude(detectBoardForm.getMissingLatitude());
+        detectiveBoard.setMissingLongitude(detectBoardForm.getMissingLongitude());
         detectiveBoard.setPet(pet);
 
         detectBoardRepository.save(detectiveBoard);
