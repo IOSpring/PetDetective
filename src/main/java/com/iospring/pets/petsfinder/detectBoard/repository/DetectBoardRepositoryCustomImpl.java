@@ -2,7 +2,6 @@ package com.iospring.pets.petsfinder.detectBoard.repository;
 
 
 import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDTO;
-import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDetailDTO;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
@@ -13,7 +12,7 @@ import java.util.List;
 public class DetectBoardRepositoryCustomImpl implements DetectBoardRepositoryCustom{
 
     private final EntityManager em;
-    private final int SHOW_BOARD_COUNT = 10;
+    public static final int SHOW_DETECTIVE_BOARD_COUNT = 3;
 
     private List<DetectBoardDTO> createDetectBoardDTO(List<Object[]> list) {
         List<DetectBoardDTO> resultList = new ArrayList<>();
@@ -37,9 +36,12 @@ public class DetectBoardRepositoryCustomImpl implements DetectBoardRepositoryCus
     @Override
     public List<DetectBoardDTO> findAllDetectBoardDTO(int page) {
         List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime from DetectiveBoard d join d.pet p join p.image i")
-                .setFirstResult((page - 1) * SHOW_BOARD_COUNT)
-                .setMaxResults(SHOW_BOARD_COUNT)
+                .setFirstResult((page - 1) * SHOW_DETECTIVE_BOARD_COUNT)
+                .setMaxResults(SHOW_DETECTIVE_BOARD_COUNT)
                 .getResultList();
+//        Long totalPage = em.createQuery("select count(d.id) from DetectiveBoard d", Long.class).getResultList().get(0);
+
+
         return createDetectBoardDTO(list);
     }
 

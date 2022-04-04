@@ -8,6 +8,8 @@ import com.iospring.pets.petsfinder.detectBoard.repository.DetectBoardRepository
 import com.iospring.pets.petsfinder.detectBoard.service.DetectBoardService;
 import com.iospring.pets.petsfinder.image.entity.Image;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,24 +26,41 @@ public class DetectController {
 
     @PostMapping("/detect")
     public DetectBoardDTO addDetectiveBoard(DetectBoardForm detectBoardForm, MultipartFile file, @RequestHeader("Host") String host) {
-
         DetectiveBoard detectiveBoard = detectBoardService.addFindBoard(detectBoardForm, file);
         return DetectBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
-
     }
 
+
+
     @GetMapping("/detect")
-    public List<DetectBoardDTO> getDetectiveAllBoard(@RequestParam(required = false) int page) {
-        System.out.println("page = " + page);
-        return detectBoardRepository.findAllDetectBoardDTO(page);
+    public DetectBoardDTOListAndToTalPage getDetectiveAllBoard(@RequestParam(required = false) int page) {
+
+        List<DetectBoardDTO> allDetectBoardDTO = detectBoardRepository.findAllDetectBoardDTO(page);
+        long count = detectBoardService.getCount();
+        DetectBoardDTOListAndToTalPage detectBoardDTOListAndToTalPage = new DetectBoardDTOListAndToTalPage();
+        detectBoardDTOListAndToTalPage.setDetectBoardDTOList(allDetectBoardDTO);
+        detectBoardDTOListAndToTalPage.setTotalPage(count);
+
+        return detectBoardDTOListAndToTalPage;
     }
 
     @GetMapping("/detect/{board_id}")
-
     public DetectBoardDetailDTO getDetailDetectBoard(@PathVariable(name = "board_id") Long boardId) {
         System.out.println("board_id = " + boardId);
 
         return detectBoardService.getDetailDetectBoard(boardId);
+    }
 
+    @DeleteMapping("/detect/{board_id}")
+    public Long deleteDetectiveBoard(@PathVariable(name = "board_id") Long id) {
+
+        return null;
+    }
+
+
+    @Data
+    class DetectBoardDTOListAndToTalPage {
+        List<DetectBoardDTO> detectBoardDTOList;
+        long totalPage;
     }
 }

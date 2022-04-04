@@ -1,14 +1,11 @@
 package com.iospring.pets.petsfinder.detectBoard.service;
 
 import com.iospring.pets.petsfinder.config.file.FileUploadService;
-import com.iospring.pets.petsfinder.config.s3.S3Service;
 import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDetailDTO;
 import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardForm;
 import com.iospring.pets.petsfinder.detectBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.detectBoard.repository.DetectBoardRepository;
-import com.iospring.pets.petsfinder.findBoard.dto.FinderBoardForm;
-import com.iospring.pets.petsfinder.findBoard.entity.FinderBoard;
-import com.iospring.pets.petsfinder.findBoard.repository.FinderBoardRepository;
+import com.iospring.pets.petsfinder.detectBoard.repository.DetectBoardRepositoryCustomImpl;
 import com.iospring.pets.petsfinder.image.ImageRepository;
 import com.iospring.pets.petsfinder.image.PetRepository;
 import com.iospring.pets.petsfinder.image.entity.Image;
@@ -61,6 +58,10 @@ public class DetectBoardService {
         return detectiveBoard;
     }
 
+
+    public long getCount() {
+        return (detectBoardRepository.count() / DetectBoardRepositoryCustomImpl.SHOW_DETECTIVE_BOARD_COUNT) +1;
+    }
 
     public DetectBoardDetailDTO getDetailDetectBoard(Long boardId) {
         DetectiveBoard detectiveBoard = detectBoardRepository.getById(boardId);

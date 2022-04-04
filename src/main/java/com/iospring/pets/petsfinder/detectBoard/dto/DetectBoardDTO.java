@@ -29,4 +29,5 @@ public class DetectBoardDTO {
     private Double missingLongitude;
     private String missingTime;
 
+
 }
