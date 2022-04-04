@@ -46,7 +46,7 @@ public class DetectiveBoard extends BaseEntity {
 
 
     @Column(columnDefinition = "varchar(12) default 'inprogress'")
-    private Status status;
+    private String status;
 
     @Column(columnDefinition = "text")
     private String content;

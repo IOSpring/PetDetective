@@ -13,7 +13,7 @@ import java.util.List;
 public class DetectBoardRepositoryCustomImpl implements DetectBoardRepositoryCustom{
 
     private final EntityManager em;
-    private final int SHOW_BOARD_COUNT = 3;
+    private final int SHOW_BOARD_COUNT = 10;
 
     private List<DetectBoardDTO> createDetectBoardDTO(List<Object[]> list) {
         List<DetectBoardDTO> resultList = new ArrayList<>();
