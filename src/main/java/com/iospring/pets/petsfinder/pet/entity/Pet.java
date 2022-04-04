@@ -46,7 +46,7 @@ public class Pet extends BaseEntity {
 
 
     @JoinColumn(name = "pet_image_fk")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Image image;
 
 

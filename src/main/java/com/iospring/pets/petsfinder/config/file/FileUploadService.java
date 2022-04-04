@@ -1,5 +1,6 @@
 package com.iospring.pets.petsfinder.config.file;
 
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.iospring.pets.petsfinder.config.s3.S3Service;
 import com.iospring.pets.petsfinder.image.entity.Image;
@@ -20,16 +21,15 @@ public class FileUploadService {
     private final S3Service s3Service;
 
 
+    public void s3DeleteImage(String fileName) {
+        s3Service.deleteFile(fileName);
+    }
 
 
-    public Image s3UploadAndCreateImage(MultipartFile file, String  breed, String color) {
-        Image image = new Image();
+
+    public String s3Upload(MultipartFile file) {
 
         String fileName = createFileName(file.getOriginalFilename());
-        image.setFileName(fileName);
-        image.setBreed(breed);
-        image.setColor(color);
-        image.setUrl(s3Service.getFileUrl(fileName));
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());
@@ -40,7 +40,8 @@ public class FileUploadService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return image;
+
+        return s3Service.getFileUrl(fileName);
     }
 
     private String createFileName(String originalFilename) {

@@ -9,6 +9,7 @@ import com.iospring.pets.petsfinder.detectBoard.repository.DetectBoardRepository
 import com.iospring.pets.petsfinder.image.ImageRepository;
 import com.iospring.pets.petsfinder.image.PetRepository;
 import com.iospring.pets.petsfinder.image.entity.Image;
+import com.iospring.pets.petsfinder.image.service.ImageService;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class DetectBoardService {
     private final DetectBoardRepository detectBoardRepository;
     private final PetRepository petRepository;
-    private final ImageRepository imageRepository;
     private final FileUploadService fileUploadService;
+    private final ImageService imageService;
 
     @Transactional
     public DetectiveBoard addFindBoard(DetectBoardForm detectBoardForm, MultipartFile file) {
@@ -36,9 +37,8 @@ public class DetectBoardService {
                 .isOperation(detectBoardForm.isOperation())
                 .build();
 
-        Image image = fileUploadService.s3UploadAndCreateImage(file, detectBoardForm.getBreed(), detectBoardForm.getColor());
-
-        imageRepository.save(image);
+        String imageUrl = fileUploadService.s3Upload(file);
+        Image image = imageService.createImage(detectBoardForm.getBreed(), detectBoardForm.getColor(),imageUrl);
 
         pet.setImage(image);
         petRepository.save(pet);
@@ -62,6 +62,8 @@ public class DetectBoardService {
     public long getCount() {
         return (detectBoardRepository.count() / DetectBoardRepositoryCustomImpl.SHOW_DETECTIVE_BOARD_COUNT) +1;
     }
+
+
 
     public DetectBoardDetailDTO getDetailDetectBoard(Long boardId) {
         DetectiveBoard detectiveBoard = detectBoardRepository.getById(boardId);
@@ -87,9 +89,23 @@ public class DetectBoardService {
                 .gender(pet.getGender())
                 .build();
 
-
         return detectBoardDetailDTO;
 
     }
 
+
+
+    @Transactional
+    public Long deleteBoard(Long id) {
+
+        DetectiveBoard detectiveBoard = detectBoardRepository.getById(id);
+        Image image = detectiveBoard.getPet().getImage();
+
+        String deletedFileName = image.getFileName();
+
+        fileUploadService.s3DeleteImage(deletedFileName);
+
+        detectBoardRepository.deleteById(id);
+        return id;
+    }
 }

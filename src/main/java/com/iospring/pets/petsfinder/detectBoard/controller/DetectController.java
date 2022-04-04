@@ -34,9 +34,12 @@ public class DetectController {
 
     @GetMapping("/detect")
     public DetectBoardDTOListAndToTalPage getDetectiveAllBoard(@RequestParam(required = false) int page) {
+        long count = detectBoardService.getCount();
+        if (page > count) {
+            return null;
+        }
 
         List<DetectBoardDTO> allDetectBoardDTO = detectBoardRepository.findAllDetectBoardDTO(page);
-        long count = detectBoardService.getCount();
         DetectBoardDTOListAndToTalPage detectBoardDTOListAndToTalPage = new DetectBoardDTOListAndToTalPage();
         detectBoardDTOListAndToTalPage.setDetectBoardDTOList(allDetectBoardDTO);
         detectBoardDTOListAndToTalPage.setTotalPage(count);
@@ -53,8 +56,8 @@ public class DetectController {
 
     @DeleteMapping("/detect/{board_id}")
     public Long deleteDetectiveBoard(@PathVariable(name = "board_id") Long id) {
-
-        return null;
+        detectBoardService.deleteBoard(id);
+        return id;
     }
 
 

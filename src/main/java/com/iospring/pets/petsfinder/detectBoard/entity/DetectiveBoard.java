@@ -23,10 +23,10 @@ public class DetectiveBoard extends BaseEntity {
     private Long id;
 
     @JoinColumn(name = "D_board_user_fk")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
     @JoinColumn(name = "D_board_pet_fk")
     private Pet pet;
 

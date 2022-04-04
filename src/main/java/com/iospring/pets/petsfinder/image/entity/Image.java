@@ -25,6 +25,11 @@ public class Image extends BaseEntity {
     @Column
     private String url;
 
-    @Column
-    private String fileName;
+
+    public  String getFileName() {
+        int lastIndexOf = this.getUrl().lastIndexOf("com/");
+        return this.getUrl().substring(lastIndexOf + 4);
+    }
+
+
 }
