@@ -29,28 +29,15 @@ public class DetectBoardService {
     public DetectiveBoard addFindBoard(DetectBoardForm detectBoardForm, MultipartFile file) {
 
 
-        Pet pet = Pet.builder()
-                .gender(detectBoardForm.getGender())
-                .disease(detectBoardForm.getDisease())
-                .feature(detectBoardForm.getFeature())
-                .age(detectBoardForm.getAge())
-                .isOperation(detectBoardForm.isOperation())
-                .build();
-
         String imageUrl = fileUploadService.s3Upload(file);
         Image image = imageService.createImage(detectBoardForm.getBreed(), detectBoardForm.getColor(),imageUrl);
+
+        Pet pet = Pet.createPet(detectBoardForm);
 
         pet.setImage(image);
         petRepository.save(pet);
 
-        DetectiveBoard detectiveBoard = new DetectiveBoard();
-        detectiveBoard.setMoney(detectBoardForm.getMoney());
-        detectiveBoard.setContent(detectBoardForm.getContent());
-        detectiveBoard.setMissLocation(detectBoardForm.getMissingLocation());
-        detectiveBoard.setMoney(detectBoardForm.getMoney());
-        detectiveBoard.setMissingTime(detectBoardForm.getMissingTime());
-        detectiveBoard.setMissingLatitude(detectBoardForm.getMissingLatitude());
-        detectiveBoard.setMissingLongitude(detectBoardForm.getMissingLongitude());
+        DetectiveBoard detectiveBoard = DetectiveBoard.createDetectiveBoard(detectBoardForm);
         detectiveBoard.setPet(pet);
 
         detectBoardRepository.save(detectiveBoard);
@@ -70,25 +57,7 @@ public class DetectBoardService {
         System.out.println("detectiveBoard.getMoney() = " + detectiveBoard.getMoney());
 
 
-        Pet pet = detectiveBoard.getPet();
-        Image image = pet.getImage();
-
-        DetectBoardDetailDTO detectBoardDetailDTO = DetectBoardDetailDTO.builder()
-                .id(detectiveBoard.getId())
-                .breed(image.getBreed())
-                .color(image.getColor())
-                .mainImageUrl(image.getUrl())
-                .missingTime(detectiveBoard.getMissingTime())
-                .missingLocation(detectiveBoard.getMissLocation())
-                .money(detectiveBoard.getMoney())
-                .content(detectiveBoard.getContent())
-                .isOperation(pet.isOperation())
-                .age(pet.getAge())
-                .feature(pet.getFeature())
-                .disease(pet.getDisease())
-                .gender(pet.getGender())
-                .build();
-
+        DetectBoardDetailDTO detectBoardDetailDTO = DetectBoardDetailDTO.createDetectBoardDetailDTO(detectiveBoard);
         return detectBoardDetailDTO;
 
     }

@@ -2,6 +2,7 @@ package com.iospring.pets.petsfinder.pet.entity;
 
 
 import com.iospring.pets.petsfinder.commond.entity.BaseEntity;
+import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardForm;
 import com.iospring.pets.petsfinder.image.entity.Image;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,12 +51,18 @@ public class Pet extends BaseEntity {
     private Image image;
 
 
-    @Builder
-    public Pet(String gender, String disease, String feature, Integer age, boolean isOperation) {
-        this.gender = gender;
-        this.disease = disease;
-        this.feature = feature;
-        this.age = age;
-        this.isOperation = isOperation;
+    public static Pet createPet(DetectBoardForm detectBoardForm) {
+        Pet pet = new Pet();
+        pet.setGender(detectBoardForm.getGender());
+        pet.setDisease(detectBoardForm.getDisease());
+        pet.setFeature(detectBoardForm.getFeature());
+        pet.setAge(detectBoardForm.getAge());
+        pet.setOperation(detectBoardForm.isOperation());
+        return pet;
     }
+
+
+
+
+
 }

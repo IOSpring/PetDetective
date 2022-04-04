@@ -22,13 +22,14 @@ public class FinderBoardService {
     @Transactional
     public Long addFindBoard(FinderBoardForm finderBoardForm,String fileUrl) {
 
-        Pet pet = Pet.builder()
+        Pet pet = null;
+                /*Pet.createPet(finderBoardForm)
                 .gender(finderBoardForm.getGender())
                 .disease(finderBoardForm.getDisease())
                 .feature(finderBoardForm.getFeature())
                 .age(finderBoardForm.getAge())
                 .isOperation(finderBoardForm.getIsOperation().equals("T") ? true : false)
-                .build();
+                .build();*/
 
         Image image = new Image();
         image.setBreed(finderBoardForm.getBreed());

@@ -3,6 +3,7 @@ package com.iospring.pets.petsfinder.detectBoard.entity;
 
 import com.iospring.pets.petsfinder.commond.entity.BaseEntity;
 import com.iospring.pets.petsfinder.commond.entity.Status;
+import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardForm;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
 import com.iospring.pets.petsfinder.user.entity.User;
 import lombok.Getter;
@@ -50,6 +51,20 @@ public class DetectiveBoard extends BaseEntity {
 
     @Column(columnDefinition = "text")
     private String content;
+
+    public static DetectiveBoard  createDetectiveBoard (DetectBoardForm detectBoardForm) {
+        DetectiveBoard detectiveBoard = new DetectiveBoard();
+        detectiveBoard.setMoney(detectBoardForm.getMoney());
+        detectiveBoard.setContent(detectBoardForm.getContent());
+        detectiveBoard.setMissLocation(detectBoardForm.getMissingLocation());
+        detectiveBoard.setMoney(detectBoardForm.getMoney());
+        detectiveBoard.setMissingTime(detectBoardForm.getMissingTime());
+        detectiveBoard.setMissingLatitude(detectBoardForm.getMissingLatitude());
+        detectiveBoard.setMissingLongitude(detectBoardForm.getMissingLongitude());
+
+
+        return detectiveBoard;
+    }
 
 
 }

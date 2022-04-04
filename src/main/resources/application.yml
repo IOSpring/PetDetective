@@ -6,7 +6,6 @@ spring:
       - credentials
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-
     url: ${CLEARDB_DATABASE_URL}
     username: ${CLEARDB_DATABASE_USERNAME}
     password: ${CLEARDB_DATABASE_PASSWORD}
