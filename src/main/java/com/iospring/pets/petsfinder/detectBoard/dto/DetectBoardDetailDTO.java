@@ -15,7 +15,7 @@ public class DetectBoardDetailDTO {
 
         Pet pet = detectiveBoard.getPet();
         Image image = detectiveBoard.getPet().getImage();
-        
+
         DetectBoardDetailDTO detectBoardDetailDTO = DetectBoardDetailDTO.builder()
                 .id(detectiveBoard.getId())
                 .breed(image.getBreed())
@@ -27,6 +27,8 @@ public class DetectBoardDetailDTO {
                 .content(detectiveBoard.getContent())
                 .isOperation(pet.isOperation())
                 .age(pet.getAge())
+                .missingLatitude(detectiveBoard.getMissingLatitude())
+                .missingLongitude(detectiveBoard.getMissingLongitude())
                 .feature(pet.getFeature())
                 .disease(pet.getDisease())
                 .gender(pet.getGender())
@@ -41,7 +43,11 @@ public class DetectBoardDetailDTO {
     private String missingTime;
     private String missingLocation;
 
+    private Double missingLatitude;
+    private Double missingLongitude;
+
     private boolean isOperation;
+
     private Integer age;
     private String feature;
     private String disease;

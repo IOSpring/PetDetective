@@ -6,9 +6,6 @@ import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardForm;
 import com.iospring.pets.petsfinder.detectBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.detectBoard.repository.DetectBoardRepository;
 import com.iospring.pets.petsfinder.detectBoard.service.DetectBoardService;
-import com.iospring.pets.petsfinder.image.entity.Image;
-import com.iospring.pets.petsfinder.pet.entity.Pet;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +20,11 @@ public class DetectController {
     private final DetectBoardService detectBoardService;
     private final DetectBoardRepository detectBoardRepository;
 
-
     @PostMapping("/detect")
-    public DetectBoardDTO addDetectiveBoard(DetectBoardForm detectBoardForm, MultipartFile file, @RequestHeader("Host") String host) {
+    public DetectBoardDTO addDetectiveBoard(DetectBoardForm detectBoardForm, MultipartFile file) {
         DetectiveBoard detectiveBoard = detectBoardService.addFindBoard(detectBoardForm, file);
         return DetectBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
     }
-
-
 
     @GetMapping("/detect")
     public DetectBoardDTOListAndToTalPage getDetectiveAllBoard(@RequestParam(required = false) int page) {
@@ -49,8 +43,6 @@ public class DetectController {
 
     @GetMapping("/detect/{board_id}")
     public DetectBoardDetailDTO getDetailDetectBoard(@PathVariable(name = "board_id") Long boardId) {
-        System.out.println("board_id = " + boardId);
-
         return detectBoardService.getDetailDetectBoard(boardId);
     }
 
@@ -59,6 +51,24 @@ public class DetectController {
         detectBoardService.deleteBoard(id);
         return id;
     }
+
+
+    @PutMapping("/detect/{board_id}")
+    public DetectBoardDTO updateBoardForm(@PathVariable(name = "board_id") Long id,
+                                          DetectBoardForm detectBoardForm,
+                                          @RequestPart(required = false) MultipartFile file) {
+        DetectiveBoard detectiveBoard = null;
+
+        if (file != null) {
+            detectiveBoard = detectBoardService.updateBoardImage(id, file);
+        }
+
+        detectiveBoard = detectBoardService.updateBoardForm(id, detectBoardForm);
+
+        System.out.println("detectBoardForm = " + detectBoardForm);
+        return DetectBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
+    }
+
 
 
     @Data

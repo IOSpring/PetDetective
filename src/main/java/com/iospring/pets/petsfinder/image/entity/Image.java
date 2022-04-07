@@ -30,6 +30,4 @@ public class Image extends BaseEntity {
         int lastIndexOf = this.getUrl().lastIndexOf("com/");
         return this.getUrl().substring(lastIndexOf + 4);
     }
-
-
 }

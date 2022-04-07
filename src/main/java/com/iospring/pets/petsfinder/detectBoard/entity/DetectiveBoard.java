@@ -44,6 +44,8 @@ public class DetectiveBoard extends BaseEntity {
     @Column
     private String missingTime;
 
+    @Column
+    private String feature;
 
 
     @Column(columnDefinition = "varchar(12) default 'inprogress'")
@@ -54,14 +56,15 @@ public class DetectiveBoard extends BaseEntity {
 
     public static DetectiveBoard  createDetectiveBoard (DetectBoardForm detectBoardForm) {
         DetectiveBoard detectiveBoard = new DetectiveBoard();
+
         detectiveBoard.setMoney(detectBoardForm.getMoney());
         detectiveBoard.setContent(detectBoardForm.getContent());
         detectiveBoard.setMissLocation(detectBoardForm.getMissingLocation());
         detectiveBoard.setMoney(detectBoardForm.getMoney());
+        detectiveBoard.setFeature(detectiveBoard.getFeature());
         detectiveBoard.setMissingTime(detectBoardForm.getMissingTime());
         detectiveBoard.setMissingLatitude(detectBoardForm.getMissingLatitude());
         detectiveBoard.setMissingLongitude(detectBoardForm.getMissingLongitude());
-
 
         return detectiveBoard;
     }

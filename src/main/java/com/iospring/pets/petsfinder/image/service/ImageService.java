@@ -16,7 +16,6 @@ public class ImageService {
     public Image createImage(String breed, String color ,String fileUrl) {
         Image image = new Image();
 
-
         image.setBreed(breed);
         image.setColor(color);
         image.setUrl(fileUrl);
