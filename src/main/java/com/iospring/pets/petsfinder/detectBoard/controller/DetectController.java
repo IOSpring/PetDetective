@@ -69,7 +69,6 @@ public class DetectController {
 
         detectiveBoard = detectBoardService.updateBoardForm(id, detectBoardForm);
 
-        System.out.println("detectBoardForm = " + detectBoardForm);
         return DetectBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
     }
 

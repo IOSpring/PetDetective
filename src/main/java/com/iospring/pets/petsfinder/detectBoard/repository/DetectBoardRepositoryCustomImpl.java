@@ -39,7 +39,7 @@ public class DetectBoardRepositoryCustomImpl implements DetectBoardRepositoryCus
                 .setFirstResult((page - 1) * SHOW_DETECTIVE_BOARD_COUNT)
                 .setMaxResults(SHOW_DETECTIVE_BOARD_COUNT)
                 .getResultList();
-//        Long totalPage = em.createQuery("select count(d.id) from DetectiveBoard d", Long.class).getResultList().get(0);
+//
 
 
         return createDetectBoardDTO(list);

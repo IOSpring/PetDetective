@@ -93,18 +93,18 @@ public class DetectBoardService {
 
         detectiveBoard.setContent(detectBoardForm.getContent());
 
-        detectiveBoard.setFeature(detectBoardForm.getFeature());
+//        detectiveBoard.setFeature(detectBoardForm.getFeature());
 
         detectiveBoard.setMoney(detectBoardForm.getMoney());
 
         detectiveBoard.setMissingLatitude(detectBoardForm.getMissingLatitude());
-
+        detectiveBoard.getPet().setFeature(detectBoardForm.getFeature());
         detectiveBoard.getPet().setAge(detectBoardForm.getAge());
 
         detectiveBoard.getPet().setGender(detectBoardForm.getGender());
         detectiveBoard.getPet().setDisease(detectBoardForm.getDisease());
         detectiveBoard.getPet().setOperation(detectBoardForm.isOperation());
-
+//        System.out.println("detectiveBoard.getFeature() = " + detectiveBoard.getFeature());
         return detectiveBoard;
     }
 
