@@ -57,9 +57,13 @@ public class DetectController {
     public DetectBoardDTO updateBoardForm(@PathVariable(name = "board_id") Long id,
                                           DetectBoardForm detectBoardForm,
                                           @RequestPart(required = false) MultipartFile file) {
+
+        System.out.println("detectBoardForm = " + detectBoardForm);
+        
         DetectiveBoard detectiveBoard = null;
 
         if (file != null) {
+            System.out.println("file.getOriginalFilename() = " + file.getOriginalFilename());
             detectiveBoard = detectBoardService.updateBoardImage(id, file);
         }
 
