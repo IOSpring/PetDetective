@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
 
+/*
 
 @RequiredArgsConstructor
 @Service
@@ -50,3 +51,4 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         return authUserRepository.save(user);
     }
 }
+*/
