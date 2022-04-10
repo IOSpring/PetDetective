@@ -1,34 +1,54 @@
 package com.iospring.pets.petsfinder.detectBoard.service;
 
+import com.google.gson.Gson;
+import com.iospring.pets.petsfinder.commond.apns.service.ApnsService;
+import com.iospring.pets.petsfinder.commond.apns.entity.CustomNotification;
 import com.iospring.pets.petsfinder.config.file.FileUploadService;
+import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDTO;
 import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDetailDTO;
 import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardForm;
 import com.iospring.pets.petsfinder.detectBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.detectBoard.repository.DetectBoardRepository;
 import com.iospring.pets.petsfinder.detectBoard.repository.DetectBoardRepositoryCustomImpl;
-import com.iospring.pets.petsfinder.image.ImageRepository;
 import com.iospring.pets.petsfinder.image.PetRepository;
 import com.iospring.pets.petsfinder.image.entity.Image;
 import com.iospring.pets.petsfinder.image.service.ImageService;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
+import com.turo.pushy.apns.ApnsClient;
+import com.turo.pushy.apns.PushNotificationResponse;
+import com.turo.pushy.apns.util.ApnsPayloadBuilder;
+import com.turo.pushy.apns.util.SimpleApnsPushNotification;
+import com.turo.pushy.apns.util.TokenUtil;
+import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.TransactionScoped;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class DetectBoardService {
+
     private final DetectBoardRepository detectBoardRepository;
     private final PetRepository petRepository;
     private final FileUploadService fileUploadService;
     private final ImageService imageService;
+    private final ApnsService apnsConfig;
+
+    public void test() {
+
+        CustomNotification customNotification = new CustomNotification();
+        customNotification.setAlertBody("this is test123");
+        customNotification.setAlertTitle("this is colaboration of 종서와 석준!!");
+        apnsConfig.pushCustomNotification(customNotification);
+    }
 
     @Transactional
-    public DetectiveBoard addFindBoard(DetectBoardForm detectBoardForm, MultipartFile file) {
+    public DetectBoardDTO
+    addFindBoard(DetectBoardForm detectBoardForm, MultipartFile file) {
 
         // Upload file to S3
         String imageUrl = fileUploadService.s3Upload(file);
@@ -56,7 +76,25 @@ public class DetectBoardService {
         // save detective board in database
         detectBoardRepository.save(detectiveBoard);
 
-        return detectiveBoard;
+        DetectBoardDTO detectBoardDTO = DetectBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
+
+
+        Gson gson = new Gson();
+        String detectBoardDTOJson = gson.toJson(detectBoardDTO);
+
+        CustomNotification customNotification = new CustomNotification();
+        customNotification.setAlertBody(detectBoardDTOJson);
+        customNotification.setAlertTitle("종서와 석준의 콜라보");
+
+        apnsConfig.pushCustomNotification(customNotification);
+
+
+        // 경도 1 == 55.6키로
+        // 경도 0.18 == 10키로
+
+        // 위도 1 == 111키로
+        // 위도 0.09== 10키로
+        return detectBoardDTO;
     }
 
 
@@ -67,8 +105,6 @@ public class DetectBoardService {
 
         Image image = detectiveBoard.getPet().getImage();
         String fileName = image.getFileName();
-
-        System.out.println("deleted fileName = " + fileName);
 
         fileUploadService.s3DeleteImage(fileName);
 
@@ -87,13 +123,12 @@ public class DetectBoardService {
 
         detectiveBoard.getPet().getImage().setBreed(detectBoardForm.getBreed());
         detectiveBoard.getPet().getImage().setColor(detectBoardForm.getColor());
+
         detectiveBoard.setMissingTime(detectBoardForm.getMissingTime());
         detectiveBoard.setMissLocation(detectBoardForm.getMissingLocation());
         detectiveBoard.setMissingLongitude(detectBoardForm.getMissingLongitude());
 
         detectiveBoard.setContent(detectBoardForm.getContent());
-
-//        detectiveBoard.setFeature(detectBoardForm.getFeature());
 
         detectiveBoard.setMoney(detectBoardForm.getMoney());
 
@@ -104,7 +139,6 @@ public class DetectBoardService {
         detectiveBoard.getPet().setGender(detectBoardForm.getGender());
         detectiveBoard.getPet().setDisease(detectBoardForm.getDisease());
         detectiveBoard.getPet().setOperation(detectBoardForm.isOperation());
-//        System.out.println("detectiveBoard.getFeature() = " + detectiveBoard.getFeature());
         return detectiveBoard;
     }
 
@@ -114,10 +148,8 @@ public class DetectBoardService {
     }
 
 
-
     public DetectBoardDetailDTO getDetailDetectBoard(Long boardId) {
         DetectiveBoard detectiveBoard = detectBoardRepository.getById(boardId);
-        System.out.println("detectiveBoard.getMoney() = " + detectiveBoard.getMoney());
 
 
         DetectBoardDetailDTO detectBoardDetailDTO = DetectBoardDetailDTO.createDetectBoardDetailDTO(detectiveBoard);

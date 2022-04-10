@@ -47,3 +47,8 @@ logging:
   level:
     org.hibernate.SQL: debug
 
+apns:
+  team_id: ${APNS_TEAM_ID}
+  key_id: ${APNS_KEY_ID}
+  topic: ${APNS_TOPIC}
+  device_token: ${APNS_DEVICE_TOKEN}

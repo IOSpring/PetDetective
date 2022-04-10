@@ -6,6 +6,8 @@ import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardForm;
 import com.iospring.pets.petsfinder.detectBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.detectBoard.repository.DetectBoardRepository;
 import com.iospring.pets.petsfinder.detectBoard.service.DetectBoardService;
+import com.iospring.pets.petsfinder.user.dto.UserDTO;
+import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +21,30 @@ public class DetectController {
 
     private final DetectBoardService detectBoardService;
     private final DetectBoardRepository detectBoardRepository;
+    private final UserRepository userRepository;
+
+    @GetMapping("/test")
+    public void aaa(){
+        detectBoardService.test();
+
+    }
 
     @PostMapping("/detect")
-    public DetectBoardDTO addDetectiveBoard(DetectBoardForm detectBoardForm, MultipartFile file) {
-        DetectiveBoard detectiveBoard = detectBoardService.addFindBoard(detectBoardForm, file);
-        return DetectBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
+    public CreatedDetectiveBoardDTOAndFoundIn10KmUsers addDetectiveBoard(DetectBoardForm detectBoardForm, MultipartFile file) {
+
+        DetectBoardDTO detectBoardDTO = detectBoardService.addFindBoard(detectBoardForm, file);
+        List<Object[]> getDataInDB = userRepository.findUsersIn10KM(detectBoardDTO.getMissingLatitude(), detectBoardDTO.getMissingLongitude());
+
+        List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObject(getDataInDB);
+
+        CreatedDetectiveBoardDTOAndFoundIn10KmUsers response = new CreatedDetectiveBoardDTOAndFoundIn10KmUsers();
+        response.setCreatedDetectiveBoardDTO(detectBoardDTO);
+        response.setFoundIn10KM(foundIn10KM);
+
+        return response;
     }
+
+
 
     @GetMapping("/detect")
     public DetectBoardDTOListAndToTalPage getDetectiveAllBoard(@RequestParam(required = false) int page) {
@@ -78,5 +98,11 @@ public class DetectController {
     class DetectBoardDTOListAndToTalPage {
         List<DetectBoardDTO> detectBoardDTOList;
         long totalPage;
+    }
+
+    @Data
+    class CreatedDetectiveBoardDTOAndFoundIn10KmUsers {
+        DetectBoardDTO createdDetectiveBoardDTO;
+        List<UserDTO> foundIn10KM;
     }
 }

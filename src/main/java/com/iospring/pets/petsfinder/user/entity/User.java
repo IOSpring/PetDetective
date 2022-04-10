@@ -31,6 +31,9 @@ public class User extends BaseEntity {
     @Column(length = 40, nullable = false)
     private String loadAddress;
 
+    private Double latitude;
+    private Double longitude;
+
     @Column(length = 50)
     private String searchLocation;
 
