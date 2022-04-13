@@ -8,6 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 public class CustomNotification {
     public String alertBody;
     public String alertTitle;
-
+    public String alertId;
     public String deviceToken;
 }

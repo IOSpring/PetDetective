@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 application-credentials.yml
 application-aws.yml
+application-apns.yml
 application-oauth.yml
 ### STS ###
 .apt_generated

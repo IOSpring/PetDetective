@@ -2,6 +2,7 @@ package com.iospring.pets.petsfinder.commond.apns.service;
 
 
 import com.iospring.pets.petsfinder.commond.apns.entity.CustomNotification;
+import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDTO;
 import com.turo.pushy.apns.ApnsClient;
 import com.turo.pushy.apns.ApnsClientBuilder;
 import com.turo.pushy.apns.PushNotificationResponse;
@@ -43,7 +44,7 @@ ApnsService {
 
         try {
             client = new ApnsClientBuilder().setApnsServer(ApnsClientBuilder.DEVELOPMENT_APNS_HOST).setSigningKey(
-                    ApnsSigningKey.loadFromInputStream(new FileInputStream("src/main/resources/AuthKey_94UP3B8FX4.p8"), teamId, keyId)
+                    ApnsSigningKey.loadFromInputStream(new FileInputStream("src/main/resources/AuthKey_K482HA2L4W.p8"), teamId, keyId)
             ).build();
 
         } catch (IOException e) {
@@ -58,13 +59,17 @@ ApnsService {
 
     public String pushCustomNotification(CustomNotification customNotification) {
         try {
-            customNotification.setDeviceToken(deviceToken);
             ApnsClient client = this.getClient();
 
             ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
+
+            customNotification.setDeviceToken(deviceToken);
             payloadBuilder.setAlertTitle(customNotification.getAlertTitle());
-            payloadBuilder.setAlertBody(customNotification.getAlertBody());
+            payloadBuilder.setAlertBody(customNotification.getAlertTitle());
+            payloadBuilder.setTargetContentId(customNotification.getAlertId());
+
             payloadBuilder.setSound("default");
+
 
             String payload = payloadBuilder.buildWithDefaultMaximumLength();
 

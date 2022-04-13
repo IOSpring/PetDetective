@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -40,51 +41,46 @@ public class DetectBoardService {
 
     public void test() {
 
+
+        List<DetectiveBoard> all = detectBoardRepository.findAll();
+
         CustomNotification customNotification = new CustomNotification();
         customNotification.setAlertBody("this is test123");
         customNotification.setAlertTitle("this is colaboration of 종서와 석준!!");
         apnsConfig.pushCustomNotification(customNotification);
+
     }
+
+
 
     @Transactional
     public DetectBoardDTO
     addFindBoard(DetectBoardForm detectBoardForm, MultipartFile file) {
 
-        // Upload file to S3
         String imageUrl = fileUploadService.s3Upload(file);
 
-        // create Image entity
         Image image = imageService.createImage(detectBoardForm.getBreed(), detectBoardForm.getColor(),imageUrl);
 
-        // create pet entity
         Pet pet = Pet.createPet(detectBoardForm);
 
-
-        // connect image to pet
         pet.setImage(image);
 
-        // save pet in database
         petRepository.save(pet);
 
-        // create detective board entity
         DetectiveBoard detectiveBoard = DetectiveBoard.createDetectiveBoard(detectBoardForm);
 
-        // connect pet to detective board
         detectiveBoard.setPet(pet);
 
 
-        // save detective board in database
         detectBoardRepository.save(detectiveBoard);
 
         DetectBoardDTO detectBoardDTO = DetectBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
 
 
-        Gson gson = new Gson();
-        String detectBoardDTOJson = gson.toJson(detectBoardDTO);
-
         CustomNotification customNotification = new CustomNotification();
-        customNotification.setAlertBody(detectBoardDTOJson);
-        customNotification.setAlertTitle("종서와 석준의 콜라보");
+        customNotification.setAlertBody(detectBoardDTO.getMoney() +  "　의 현상금이 걸린 분실 게시글이 올라왔습니다");
+        customNotification.setAlertTitle("신고 알림!");
+        customNotification.setAlertId(detectBoardDTO.getId() + "");
 
         apnsConfig.pushCustomNotification(customNotification);
 
