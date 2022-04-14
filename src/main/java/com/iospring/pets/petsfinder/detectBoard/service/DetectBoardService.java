@@ -37,7 +37,7 @@ public class DetectBoardService {
     private final PetRepository petRepository;
     private final FileUploadService fileUploadService;
     private final ImageService imageService;
-    private final ApnsService apnsConfig;
+
 
     public void test() {
 
@@ -47,7 +47,7 @@ public class DetectBoardService {
         CustomNotification customNotification = new CustomNotification();
         customNotification.setAlertBody("this is test123");
         customNotification.setAlertTitle("this is colaboration of 종서와 석준!!");
-        apnsConfig.pushCustomNotification(customNotification);
+//        apnsConfig.pushCustomNotification(customNotification);
 
     }
 
@@ -77,12 +77,7 @@ public class DetectBoardService {
         DetectBoardDTO detectBoardDTO = DetectBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
 
 
-        CustomNotification customNotification = new CustomNotification();
-        customNotification.setAlertBody(detectBoardDTO.getMoney() +  "　의 현상금이 걸린 분실 게시글이 올라왔습니다");
-        customNotification.setAlertTitle("신고 알림!");
-        customNotification.setAlertId(detectBoardDTO.getId() + "");
 
-        apnsConfig.pushCustomNotification(customNotification);
 
 
         // 경도 1 == 55.6키로

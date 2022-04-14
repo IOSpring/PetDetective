@@ -10,12 +10,15 @@ public class SecurityConfig2 extends WebSecurityConfigurerAdapter
 {
 
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic()
+
                 .disable().csrf()
                 .disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+                .and().cors().disable()
+
                 .authorizeRequests()
                 .anyRequest().permitAll();
     }

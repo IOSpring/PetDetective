@@ -35,14 +35,18 @@ public class DetectBoardRepositoryCustomImpl implements DetectBoardRepositoryCus
 
     @Override
     public List<DetectBoardDTO> findAllDetectBoardDTO(int page) {
-        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime from DetectiveBoard d join d.pet p join p.image i")
+        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime" +
+                        " from DetectiveBoard d join d.pet p join p.image i")
                 .setFirstResult((page - 1) * SHOW_DETECTIVE_BOARD_COUNT)
                 .setMaxResults(SHOW_DETECTIVE_BOARD_COUNT)
                 .getResultList();
 //
-
-
         return createDetectBoardDTO(list);
+    }
+
+    public static void main(String[] args) {
+
+
     }
 
 

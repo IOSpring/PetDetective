@@ -1,5 +1,7 @@
 package com.iospring.pets.petsfinder.detectBoard.controller;
 
+import com.iospring.pets.petsfinder.commond.apns.entity.CustomNotification;
+import com.iospring.pets.petsfinder.commond.apns.service.ApnsService;
 import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDTO;
 import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDetailDTO;
 import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardForm;
@@ -8,6 +10,8 @@ import com.iospring.pets.petsfinder.detectBoard.repository.DetectBoardRepository
 import com.iospring.pets.petsfinder.detectBoard.service.DetectBoardService;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
 import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
+import com.iospring.pets.petsfinder.user.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,27 +25,29 @@ public class DetectController {
 
     private final DetectBoardService detectBoardService;
     private final DetectBoardRepository detectBoardRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
+    private final ApnsService apnsConfig;
 
     @GetMapping("/test")
     public void aaa(){
         detectBoardService.test();
-
     }
 
     @PostMapping("/detect")
     public CreatedDetectiveBoardDTOAndFoundIn10KmUsers addDetectiveBoard(DetectBoardForm detectBoardForm, MultipartFile file) {
 
         DetectBoardDTO detectBoardDTO = detectBoardService.addFindBoard(detectBoardForm, file);
-        List<Object[]> getDataInDB = userRepository.findUsersIn10KM(detectBoardDTO.getMissingLatitude(), detectBoardDTO.getMissingLongitude());
 
-        List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObject(getDataInDB);
+        CustomNotification customNotification = new CustomNotification();
+        customNotification.setAlertBody("현상금 "+ detectBoardDTO.getMoney() +  "원!");
+        customNotification.setAlertTitle("신고 알림!");
+        customNotification.setAlertId(detectBoardDTO.getId() + "");
 
-        CreatedDetectiveBoardDTOAndFoundIn10KmUsers response = new CreatedDetectiveBoardDTOAndFoundIn10KmUsers();
-        response.setCreatedDetectiveBoardDTO(detectBoardDTO);
-        response.setFoundIn10KM(foundIn10KM);
+        apnsConfig.pushCustomNotification(customNotification);
 
-        return response;
+        List<UserDTO> userWithIn10KM = userService.findUserWithIn10KM(detectBoardDTO);
+
+        return new CreatedDetectiveBoardDTOAndFoundIn10KmUsers(detectBoardDTO, userWithIn10KM);
     }
 
 
@@ -49,6 +55,7 @@ public class DetectController {
     @GetMapping("/detect")
     public DetectBoardDTOListAndToTalPage getDetectiveAllBoard(@RequestParam(required = false) int page) {
         long count = detectBoardService.getCount();
+
         if (page > count) {
             return null;
         }
@@ -101,6 +108,7 @@ public class DetectController {
     }
 
     @Data
+    @AllArgsConstructor
     class CreatedDetectiveBoardDTOAndFoundIn10KmUsers {
         DetectBoardDTO createdDetectiveBoardDTO;
         List<UserDTO> foundIn10KM;

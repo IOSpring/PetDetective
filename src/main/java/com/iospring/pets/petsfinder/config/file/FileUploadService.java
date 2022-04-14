@@ -20,12 +20,9 @@ public class FileUploadService {
 
     private final S3Service s3Service;
 
-
     public void s3DeleteImage(String fileName) {
         s3Service.deleteFile(fileName);
     }
-
-
 
     public String s3Upload(MultipartFile file) {
 

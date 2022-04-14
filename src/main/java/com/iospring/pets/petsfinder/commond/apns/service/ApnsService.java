@@ -65,7 +65,9 @@ ApnsService {
 
             customNotification.setDeviceToken(deviceToken);
             payloadBuilder.setAlertTitle(customNotification.getAlertTitle());
-            payloadBuilder.setAlertBody(customNotification.getAlertTitle());
+            payloadBuilder.setAlertBody(customNotification.getAlertBody());
+
+
             payloadBuilder.setTargetContentId(customNotification.getAlertId());
 
             payloadBuilder.setSound("default");
