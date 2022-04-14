@@ -34,15 +34,15 @@ public class DetectController {
     }
 
     @PostMapping("/detect")
-    public CreatedDetectiveBoardDTOAndFoundIn10KmUsers addDetectiveBoard(DetectBoardForm detectBoardForm, MultipartFile file) {
+    public CreatedDetectiveBoardDTOAndFoundIn10KmUsers addDetectiveBoard(DetectBoardForm detectBoardForm, MultipartFile file, @RequestHeader("host") String host) {
 
-        DetectBoardDTO detectBoardDTO = detectBoardService.addFindBoard(detectBoardForm, file);
+        DetectBoardDTO detectBoardDTO = detectBoardService.addFindBoard(detectBoardForm, file,host);
 
         CustomNotification customNotification = new CustomNotification();
-        customNotification.setAlertBody("현상금 "+ detectBoardDTO.getMoney() +  "원!");
+        customNotification.setAlertBody("현상금 " + detectBoardDTO.getMoney() + "원!");
         customNotification.setAlertTitle("신고 알림!");
         customNotification.setAlertId(detectBoardDTO.getId() + "");
-
+        customNotification.setImageUrl(detectBoardDTO.getMainImageUrl());
         apnsConfig.pushCustomNotification(customNotification);
 
         List<UserDTO> userWithIn10KM = userService.findUserWithIn10KM(detectBoardDTO);
@@ -83,7 +83,9 @@ public class DetectController {
     @PutMapping("/detect/{board_id}")
     public DetectBoardDTO updateBoardForm(@PathVariable(name = "board_id") Long id,
                                           DetectBoardForm detectBoardForm,
-                                          @RequestPart(required = false) MultipartFile file) {
+                                          @RequestPart(required = false) MultipartFile file,
+                                          @RequestHeader("host") String host
+    ) {
 
         System.out.println("detectBoardForm = " + detectBoardForm);
         
@@ -91,7 +93,7 @@ public class DetectController {
 
         if (file != null) {
             System.out.println("file.getOriginalFilename() = " + file.getOriginalFilename());
-            detectiveBoard = detectBoardService.updateBoardImage(id, file);
+            detectiveBoard = detectBoardService.updateBoardImage(id, file,host);
         }
 
         detectiveBoard = detectBoardService.updateBoardForm(id, detectBoardForm);

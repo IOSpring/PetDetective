@@ -10,4 +10,5 @@ public class CustomNotification {
     public String alertTitle;
     public String alertId;
     public String deviceToken;
+    public String imageUrl;
 }

@@ -24,9 +24,13 @@ public class FileUploadService {
         s3Service.deleteFile(fileName);
     }
 
-    public String s3Upload(MultipartFile file) {
+    public String s3Upload(MultipartFile file,String host) {
 
-        String fileName = createFileName(file.getOriginalFilename());
+        String fileName;
+        if (host.equals("localhost:8080"))
+            fileName = "local/"+createFileName(file.getOriginalFilename());
+        else
+            fileName = createFileName(file.getOriginalFilename());
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());

@@ -37,7 +37,6 @@ ApnsService {
     @Value("${apns.device_token}")
     public String deviceToken;
 
-
     @Bean
     public  ApnsClient getClient() {
         ApnsClient client = null;
@@ -67,7 +66,6 @@ ApnsService {
             payloadBuilder.setAlertTitle(customNotification.getAlertTitle());
             payloadBuilder.setAlertBody(customNotification.getAlertBody());
 
-
             payloadBuilder.setTargetContentId(customNotification.getAlertId());
 
             payloadBuilder.setSound("default");
@@ -87,7 +85,6 @@ ApnsService {
             else{
                 System.out.println("=================================================================");
                 System.out.println("response = " + response);
-                System.out.println("response.getPushNotification().getPayload() = " + response.getPushNotification().getPayload());
                 System.out.println("=================================================================");
             }
 
