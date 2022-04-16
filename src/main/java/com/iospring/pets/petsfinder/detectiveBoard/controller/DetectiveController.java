@@ -51,16 +51,12 @@ public class DetectiveController {
 
     @GetMapping("/detect")
     public DetectBoardDTOListAndToTalPage getDetectiveAllBoard(@RequestParam(required = false) int page) {
-        long count = detectBoardService.getCount();
-
-        if (page > count) {
+        long totalCount = detectBoardService.getCount();
+        if (page > totalCount) {
             return null;
         }
-
         List<DetectiveBoardDTO> allDetectBoardDTO = detectBoardRepository.findAllDetectBoardDTO(page);
-        DetectBoardDTOListAndToTalPage detectBoardDTOListAndToTalPage = new DetectBoardDTOListAndToTalPage();
-        detectBoardDTOListAndToTalPage.setDetectBoardDTOList(allDetectBoardDTO);
-        detectBoardDTOListAndToTalPage.setTotalPage(count);
+        DetectBoardDTOListAndToTalPage detectBoardDTOListAndToTalPage = new DetectBoardDTOListAndToTalPage(allDetectBoardDTO,totalCount);
 
         return detectBoardDTOListAndToTalPage;
     }
@@ -97,6 +93,7 @@ public class DetectiveController {
 
 
     @Data
+    @AllArgsConstructor
     class DetectBoardDTOListAndToTalPage {
         List<DetectiveBoardDTO> detectBoardDTOList;
         long totalPage;

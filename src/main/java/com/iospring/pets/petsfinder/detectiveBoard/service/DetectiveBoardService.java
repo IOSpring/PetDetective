@@ -109,7 +109,6 @@ public class DetectiveBoardService {
     public DetectiveBoardDetailDTO getDetailDetectBoard(Long boardId) {
         DetectiveBoard detectiveBoard = detectBoardRepository.getById(boardId);
 
-
         DetectiveBoardDetailDTO detectBoardDetailDTO = DetectiveBoardDetailDTO.createDetectBoardDetailDTO(detectiveBoard);
         return detectBoardDetailDTO;
 

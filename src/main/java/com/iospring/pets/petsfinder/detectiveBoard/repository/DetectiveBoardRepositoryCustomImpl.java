@@ -39,7 +39,6 @@ public class DetectiveBoardRepositoryCustomImpl implements DetectiveBoardReposit
                 .setFirstResult((page - 1) * SHOW_DETECTIVE_BOARD_COUNT)
                 .setMaxResults(SHOW_DETECTIVE_BOARD_COUNT)
                 .getResultList();
-//
         return createDetectBoardDTO(list);
     }
 }
