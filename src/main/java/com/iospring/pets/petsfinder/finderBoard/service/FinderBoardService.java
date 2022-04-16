@@ -1,9 +1,11 @@
 package com.iospring.pets.petsfinder.finderBoard.service;
 
 import com.iospring.pets.petsfinder.config.file.FileUploadService;
+import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepositoryCustomImpl;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardForm;
 import com.iospring.pets.petsfinder.finderBoard.entity.FinderBoard;
+import com.iospring.pets.petsfinder.finderBoard.repository.CustomFinderBoardRepositoryImpl;
 import com.iospring.pets.petsfinder.finderBoard.repository.FinderBoardRepository;
 import com.iospring.pets.petsfinder.image.entity.Image;
 import com.iospring.pets.petsfinder.image.service.ImageService;
@@ -47,6 +49,14 @@ public class FinderBoardService {
 
     public List<UserDTO> userListMatchingBreedAndColor(String breed, String color) {
         return finderBoardRepository.findUserListMatchingBreedAndColor(breed,color);
+    }
+
+    public long getCareFindBoardPage() {
+        return (finderBoardRepository.getIsCareCount() / CustomFinderBoardRepositoryImpl.SHOW_FINDER_BOARD_COUNT) +1;
+    }
+
+    public long getNotCareFindBoardPage() {
+        return (finderBoardRepository.getIsNotCareCount() / CustomFinderBoardRepositoryImpl.SHOW_FINDER_BOARD_COUNT) +1;
     }
     /*
     발견 게시판 올리면 실종 게시판 찾은 다음에 그 유저 찾기 .

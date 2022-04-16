@@ -1,8 +1,7 @@
 package com.iospring.pets.petsfinder.finderBoard.repository;
 
+import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
-import com.iospring.pets.petsfinder.user.entity.User;
-import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
@@ -13,6 +12,24 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardRepository {
+
+    public static final int SHOW_FINDER_BOARD_COUNT = 10;
+
+    private List<FinderBoardDTO> createFindBoardDTO(List<Object[]> list) {
+        List<FinderBoardDTO> resultList = new ArrayList<>();
+        for (Object[] objects : list) {
+            FinderBoardDTO finderBoardDTO = new FinderBoardDTO();
+            finderBoardDTO.setId((Long) objects[0]);
+            finderBoardDTO.setMissingLocation((String) objects[1]);
+            finderBoardDTO.setCare((Boolean) objects[2]);
+            finderBoardDTO.setMainImageUrl((String) objects[3]);
+            finderBoardDTO.setMissingLatitude((Double) objects[4]);
+            finderBoardDTO.setMissingLongitude((Double) objects[5]);
+            finderBoardDTO.setMissingTime((String) objects[6]);
+            resultList.add(finderBoardDTO);
+        }
+        return resultList;
+    }
 
     public List<UserDTO> createUserDTOFromObject(List<Object[]> list) {
 
@@ -43,5 +60,35 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
         List<UserDTO> userDTOList = createUserDTOFromObject(resultListObj);
 
         return userDTOList;
+
     }
+
+
+
+    @Override
+    public List<FinderBoardDTO> getCareFinderBoardDTO(int page) {
+        List<Object[]> list = em.createQuery("select f.id , f.missLocation , f.isCare, i.url, f.missingLatitude , f.missingLongitude , f.missingTime" +
+                        " from FinderBoard f join f.pet p join p.image i where f.isCare = :isCare order by f.createAt desc ")
+                .setParameter("isCare", true)
+                .setFirstResult((page - 1) * SHOW_FINDER_BOARD_COUNT)
+                .setMaxResults(SHOW_FINDER_BOARD_COUNT)
+                .getResultList();
+        return createFindBoardDTO(list);
+    }
+
+    @Override
+    public List<FinderBoardDTO> getNotCareFinderBoardDTO(int page) {
+        List<Object[]> list = em.createQuery("select f.id , f.missLocation , f.isCare, i.url, f.missingLatitude , f.missingLongitude , f.missingTime" +
+                        " from FinderBoard f join f.pet p join p.image i where f.isCare = :isCare")
+                .setParameter("isCare", false)
+                .setFirstResult((page - 1) * SHOW_FINDER_BOARD_COUNT)
+                .setMaxResults(SHOW_FINDER_BOARD_COUNT)
+                .getResultList();
+
+        return createFindBoardDTO(list);
+
+    }
+
 }
+
+
