@@ -2,7 +2,6 @@ package com.iospring.pets.petsfinder.commond.apns.service;
 
 
 import com.iospring.pets.petsfinder.commond.apns.entity.CustomNotification;
-import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDTO;
 import com.turo.pushy.apns.ApnsClient;
 import com.turo.pushy.apns.ApnsClientBuilder;
 import com.turo.pushy.apns.PushNotificationResponse;
@@ -40,7 +39,6 @@ ApnsService {
     @Bean
     public  ApnsClient getClient() {
         ApnsClient client = null;
-
         try {
             client = new ApnsClientBuilder().setApnsServer(ApnsClientBuilder.DEVELOPMENT_APNS_HOST).setSigningKey(
                     ApnsSigningKey.loadFromInputStream(new FileInputStream("src/main/resources/AuthKey_K482HA2L4W.p8"), teamId, keyId)
@@ -63,11 +61,10 @@ ApnsService {
             ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
 
             customNotification.setDeviceToken(deviceToken);
+
             payloadBuilder.setAlertTitle(customNotification.getAlertTitle());
             payloadBuilder.setAlertBody(customNotification.getAlertBody());
-
             payloadBuilder.setTargetContentId(customNotification.getAlertId());
-
             payloadBuilder.setSound("default");
 
 

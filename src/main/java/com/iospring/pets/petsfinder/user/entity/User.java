@@ -1,7 +1,7 @@
 package com.iospring.pets.petsfinder.user.entity;
 
 
-import com.iospring.pets.petsfinder.detectBoard.entity.DetectiveBoard;
+import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.findBoard.entity.FinderBoard;
 import com.iospring.pets.petsfinder.commond.entity.BaseEntity;
 import lombok.Getter;

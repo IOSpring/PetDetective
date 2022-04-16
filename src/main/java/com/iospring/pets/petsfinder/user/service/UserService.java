@@ -1,6 +1,6 @@
 package com.iospring.pets.petsfinder.user.service;
 
-import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDTO;
+import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDTO;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
 import com.iospring.pets.petsfinder.user.dto.UserJoinDTO;
 import com.iospring.pets.petsfinder.user.entity.User;
@@ -44,7 +44,7 @@ public class UserService {
         return user;
     }
 
-    public List<UserDTO> findUserWithIn10KM(DetectBoardDTO detectBoardDTO) {
+    public List<UserDTO> findUserWithIn10KM(DetectiveBoardDTO detectBoardDTO) {
         List<Object[]> getDataInDB = userRepository.findUsersIn10KM(detectBoardDTO.getMissingLatitude(), detectBoardDTO.getMissingLongitude());
 
         List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObject(getDataInDB);

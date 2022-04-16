@@ -1,22 +1,22 @@
-package com.iospring.pets.petsfinder.detectBoard.dto;
+package com.iospring.pets.petsfinder.detectiveBoard.dto;
 
 
-import com.iospring.pets.petsfinder.detectBoard.entity.DetectiveBoard;import com.iospring.pets.petsfinder.image.entity.Image;
+import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;import com.iospring.pets.petsfinder.image.entity.Image;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class DetectBoardDetailDTO {
+public class DetectiveBoardDetailDTO {
 
 
-    public static DetectBoardDetailDTO createDetectBoardDetailDTO(DetectiveBoard detectiveBoard) {
+    public static DetectiveBoardDetailDTO createDetectBoardDetailDTO(DetectiveBoard detectiveBoard) {
 
         Pet pet = detectiveBoard.getPet();
         Image image = detectiveBoard.getPet().getImage();
 
-        DetectBoardDetailDTO detectBoardDetailDTO = DetectBoardDetailDTO.builder()
+        DetectiveBoardDetailDTO detectBoardDetailDTO = DetectiveBoardDetailDTO.builder()
                 .id(detectiveBoard.getId())
                 .breed(image.getBreed())
                 .color(image.getColor())

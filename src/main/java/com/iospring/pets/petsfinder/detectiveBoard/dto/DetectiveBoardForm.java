@@ -1,11 +1,11 @@
-package com.iospring.pets.petsfinder.detectBoard.dto;
+package com.iospring.pets.petsfinder.detectiveBoard.dto;
 
 
 import lombok.Data;
 
 
 @Data
-public class DetectBoardForm {
+public class DetectiveBoardForm {
     private String breed;
     private String color;
     private String missingTime;

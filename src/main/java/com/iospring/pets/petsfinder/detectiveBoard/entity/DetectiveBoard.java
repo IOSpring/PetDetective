@@ -1,8 +1,8 @@
-package com.iospring.pets.petsfinder.detectBoard.entity;
+package com.iospring.pets.petsfinder.detectiveBoard.entity;
 
 
 import com.iospring.pets.petsfinder.commond.entity.BaseEntity;
-import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardForm;
+import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardForm;
 import com.iospring.pets.petsfinder.image.entity.Image;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
 import com.iospring.pets.petsfinder.user.entity.User;
@@ -47,7 +47,7 @@ public class DetectiveBoard extends BaseEntity {
     @Column(columnDefinition = "text")
     private String content;
 
-    public static DetectiveBoard toEntity(DetectBoardForm detectBoardForm) {
+    public static DetectiveBoard toEntity(DetectiveBoardForm detectBoardForm) {
         DetectiveBoard detectiveBoard = new DetectiveBoard();
         detectiveBoard.setMoney(detectBoardForm.getMoney());
         detectiveBoard.setContent(detectBoardForm.getContent());
@@ -61,7 +61,7 @@ public class DetectiveBoard extends BaseEntity {
     }
 
 
-    public void updatePet(DetectBoardForm detectBoardForm) {
+    public void updatePet(DetectiveBoardForm detectBoardForm) {
         Pet pet = this.getPet();
         pet.setFeature(detectBoardForm.getFeature());
         pet.setAge(detectBoardForm.getAge());
@@ -70,13 +70,13 @@ public class DetectiveBoard extends BaseEntity {
         pet.setOperation(detectBoardForm.isOperation());
     }
 
-    public void updateImage(DetectBoardForm detectBoardForm) {
+    public void updateImage(DetectiveBoardForm detectBoardForm) {
         Image image= this.getPet().getImage();
         image.setBreed(detectBoardForm.getBreed());
         image.setColor(detectBoardForm.getColor());
     }
 
-    public void updateBoard(DetectBoardForm detectBoardForm) {
+    public void updateBoard(DetectiveBoardForm detectBoardForm) {
         this.setMissingTime(detectBoardForm.getMissingTime());
         this.setMissLocation(detectBoardForm.getMissingLocation());
         this.setMissingLongitude(detectBoardForm.getMissingLongitude());

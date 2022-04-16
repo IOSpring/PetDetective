@@ -1,13 +1,13 @@
-package com.iospring.pets.petsfinder.detectBoard.service;
+package com.iospring.pets.petsfinder.detectiveBoard.service;
 
 import com.iospring.pets.petsfinder.commond.apns.entity.CustomNotification;
 import com.iospring.pets.petsfinder.config.file.FileUploadService;
-import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDTO;
-import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardDetailDTO;
-import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardForm;
-import com.iospring.pets.petsfinder.detectBoard.entity.DetectiveBoard;
-import com.iospring.pets.petsfinder.detectBoard.repository.DetectBoardRepository;
-import com.iospring.pets.petsfinder.detectBoard.repository.DetectBoardRepositoryCustomImpl;
+import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDTO;
+import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDetailDTO;
+import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardForm;
+import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;
+import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepository;
+import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepositoryCustomImpl;
 import com.iospring.pets.petsfinder.image.PetRepository;
 import com.iospring.pets.petsfinder.image.entity.Image;
 import com.iospring.pets.petsfinder.image.service.ImageService;
@@ -22,9 +22,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class DetectBoardService {
+public class DetectiveBoardService {
 
-    private final DetectBoardRepository detectBoardRepository;
+    private final DetectiveBoardRepository detectBoardRepository;
     private final PetRepository petRepository;
     private final FileUploadService fileUploadService;
     private final ImageService imageService;
@@ -45,35 +45,18 @@ public class DetectBoardService {
 
 
     @Transactional
-    public DetectBoardDTO addFindBoard(DetectBoardForm detectBoardForm, MultipartFile file, String host) {
+    public DetectiveBoardDTO addFindBoard(DetectiveBoardForm detectBoardForm, MultipartFile file, String host) {
 
         String imageUrl = fileUploadService.s3Upload(file,host);
-
         Image image = imageService.createImage(detectBoardForm.getBreed(), detectBoardForm.getColor(), imageUrl);
-
         Pet pet = Pet.createPet(detectBoardForm);
-
         pet.setImage(image);
-
         petRepository.save(pet);
-
         DetectiveBoard detectiveBoard = DetectiveBoard.toEntity(detectBoardForm);
-
         detectiveBoard.setPet(pet);
-
-
         detectBoardRepository.save(detectiveBoard);
+        DetectiveBoardDTO detectBoardDTO = DetectiveBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
 
-        DetectBoardDTO detectBoardDTO = DetectBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
-
-
-
-
-        // 경도 1 == 55.6키로
-        // 경도 0.18 == 10키로
-
-        // 위도 1 == 111키로
-        // 위도 0.09== 10키로
         return detectBoardDTO;
     }
 
@@ -96,40 +79,13 @@ public class DetectBoardService {
     }
 
     @Transactional
-    public DetectiveBoard updateBoardForm(Long id, DetectBoardForm detectBoardForm) {
+    public DetectiveBoard updateBoardForm(Long id, DetectiveBoardForm detectBoardForm) {
 
         DetectiveBoard detectiveBoard = detectBoardRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found board"));
 
-        /*
-        detectiveBoard.getPet().getImage().setBreed(detectBoardForm.getBreed());
-        detectiveBoard.getPet().getImage().setColor(detectBoardForm.getColor());
-        ->
-        */
         detectiveBoard.updateImage(detectBoardForm);
-
-
-
-        /*detectiveBoard.setMissingTime(detectBoardForm.getMissingTime());
-        detectiveBoard.setMissLocation(detectBoardForm.getMissingLocation());
-        detectiveBoard.setMissingLongitude(detectBoardForm.getMissingLongitude());
-        detectiveBoard.setContent(detectBoardForm.getContent());
-        detectiveBoard.setMoney(detectBoardForm.getMoney());
-        detectiveBoard.setMissingLatitude(detectBoardForm.getMissingLatitude())
-        ->
-        */
-
         detectiveBoard.updateBoard(detectBoardForm);
-
-
-        /*detectiveBoard.getPet().setGender(detectBoardForm.getGender());
-        detectiveBoard.getPet().setDisease(detectBoardForm.getDisease());
-        detectiveBoard.getPet().setOperation(detectBoardForm.isOperation());
-        detectiveBoard.getPet().setFeature(detectBoardForm.getFeature());
-        detectiveBoard.getPet().setAge(detectBoardForm.getAge());
-        ->
-        */
-
         detectiveBoard.updatePet(detectBoardForm);
 
         return detectiveBoard;
@@ -137,15 +93,15 @@ public class DetectBoardService {
 
 
     public long getCount() {
-        return (detectBoardRepository.count() / DetectBoardRepositoryCustomImpl.SHOW_DETECTIVE_BOARD_COUNT) +1;
+        return (detectBoardRepository.count() / DetectiveBoardRepositoryCustomImpl.SHOW_DETECTIVE_BOARD_COUNT) +1;
     }
 
 
-    public DetectBoardDetailDTO getDetailDetectBoard(Long boardId) {
+    public DetectiveBoardDetailDTO getDetailDetectBoard(Long boardId) {
         DetectiveBoard detectiveBoard = detectBoardRepository.getById(boardId);
 
 
-        DetectBoardDetailDTO detectBoardDetailDTO = DetectBoardDetailDTO.createDetectBoardDetailDTO(detectiveBoard);
+        DetectiveBoardDetailDTO detectBoardDetailDTO = DetectiveBoardDetailDTO.createDetectBoardDetailDTO(detectiveBoard);
         return detectBoardDetailDTO;
 
     }
@@ -163,6 +119,39 @@ public class DetectBoardService {
         fileUploadService.s3DeleteImage(deletedFileName);
 
         detectBoardRepository.deleteById(id);
+
         return id;
     }
 }
+/*
+        detectiveBoard.getPet().getImage().setBreed(detectBoardForm.getBreed());
+        detectiveBoard.getPet().getImage().setColor(detectBoardForm.getColor());
+        ->
+
+        detectiveBoard.updateImage(detectBoardForm);
+        */
+
+
+
+        /*detectiveBoard.setMissingTime(detectBoardForm.getMissingTime());
+        detectiveBoard.setMissLocation(detectBoardForm.getMissingLocation());
+        detectiveBoard.setMissingLongitude(detectBoardForm.getMissingLongitude());
+        detectiveBoard.setContent(detectBoardForm.getContent());
+        detectiveBoard.setMoney(detectBoardForm.getMoney());
+        detectiveBoard.setMissingLatitude(detectBoardForm.getMissingLatitude())
+        ->
+
+        detectiveBoard.updateBoard(detectBoardForm);
+        */
+
+
+
+        /*detectiveBoard.getPet().setGender(detectBoardForm.getGender());
+        detectiveBoard.getPet().setDisease(detectBoardForm.getDisease());
+        detectiveBoard.getPet().setOperation(detectBoardForm.isOperation());
+        detectiveBoard.getPet().setFeature(detectBoardForm.getFeature());
+        detectiveBoard.getPet().setAge(detectBoardForm.getAge());
+        ->
+        detectiveBoard.updatePet(detectBoardForm);
+        */
+

@@ -2,9 +2,8 @@ package com.iospring.pets.petsfinder.pet.entity;
 
 
 import com.iospring.pets.petsfinder.commond.entity.BaseEntity;
-import com.iospring.pets.petsfinder.detectBoard.dto.DetectBoardForm;
+import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardForm;
 import com.iospring.pets.petsfinder.image.entity.Image;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -51,7 +50,7 @@ public class Pet extends BaseEntity {
     private Image image;
 
 
-    public static Pet createPet(DetectBoardForm detectBoardForm) {
+    public static Pet createPet(DetectiveBoardForm detectBoardForm) {
         Pet pet = new Pet();
         pet.setGender(detectBoardForm.getGender());
         pet.setDisease(detectBoardForm.getDisease());

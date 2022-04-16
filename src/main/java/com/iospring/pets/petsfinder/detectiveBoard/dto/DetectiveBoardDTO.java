@@ -1,14 +1,14 @@
-package com.iospring.pets.petsfinder.detectBoard.dto;
+package com.iospring.pets.petsfinder.detectiveBoard.dto;
 
 
-import com.iospring.pets.petsfinder.detectBoard.entity.DetectiveBoard;
+import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;
 import lombok.Data;
 
 @Data
-public class DetectBoardDTO {
+public class DetectiveBoardDTO {
 
-    public static DetectBoardDTO createDetectBoardDTO(DetectiveBoard detectiveBoard, String url) {
-        DetectBoardDTO detectBoardDTO = new DetectBoardDTO();
+    public static DetectiveBoardDTO createDetectBoardDTO(DetectiveBoard detectiveBoard, String url) {
+        DetectiveBoardDTO detectBoardDTO = new DetectiveBoardDTO();
 
         detectBoardDTO.setId(detectiveBoard.getId());
         detectBoardDTO.setMoney(detectiveBoard.getMoney());
