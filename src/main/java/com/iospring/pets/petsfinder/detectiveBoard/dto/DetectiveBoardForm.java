@@ -1,24 +1,12 @@
 package com.iospring.pets.petsfinder.detectiveBoard.dto;
 
 
+import com.iospring.pets.petsfinder.commond.entity.BoardForm;
 import lombok.Data;
 
 
 @Data
-public class DetectiveBoardForm {
-    private String breed;
-    private String color;
-    private String missingTime;
-    private String missingLocation;
-    private Double missingLatitude;
-    private Double missingLongitude;
-    private String content;
-    private String feature; // sepc -> feature 수정 요청
-    private int money;
-    private String gender;
+public class DetectiveBoardForm  extends BoardForm {
 
-    private boolean isOperation;
-    private String disease;
-    private int age;
 }
 

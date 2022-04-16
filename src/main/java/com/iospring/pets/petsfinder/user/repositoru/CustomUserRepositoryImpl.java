@@ -13,13 +13,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomUserRepositoryImpl implements CustomUserRepository{
 
-    public List<UserDTO> createUserDTOFromObject(List<Object[]> list) {
-        for (Object[] objects : list) {
-            for (int i = 0; i < objects.length; i++) {
-            }
-        }
-        List<UserDTO> userDTOList = new ArrayList<>();
+     public List<UserDTO> createUserDTOFromObject(List<Object[]> list) {
 
+        List<UserDTO> userDTOList = new ArrayList<>();
 
         for (Object[] objects : list) {
             BigInteger bigInteger = new BigInteger(String.valueOf(objects[0]));
@@ -28,8 +24,6 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
             userDTO.setPhoneNumber((String) objects[1]);
             userDTO.setLatitude((Double) objects[2]);
             userDTO.setLongitude((Double) objects[3]);
-
-
             userDTOList.add(userDTO);
         }
 

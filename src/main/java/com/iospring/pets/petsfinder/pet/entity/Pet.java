@@ -2,16 +2,14 @@ package com.iospring.pets.petsfinder.pet.entity;
 
 
 import com.iospring.pets.petsfinder.commond.entity.BaseEntity;
+import com.iospring.pets.petsfinder.commond.entity.BoardForm;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardForm;
 import com.iospring.pets.petsfinder.image.entity.Image;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Setter
 @NoArgsConstructor
 @Getter
 public class Pet extends BaseEntity {
@@ -20,7 +18,6 @@ public class Pet extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pet_id")
     private Long id;
-
 
 
     @Column(length = 5)
@@ -44,21 +41,35 @@ public class Pet extends BaseEntity {
     private boolean isOperation;
 
 
+    @Builder
+    public Pet(String gender, String disease, String feature, Integer age, boolean isOperation) {
+        this.gender = gender;
+        this.disease = disease;
+        this.feature = feature;
+        this.age = age;
+        this.isOperation = isOperation;
+    }
 
     @JoinColumn(name = "pet_image_fk")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Image image;
 
 
-    public static Pet createPet(DetectiveBoardForm detectBoardForm) {
-        Pet pet = new Pet();
-        pet.setGender(detectBoardForm.getGender());
-        pet.setDisease(detectBoardForm.getDisease());
-        pet.setFeature(detectBoardForm.getFeature());
-        pet.setAge(detectBoardForm.getAge());
-        pet.setOperation(detectBoardForm.isOperation());
-        return pet;
+    public void connectImage(Image image) {
+        this.image = image;
+
     }
+
+
+    public void update(String feature, Integer age , String gender, String disease, boolean isOperation) {
+        this.feature = feature;
+        this.age = age;
+        this.gender = gender;
+        this.disease = disease;
+        this.isOperation = isOperation;
+    }
+
+
 
 
 

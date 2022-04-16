@@ -1,19 +1,21 @@
-package com.iospring.pets.petsfinder.findBoard.entity;
+package com.iospring.pets.petsfinder.finderBoard.entity;
 
 
 import com.iospring.pets.petsfinder.commond.entity.BaseEntity;
 import com.iospring.pets.petsfinder.commond.entity.Status;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
 import com.iospring.pets.petsfinder.user.entity.User;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor
 public class FinderBoard extends BaseEntity {
 
     @Id
@@ -31,14 +33,16 @@ public class FinderBoard extends BaseEntity {
 
     @Column(length = 50)
     private String missLocation;
-
+    private Double missingLatitude;
+    private Double missingLongitude;
 
     @Column
     private String missingTime;
 
 
+
     @Column(columnDefinition = "varchar(12) default 'inprogress'")
-    private Status status;
+    private String status;
 
     @Column(columnDefinition = "bool not null default false")
     private boolean isCare;
@@ -46,4 +50,16 @@ public class FinderBoard extends BaseEntity {
 
     @Column(columnDefinition = "text")
     private String content;
+
+
+    @Builder
+    public FinderBoard(String missLocation, Double missingLatitude, Double missingLongitude, String missingTime, String status, boolean isCare, String content) {
+        this.missLocation = missLocation;
+        this.missingLatitude = missingLatitude;
+        this.missingLongitude = missingLongitude;
+        this.missingTime = missingTime;
+        this.status = status;
+        this.isCare = isCare;
+        this.content = content;
+    }
 }

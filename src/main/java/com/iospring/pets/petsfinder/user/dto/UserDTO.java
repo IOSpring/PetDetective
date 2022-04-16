@@ -12,7 +12,6 @@ public class UserDTO {
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setLatitude(user.getLatitude());
         userDTO.setLongitude(user.getLongitude());
-
         return userDTO;
     }
 

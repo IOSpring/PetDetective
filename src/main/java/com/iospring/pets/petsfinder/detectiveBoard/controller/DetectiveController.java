@@ -2,6 +2,7 @@ package com.iospring.pets.petsfinder.detectiveBoard.controller;
 
 import com.iospring.pets.petsfinder.commond.apns.entity.CustomNotification;
 import com.iospring.pets.petsfinder.commond.apns.service.ApnsService;
+import com.iospring.pets.petsfinder.commond.entity.BoardForm;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDTO;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDetailDTO;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardForm;
@@ -31,7 +32,7 @@ public class DetectiveController {
    @PostMapping("/detect")
         public CreatedDetectiveBoardDTOAndFoundIn10KmUsers addDetectiveBoard(DetectiveBoardForm detectBoardForm, MultipartFile file, @RequestHeader("host") String host) {
 
-            DetectiveBoardDTO detectBoardDTO = detectBoardService.addFindBoard(detectBoardForm, file,host);
+            DetectiveBoardDTO detectBoardDTO = detectBoardService.addDetectiveBoard(detectBoardForm, file,host);
 
             CustomNotification customNotification = new CustomNotification();
             customNotification.setAlertBody("현상금 " + detectBoardDTO.getMoney() + "원!");
@@ -82,7 +83,7 @@ public class DetectiveController {
                                              @RequestPart(required = false) MultipartFile file,
                                              @RequestHeader("host") String host
     ) {
-
+        System.out.println("detectBoardForm = " + detectBoardForm);
         DetectiveBoard detectiveBoard = null;
 
         if (file != null) {

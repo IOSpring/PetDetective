@@ -1,11 +1,13 @@
 package com.iospring.pets.petsfinder.detectiveBoard.dto;
 
 
+import com.iospring.pets.petsfinder.commond.entity.BoardDTO;
 import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;
 import lombok.Data;
 
 @Data
-public class DetectiveBoardDTO {
+public class DetectiveBoardDTO extends BoardDTO {
+    private Integer money;
 
     public static DetectiveBoardDTO createDetectBoardDTO(DetectiveBoard detectiveBoard, String url) {
         DetectiveBoardDTO detectBoardDTO = new DetectiveBoardDTO();
@@ -21,13 +23,7 @@ public class DetectiveBoardDTO {
         return detectBoardDTO;
     }
 
-    private String mainImageUrl;
-    private String missingLocation;
-    private Long id;
-    private Integer money;
-    private Double missingLatitude;
-    private Double missingLongitude;
-    private String missingTime;
+
 
 
 }

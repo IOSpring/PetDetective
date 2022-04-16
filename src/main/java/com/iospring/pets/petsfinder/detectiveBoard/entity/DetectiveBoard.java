@@ -2,6 +2,7 @@ package com.iospring.pets.petsfinder.detectiveBoard.entity;
 
 
 import com.iospring.pets.petsfinder.commond.entity.BaseEntity;
+import com.iospring.pets.petsfinder.commond.entity.BoardForm;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardForm;
 import com.iospring.pets.petsfinder.image.entity.Image;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
@@ -31,8 +32,6 @@ public class DetectiveBoard extends BaseEntity {
 
     @Column(length = 50)
     private String missLocation;
-
-
     private Double missingLatitude;
     private Double missingLongitude;
     @Column
@@ -47,41 +46,35 @@ public class DetectiveBoard extends BaseEntity {
     @Column(columnDefinition = "text")
     private String content;
 
-    public static DetectiveBoard toEntity(DetectiveBoardForm detectBoardForm) {
+    public static DetectiveBoard toEntity(BoardForm boardForm) {
         DetectiveBoard detectiveBoard = new DetectiveBoard();
-        detectiveBoard.setMoney(detectBoardForm.getMoney());
-        detectiveBoard.setContent(detectBoardForm.getContent());
-        detectiveBoard.setMissLocation(detectBoardForm.getMissingLocation());
-        detectiveBoard.setMoney(detectBoardForm.getMoney());
-        detectiveBoard.setMissingTime(detectBoardForm.getMissingTime());
-        detectiveBoard.setMissingLatitude(detectBoardForm.getMissingLatitude());
-        detectiveBoard.setMissingLongitude(detectBoardForm.getMissingLongitude());
+        detectiveBoard.setMoney(boardForm.getMoney());
+        detectiveBoard.setContent(boardForm.getContent());
+        detectiveBoard.setMissLocation(boardForm.getMissingLocation());
+        detectiveBoard.setMissingTime(boardForm.getMissingTime());
+        detectiveBoard.setMissingLatitude(boardForm.getMissingLatitude());
+        detectiveBoard.setMissingLongitude(boardForm.getMissingLongitude());
         detectiveBoard.setStatus("inprogress");
         return detectiveBoard;
     }
 
 
-    public void updatePet(DetectiveBoardForm detectBoardForm) {
+    public void updatePet(BoardForm boardForm) {
         Pet pet = this.getPet();
-        pet.setFeature(detectBoardForm.getFeature());
-        pet.setAge(detectBoardForm.getAge());
-        pet.setGender(detectBoardForm.getGender());
-        pet.setDisease(detectBoardForm.getDisease());
-        pet.setOperation(detectBoardForm.isOperation());
+        pet.update(boardForm.getFeature(),boardForm.getAge(),boardForm.getGender(),boardForm.getDisease(),boardForm.isOperation());
     }
 
-    public void updateImage(DetectiveBoardForm detectBoardForm) {
+    public void updateImage(BoardForm board) {
         Image image= this.getPet().getImage();
-        image.setBreed(detectBoardForm.getBreed());
-        image.setColor(detectBoardForm.getColor());
+        image.update(board.getBreed(), board.getColor());
     }
 
-    public void updateBoard(DetectiveBoardForm detectBoardForm) {
-        this.setMissingTime(detectBoardForm.getMissingTime());
-        this.setMissLocation(detectBoardForm.getMissingLocation());
-        this.setMissingLongitude(detectBoardForm.getMissingLongitude());
-        this.setContent(detectBoardForm.getContent());
-        this.setMoney(detectBoardForm.getMoney());
-        this.setMissingLatitude(detectBoardForm.getMissingLatitude());
+    public void updateBoard(BoardForm boardForm) {
+        this.setMissingTime(boardForm.getMissingTime());
+        this.setMissLocation(boardForm.getMissingLocation());
+        this.setMissingLongitude(boardForm.getMissingLongitude());
+        this.setContent(boardForm.getContent());
+        this.setMoney(boardForm.getMoney());
+        this.setMissingLatitude(boardForm.getMissingLatitude());
     }
 }
