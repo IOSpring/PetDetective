@@ -2,7 +2,10 @@ package com.iospring.pets.petsfinder.finderBoard.entity;
 
 
 import com.iospring.pets.petsfinder.commond.entity.BaseEntity;
+import com.iospring.pets.petsfinder.commond.entity.BoardForm;
 import com.iospring.pets.petsfinder.commond.entity.Status;
+import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardForm;
+import com.iospring.pets.petsfinder.image.entity.Image;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
 import com.iospring.pets.petsfinder.user.entity.User;
 import lombok.Builder;
@@ -51,6 +54,24 @@ public class FinderBoard extends BaseEntity {
     @Column(columnDefinition = "text")
     private String content;
 
+    public void updatePet(BoardForm boardForm) {
+        Pet pet = this.getPet();
+        pet.update(boardForm.getFeature(),boardForm.getAge(),boardForm.getGender(),boardForm.getDisease(),boardForm.isOperation());
+    }
+
+    public void updateImage(BoardForm board) {
+        Image image= this.getPet().getImage();
+        image.update(board.getBreed(), board.getColor());
+    }
+
+    public void updateBoard(FinderBoardForm finderBoardForm) {
+        this.setMissingTime(finderBoardForm.getMissingTime());
+        this.setMissLocation(finderBoardForm.getMissingLocation());
+        this.setMissingLongitude(finderBoardForm.getMissingLongitude());
+        this.setContent(finderBoardForm.getContent());
+        this.setCare(finderBoardForm.isCare());
+        this.setMissingLatitude(finderBoardForm.getMissingLatitude());
+    }
 
     @Builder
     public FinderBoard(String missLocation, Double missingLatitude, Double missingLongitude, String missingTime, String status, boolean isCare, String content) {

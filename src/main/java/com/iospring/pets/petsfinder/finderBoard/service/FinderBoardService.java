@@ -1,7 +1,6 @@
 package com.iospring.pets.petsfinder.finderBoard.service;
 
 import com.iospring.pets.petsfinder.config.file.FileUploadService;
-import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepositoryCustomImpl;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardForm;
 import com.iospring.pets.petsfinder.finderBoard.entity.FinderBoard;
@@ -12,8 +11,6 @@ import com.iospring.pets.petsfinder.image.service.ImageService;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
 import com.iospring.pets.petsfinder.pet.service.PetService;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +54,49 @@ public class FinderBoardService {
 
     public long getNotCareFindBoardPage() {
         return (finderBoardRepository.getIsNotCareCount() / CustomFinderBoardRepositoryImpl.SHOW_FINDER_BOARD_COUNT) +1;
+    }
+
+    @Transactional
+    public Long deleteBoard(Long id) {
+        FinderBoard finderBoard = finderBoardRepository.getById(id);
+        Image image = finderBoard.getPet().getImage();
+        try {
+            fileUploadService.s3DeleteImage(image.getFileName());
+        } catch (RuntimeException e) {
+            // Todo Exception Process
+            throw e;
+        }
+        finderBoardRepository.deleteById(id);
+        return id;
+    }
+
+    public FinderBoard updateBoardImage(Long id, MultipartFile file, String host) {
+        FinderBoard finderBoard = finderBoardRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found board"));
+
+
+        Image image = finderBoard.getPet().getImage();
+        fileUploadService.s3DeleteImage(image.getFileName());
+        String newFileName = fileUploadService.s3Upload(file, host,"finder");
+        image.setUrl(newFileName);
+        return finderBoard;
+    }
+
+    public FinderBoard updateBoardForm(Long id, FinderBoardForm finderBoardForm) {
+        FinderBoard finderBoard = finderBoardRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found board"));
+
+        finderBoard.updateImage(finderBoardForm);
+        finderBoard.updateBoard(finderBoardForm);
+        finderBoard.updatePet(finderBoardForm);
+
+        return finderBoard;
+    }
+
+    public void getDetailDetectBoard(Long boardId) {
+        FinderBoard finderBoard = finderBoardRepository.getById(boardId);
+        return  ;
+
     }
     /*
     발견 게시판 올리면 실종 게시판 찾은 다음에 그 유저 찾기 .

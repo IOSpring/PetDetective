@@ -1,7 +1,13 @@
 package com.iospring.pets.petsfinder.finderBoard.controller;
 
+import com.iospring.pets.petsfinder.config.file.FileUploadService;
+import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDTO;
+import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDetailDTO;
+import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardForm;
+import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardForm;
+import com.iospring.pets.petsfinder.finderBoard.entity.FinderBoard;
 import com.iospring.pets.petsfinder.finderBoard.repository.FinderBoardRepository;
 import com.iospring.pets.petsfinder.finderBoard.service.FinderBoardService;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
@@ -19,6 +25,8 @@ public class FinderController {
 
     private final FinderBoardService finderBoardService;
     private final FinderBoardRepository finderBoardRepository;
+
+
     @PostMapping("/finder")
     public CreateFinderBoardDTOAndUserMatchingBoardAndColor addFinderBoard(FinderBoardForm finderBoardForm,
                                MultipartFile file,
@@ -53,6 +61,40 @@ public class FinderController {
     }
 
 
+    @GetMapping("/finder/{board_id}")
+    public void getDetailDetectBoard(@PathVariable(name = "board_id") Long boardId) {
+//        return finderBoardService.getDetailDetectBoard(boardId);
+        return ;
+    }
+    @DeleteMapping("/finder/{board_id}")
+    public Long deleteFinderBoard(@PathVariable(name = "board_id") Long id) {
+        Long deleteBoardId = finderBoardService.deleteBoard(id);
+
+        return  deleteBoardId;
+    }
+
+    @PutMapping("/finder/{board_id}")
+    public FinderBoardDTO updateBoardForm(@PathVariable(name = "board_id") Long id,
+                                             FinderBoardForm finderBoardForm,
+                                             @RequestPart(required = false) MultipartFile file,
+                                             @RequestHeader("host") String host
+    ) {
+        System.out.println("detectBoardForm = " + finderBoardForm);
+        FinderBoard finderBoard = null;
+
+        if (file != null) {
+            finderBoard = finderBoardService.updateBoardImage(id, file,host);
+        }
+
+        finderBoard = finderBoardService.updateBoardForm(id, finderBoardForm);
+        return FinderBoardDTO.createDetectBoardDTO(finderBoard, finderBoard.getPet().getImage().getUrl());
+    }
+
+
+
+
+
+
     @Data
     @AllArgsConstructor
     class CreateFinderBoardDTOAndUserMatchingBoardAndColor {
@@ -60,7 +102,6 @@ public class FinderController {
         List<UserDTO> matchingBoardAndColorUserList;
 
     }
-
 
     @Data
     @AllArgsConstructor

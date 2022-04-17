@@ -1,6 +1,7 @@
 package com.iospring.pets.petsfinder.detectiveBoard.dto;
 
 
+import com.iospring.pets.petsfinder.commond.entity.BoardDetailDTO;
 import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;import com.iospring.pets.petsfinder.image.entity.Image;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
 import lombok.Builder;
@@ -8,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class DetectiveBoardDetailDTO {
+public class DetectiveBoardDetailDTO   {
 
 
     public static DetectiveBoardDetailDTO createDetectBoardDetailDTO(DetectiveBoard detectiveBoard) {
@@ -23,7 +24,7 @@ public class DetectiveBoardDetailDTO {
                 .mainImageUrl(image.getUrl())
                 .missingTime(detectiveBoard.getMissingTime())
                 .missingLocation(detectiveBoard.getMissLocation())
-                .money(detectiveBoard.getMoney())
+//                .money(detectiveBoard.getMoney())
                 .content(detectiveBoard.getContent())
                 .isOperation(pet.isOperation())
                 .age(pet.getAge())
@@ -56,7 +57,9 @@ public class DetectiveBoardDetailDTO {
     private String mainImageUrl;
 
     private Long id;
-    private Integer money;
+
     private String content;
+
+    private Integer money;
 
 }

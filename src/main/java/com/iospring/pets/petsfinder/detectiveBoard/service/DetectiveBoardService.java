@@ -76,9 +76,9 @@ public class DetectiveBoardService {
                 .orElseThrow(() -> new RuntimeException("Not found board"));
 
         Image image = detectiveBoard.getPet().getImage();
-        String fileName = image.getFileName();
 
-        fileUploadService.s3DeleteImage(fileName);
+
+        fileUploadService.s3DeleteImage(image.getFileName());
 
         String newFileName = fileUploadService.s3Upload(file, host,"detective");
 
@@ -121,10 +121,12 @@ public class DetectiveBoardService {
 
         DetectiveBoard detectiveBoard = detectBoardRepository.getById(id);
         Image image = detectiveBoard.getPet().getImage();
+        try {
+            fileUploadService.s3DeleteImage(image.getFileName());
+        } catch (RuntimeException e) {
+            throw e;
+        }
 
-        String deletedFileName = image.getFileName();
-
-        fileUploadService.s3DeleteImage(deletedFileName);
 
         detectBoardRepository.deleteById(id);
 

@@ -56,9 +56,7 @@ public class DetectiveController {
             return null;
         }
         List<DetectiveBoardDTO> allDetectBoardDTO = detectBoardRepository.findAllDetectBoardDTO(page);
-        DetectBoardDTOListAndToTalPage detectBoardDTOListAndToTalPage = new DetectBoardDTOListAndToTalPage(allDetectBoardDTO,totalCount);
-
-        return detectBoardDTOListAndToTalPage;
+        return  new DetectBoardDTOListAndToTalPage(allDetectBoardDTO,totalCount);
     }
 
     @GetMapping("/detect/{board_id}")
@@ -68,8 +66,8 @@ public class DetectiveController {
 
     @DeleteMapping("/detect/{board_id}")
     public Long deleteDetectiveBoard(@PathVariable(name = "board_id") Long id) {
-        detectBoardService.deleteBoard(id);
-        return id;
+        Long deleteBoardId = detectBoardService.deleteBoard(id);
+        return deleteBoardId;
     }
 
 
