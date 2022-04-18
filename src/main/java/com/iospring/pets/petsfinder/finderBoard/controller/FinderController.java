@@ -6,6 +6,7 @@ import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDetailDTO;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardForm;
 import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
+import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDetailDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardForm;
 import com.iospring.pets.petsfinder.finderBoard.entity.FinderBoard;
 import com.iospring.pets.petsfinder.finderBoard.repository.FinderBoardRepository;
@@ -62,10 +63,11 @@ public class FinderController {
 
 
     @GetMapping("/finder/{board_id}")
-    public void getDetailDetectBoard(@PathVariable(name = "board_id") Long boardId) {
-//        return finderBoardService.getDetailDetectBoard(boardId);
-        return ;
+    public FinderBoardDetailDTO getDetailDetectBoard(@PathVariable(name = "board_id") Long boardId) {
+        return finderBoardService.getDetailDetectBoard(boardId);
     }
+
+
     @DeleteMapping("/finder/{board_id}")
     public Long deleteFinderBoard(@PathVariable(name = "board_id") Long id) {
         Long deleteBoardId = finderBoardService.deleteBoard(id);

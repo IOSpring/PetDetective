@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class DetectiveBoardDetailDTO   {
+public class DetectiveBoardDetailDTO  {
 
 
     public static DetectiveBoardDetailDTO createDetectBoardDetailDTO(DetectiveBoard detectiveBoard) {
@@ -24,7 +24,7 @@ public class DetectiveBoardDetailDTO   {
                 .mainImageUrl(image.getUrl())
                 .missingTime(detectiveBoard.getMissingTime())
                 .missingLocation(detectiveBoard.getMissLocation())
-//                .money(detectiveBoard.getMoney())
+                .money(detectiveBoard.getMoney())
                 .content(detectiveBoard.getContent())
                 .isOperation(pet.isOperation())
                 .age(pet.getAge())

@@ -1,7 +1,9 @@
 package com.iospring.pets.petsfinder.finderBoard.service;
 
 import com.iospring.pets.petsfinder.config.file.FileUploadService;
+import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDetailDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
+import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDetailDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardForm;
 import com.iospring.pets.petsfinder.finderBoard.entity.FinderBoard;
 import com.iospring.pets.petsfinder.finderBoard.repository.CustomFinderBoardRepositoryImpl;
@@ -82,7 +84,9 @@ public class FinderBoardService {
         return finderBoard;
     }
 
+    @Transactional
     public FinderBoard updateBoardForm(Long id, FinderBoardForm finderBoardForm) {
+
         FinderBoard finderBoard = finderBoardRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found board"));
 
@@ -93,14 +97,12 @@ public class FinderBoardService {
         return finderBoard;
     }
 
-    public void getDetailDetectBoard(Long boardId) {
+    public FinderBoardDetailDTO getDetailDetectBoard(Long boardId) {
         FinderBoard finderBoard = finderBoardRepository.getById(boardId);
-        return  ;
 
+        FinderBoardDetailDTO finderBoardDetailDTO = FinderBoardDetailDTO.createDetectBoardDetailDTO(finderBoard);
+        return finderBoardDetailDTO;
     }
-    /*
-    발견 게시판 올리면 실종 게시판 찾은 다음에 그 유저 찾기 .
-     */
 
 
 
