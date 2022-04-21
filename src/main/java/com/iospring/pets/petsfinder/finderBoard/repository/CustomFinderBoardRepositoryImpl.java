@@ -89,6 +89,18 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
 
     }
 
+    @Override
+    public List<FinderBoardDTO> getAllFinderBoardDTO(int page) {
+        List<Object[]> list = em.createQuery("select f.id , f.missLocation , f.isCare, i.url, f.missingLatitude , f.missingLongitude , f.missingTime" +
+                        " from FinderBoard f join f.pet p join p.image i order by f.createAt desc")
+                .setFirstResult((page - 1) * SHOW_FINDER_BOARD_COUNT)
+                .setMaxResults(SHOW_FINDER_BOARD_COUNT)
+                .getResultList();
+
+        return createFindBoardDTO(list);
+    }
+
 }
+
 
 

@@ -44,21 +44,25 @@ public class FinderController {
 
     @GetMapping("/finder")
     public FindBoardDTOListAndToTalPage getFinderAllBoard(
-                                  @RequestParam(name = "care") boolean care,
+                                  @RequestParam(name = "care", required = false) String care,
                                   @RequestParam(name = "page") int page) {
-        if (care) {
-            long totalPage= finderBoardService.getCareFindBoardPage();
-            if(page > totalPage ) return null;
+        if(care == null) {
+            long totalPage = finderBoardService.getFindBoardPage();
+            if (page > totalPage) throw new RuntimeException("페이지를 초과했습니다.");
+            List<FinderBoardDTO> fullFinderBoardDTO = finderBoardRepository.getAllFinderBoardDTO(page);
+            return new FindBoardDTOListAndToTalPage(fullFinderBoardDTO, totalPage);
+        }
+         else if (care.equals("true") ) {
+            long totalPage = finderBoardService.getCareFindBoardPage();
+            if (page > totalPage) throw new RuntimeException("페이지를 초과했습니다.");
             List<FinderBoardDTO> allCareFindBoardDTO = finderBoardRepository.getCareFinderBoardDTO(page);
             return new FindBoardDTOListAndToTalPage(allCareFindBoardDTO, totalPage);
-        }
-        else {
-            long totalPage= finderBoardService.getNotCareFindBoardPage();
-            if(page > totalPage ) return null;
+        } else{
+            long totalPage = finderBoardService.getNotCareFindBoardPage();
+            if (page > totalPage) throw new RuntimeException("페이지를 초과했습니다.");
             List<FinderBoardDTO> notCareFinderBoardDTO = finderBoardRepository.getNotCareFinderBoardDTO(page);
             return new FindBoardDTOListAndToTalPage(notCareFinderBoardDTO, totalPage);
         }
-
     }
 
 

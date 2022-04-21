@@ -12,4 +12,5 @@ public interface CustomFinderBoardRepository  {
 
     List<FinderBoardDTO> getCareFinderBoardDTO(int page);
     List<FinderBoardDTO> getNotCareFinderBoardDTO(int page);
+    List<FinderBoardDTO> getAllFinderBoardDTO(int page);
 }

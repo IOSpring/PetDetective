@@ -58,6 +58,9 @@ public class FinderBoardService {
         return (finderBoardRepository.getIsNotCareCount() / CustomFinderBoardRepositoryImpl.SHOW_FINDER_BOARD_COUNT) +1;
     }
 
+    public long getFindBoardPage() {
+        return (finderBoardRepository.count() / CustomFinderBoardRepositoryImpl.SHOW_FINDER_BOARD_COUNT) +1;
+    }
     @Transactional
     public Long deleteBoard(Long id) {
         FinderBoard finderBoard = finderBoardRepository.getById(id);
