@@ -20,7 +20,7 @@ public class FinderBoardForm extends BoardForm {
 
     public FinderBoard toEntity(FinderBoardForm finderBoardForm) {
         FinderBoard finderBoard = FinderBoard.builder()
-                .isCare(finderBoardForm.isCare)
+                .isCare(finderBoardForm.isCare())
                 .content(finderBoardForm.getContent())
                 .missingTime(finderBoardForm.getMissingTime())
                 .missLocation(finderBoardForm.getMissingLocation())

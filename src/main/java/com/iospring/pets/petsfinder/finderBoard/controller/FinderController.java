@@ -1,10 +1,5 @@
 package com.iospring.pets.petsfinder.finderBoard.controller;
 
-import com.iospring.pets.petsfinder.config.file.FileUploadService;
-import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDTO;
-import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDetailDTO;
-import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardForm;
-import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDetailDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardForm;
