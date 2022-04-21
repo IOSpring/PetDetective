@@ -34,6 +34,9 @@ public class ChatController {
         User userB = userRepository.findByPhoneNumber("01099043323").orElseThrow(() -> new RuntimeException("No User"));
         UserDTO userBDTO = UserDTO.createUserDTO(userB);
 
+
+
+
         MultiValueMap<String, UserDTO> params = new LinkedMultiValueMap<>();
         params.add("userA", userADTO);
         params.add("userB", userBDTO);
