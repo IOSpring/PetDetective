@@ -1,5 +1,7 @@
 package com.iospring.pets.petsfinder.finderBoard.controller;
 
+import com.iospring.pets.petsfinder.detectiveBoard.controller.DetectiveController;
+import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDetailDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardForm;
@@ -92,6 +94,45 @@ public class FinderController {
     }
 
 
+    @GetMapping("/finder/search")
+    public FindBoardDTOListAndToTalPage searchDetectiveBoard(
+            @RequestParam(name = "category") String category,
+            @RequestParam(name = "condition") String condition,
+            @RequestParam(name = "page", defaultValue = "1") int page
+    )
+    {
+        if (category.equals("loc")) {
+            List<FinderBoardDTO> finderBoardDTOList = finderBoardRepository.findFinderBoardDtoByLocation(page, condition);
+            long totalPageCount = finderBoardService.getPageCountSearchedByLocation(condition);
+
+            if (page > totalPageCount) throw new RuntimeException("페이지를 초과했습니다.");
+
+            return new FindBoardDTOListAndToTalPage(finderBoardDTOList,totalPageCount);
+
+        } else if (category.equals("breed")) {
+            List<FinderBoardDTO> finderBoardDTOList = finderBoardRepository.findFinderBoardDtoByBreed(page, condition);
+
+
+            long totalPageCount = finderBoardService.getPageCountSearchedByBreed(condition);
+
+            if (page > totalPageCount) throw new RuntimeException("페이지를 초과했습니다.");
+
+            return new FindBoardDTOListAndToTalPage(finderBoardDTOList,totalPageCount);
+
+        } else if (category.equals("color")) {
+            List<FinderBoardDTO> finderBoardDTOList = finderBoardRepository.findFinderBoardDtoByColor(page, condition);
+
+            long totalPageCount = finderBoardService.getPageCountSearchedByColor(condition);
+
+            if (page > totalPageCount) throw new RuntimeException("페이지를 초과했습니다.");
+
+            return new FindBoardDTOListAndToTalPage(finderBoardDTOList,totalPageCount);
+
+        } else {
+            throw new RuntimeException("해당 조건으로 검색할 수 없습니다.");
+        }
+
+    }
 
 
 

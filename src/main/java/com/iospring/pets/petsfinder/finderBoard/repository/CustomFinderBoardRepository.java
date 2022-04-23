@@ -13,4 +13,16 @@ public interface CustomFinderBoardRepository  {
     List<FinderBoardDTO> getCareFinderBoardDTO(int page);
     List<FinderBoardDTO> getNotCareFinderBoardDTO(int page);
     List<FinderBoardDTO> getAllFinderBoardDTO(int page);
+
+    List<FinderBoardDTO> findFinderBoardDtoByLocation(int page, String condition);
+
+    long countFinderBoardDtoSearchedByLocation(String condition);
+
+    List<FinderBoardDTO> findFinderBoardDtoByBreed(int page, String condition);
+
+    long countDetectBoardDtoSearchedByBreed(String condition);
+
+    List<FinderBoardDTO> findFinderBoardDtoByColor(int page, String condition);
+
+    long countFinderBoardDtoSearchedByColor(String condition);
 }

@@ -100,6 +100,65 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
         return createFindBoardDTO(list);
     }
 
+    @Override
+    public List<FinderBoardDTO> findFinderBoardDtoByLocation(int page, String condition) {
+        List<Object[]> list = em.createQuery("select f.id , f.missLocation, f.isCare , i.url, f.missingLatitude , f.missingLongitude , f.missingTime" +
+                        " from FinderBoard f join f.pet p join p.image i where  f.missLocation like :condition order by f.createAt desc ")
+                .setParameter("condition" , '%' + condition +'%')
+                .setFirstResult((page - 1) * SHOW_FINDER_BOARD_COUNT)
+                .setMaxResults(SHOW_FINDER_BOARD_COUNT)
+                .getResultList();
+        return createFindBoardDTO(list);
+    }
+
+
+
+    @Override
+    public long countFinderBoardDtoSearchedByLocation(String condition) {
+        return em.createQuery("select count(f.missLocation) from FinderBoard f where f.missLocation  like :condition", Long.class)
+                .setParameter("condition" , '%' + condition +'%')
+                .getSingleResult();
+    }
+
+    @Override
+    public List<FinderBoardDTO> findFinderBoardDtoByBreed(int page, String condition) {
+        List<Object[]> list = em.createQuery("select f.id , f.missLocation, f.isCare , i.url, f.missingLatitude , f.missingLongitude , f.missingTime" +
+                        " from FinderBoard f join f.pet p join p.image i where i.breed like :condition order by f.createAt desc ")
+                .setParameter("condition" , '%' + condition +'%')
+                .setFirstResult((page - 1) * SHOW_FINDER_BOARD_COUNT)
+                .setMaxResults(SHOW_FINDER_BOARD_COUNT)
+                .getResultList();
+        return createFindBoardDTO(list);
+    }
+
+    @Override
+    public long countDetectBoardDtoSearchedByBreed(String condition) {
+
+        return em.createQuery("select count(i.breed) from FinderBoard f join f.pet p join p.image i where i.breed like :condition", Long.class)
+                .setParameter("condition" , '%' +  condition + '%')
+                .getSingleResult();
+    }
+
+    @Override
+    public List<FinderBoardDTO> findFinderBoardDtoByColor(int page, String condition) {
+        List<Object[]> list = em.createQuery("select f.id , f.missLocation, f.isCare , i.url, f.missingLatitude , f.missingLongitude , f.missingTime" +
+                        " from FinderBoard f join f.pet p join p.image i where i.color like :condition order by f.createAt desc ")
+                .setParameter("condition" , '%' + condition +'%')
+                .setFirstResult((page - 1) * SHOW_FINDER_BOARD_COUNT)
+                .setMaxResults(SHOW_FINDER_BOARD_COUNT)
+                .getResultList();
+
+        return createFindBoardDTO(list);
+
+    }
+
+    @Override
+    public long countFinderBoardDtoSearchedByColor(String condition) {
+        return em.createQuery("select count(i.breed) from FinderBoard f join f.pet p join p.image i where i.color like :condition", Long.class)
+                .setParameter("condition" , '%' +  condition + '%')
+                .getSingleResult();
+    }
+
 }
 
 

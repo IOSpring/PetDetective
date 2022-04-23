@@ -2,6 +2,7 @@ package com.iospring.pets.petsfinder.finderBoard.service;
 
 import com.iospring.pets.petsfinder.config.file.FileUploadService;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDetailDTO;
+import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepositoryCustomImpl;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDetailDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardForm;
@@ -108,7 +109,16 @@ public class FinderBoardService {
     }
 
 
+    public long getPageCountSearchedByLocation(String condition) {
+        return (finderBoardRepository.countFinderBoardDtoSearchedByLocation(condition) / CustomFinderBoardRepositoryImpl.SHOW_FINDER_BOARD_COUNT) +1;
+    }
 
+    public long getPageCountSearchedByBreed(String condition) {
+        return (finderBoardRepository.countDetectBoardDtoSearchedByBreed(condition) / CustomFinderBoardRepositoryImpl.SHOW_FINDER_BOARD_COUNT) +1;
+    }
 
+    public long getPageCountSearchedByColor(String condition) {
+        return (finderBoardRepository.countFinderBoardDtoSearchedByColor(condition) / CustomFinderBoardRepositoryImpl.SHOW_FINDER_BOARD_COUNT) +1;
 
+    }
 }
