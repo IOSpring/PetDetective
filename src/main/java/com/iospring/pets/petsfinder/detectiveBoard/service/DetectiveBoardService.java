@@ -39,7 +39,6 @@ public class DetectiveBoardService {
         CustomNotification customNotification = new CustomNotification();
         customNotification.setAlertBody("this is test123");
         customNotification.setAlertTitle("this is colaboration of 종서와 석준!!");
-//        apnsConfig.pushCustomNotification(customNotification);
 
     }
 
@@ -101,11 +100,23 @@ public class DetectiveBoardService {
     }
 
 
-    public long getCount() {
+    public long getPageCount() {
         return (detectBoardRepository.count() / DetectiveBoardRepositoryCustomImpl.SHOW_DETECTIVE_BOARD_COUNT) +1;
     }
 
 
+    public long getPageCountSearchedByLocation(String condition) {
+        return (detectBoardRepository.countDetectBoardDtoSearchedByLocation(condition) / DetectiveBoardRepositoryCustomImpl.SHOW_DETECTIVE_BOARD_COUNT) +1;
+    }
+
+    public long getPageCountSearchedByBreed(String condition) {
+        return (detectBoardRepository.countDetectBoardDtoSearchedByBreed(condition) / DetectiveBoardRepositoryCustomImpl.SHOW_DETECTIVE_BOARD_COUNT) +1;
+    }
+
+    public long getPageCountSearchedByColor(String condition){
+        return (detectBoardRepository.countDetectBoardDtoSearchedByColor(condition) / DetectiveBoardRepositoryCustomImpl.SHOW_DETECTIVE_BOARD_COUNT) +1;
+
+    }
     public DetectiveBoardDetailDTO getDetailDetectBoard(Long boardId) {
         DetectiveBoard detectiveBoard = detectBoardRepository.getById(boardId);
 

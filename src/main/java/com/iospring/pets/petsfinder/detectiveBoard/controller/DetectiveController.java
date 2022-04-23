@@ -2,7 +2,6 @@ package com.iospring.pets.petsfinder.detectiveBoard.controller;
 
 import com.iospring.pets.petsfinder.commond.apns.entity.CustomNotification;
 import com.iospring.pets.petsfinder.commond.apns.service.ApnsService;
-import com.iospring.pets.petsfinder.commond.entity.BoardForm;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDTO;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDetailDTO;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardForm;
@@ -51,11 +50,11 @@ public class DetectiveController {
 
     @GetMapping("/detect")
     public DetectBoardDTOListAndToTalPage getDetectiveAllBoard(@RequestParam(required = false) int page) {
-        long totalCount = detectBoardService.getCount();
+        long totalCount = detectBoardService.getPageCount();
         if (page > totalCount) {
-            return null;
+            if (page > totalCount) throw new RuntimeException("페이지를 초과했습니다.");
         }
-        List<DetectiveBoardDTO> allDetectBoardDTO = detectBoardRepository.findAllDetectBoardDTO(page);
+        List<DetectiveBoardDTO> allDetectBoardDTO = detectBoardRepository.findAllDetectBoardDto(page);
         return  new DetectBoardDTOListAndToTalPage(allDetectBoardDTO,totalCount);
     }
 
@@ -86,6 +85,42 @@ public class DetectiveController {
 
         detectiveBoard = detectBoardService.updateBoardForm(id, detectBoardForm);
         return DetectiveBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
+    }
+
+
+    @GetMapping("/detect/search")
+    public DetectBoardDTOListAndToTalPage searchDetectiveBoard(
+            @RequestParam(name = "category") String category,
+            @RequestParam(name = "condition") String condition,
+            @RequestParam(name = "page", defaultValue = "1") int page
+    ) {
+        if (category.equals("loc")) {
+            List<DetectiveBoardDTO> detectBoardDtoByLocation = detectBoardRepository.findDetectBoardDtoByLocation(page, condition);
+            long totalPageCount = detectBoardService.getPageCountSearchedByLocation(condition);
+
+            if (page > totalPageCount) throw new RuntimeException("페이지를 초과했습니다.");
+
+            return new DetectBoardDTOListAndToTalPage(detectBoardDtoByLocation,totalPageCount);
+
+        } else if (category.equals("breed")) {
+            List<DetectiveBoardDTO> detectBoardDtoByBreed = detectBoardRepository.findDetectBoardDtoByBreed(page, condition);
+            long totalPageCount = detectBoardService.getPageCountSearchedByBreed(condition);
+
+            if (page > totalPageCount) throw new RuntimeException("페이지를 초과했습니다.");
+
+            return new DetectBoardDTOListAndToTalPage(detectBoardDtoByBreed,totalPageCount);
+
+        } else if (category.equals("color")) {
+            List<DetectiveBoardDTO> detectBoardDtoByColor = detectBoardRepository.findDetectBoardDtoByColor(page, condition);
+            long totalPageCount = detectBoardService.getPageCountSearchedByColor(condition);
+
+            if (page > totalPageCount) throw new RuntimeException("페이지를 초과했습니다.");
+
+            return new DetectBoardDTOListAndToTalPage(detectBoardDtoByColor,totalPageCount);
+        } else {
+            throw new RuntimeException("해당 조건으로 검색할 수 없습니다.");
+        }
+
     }
 
 

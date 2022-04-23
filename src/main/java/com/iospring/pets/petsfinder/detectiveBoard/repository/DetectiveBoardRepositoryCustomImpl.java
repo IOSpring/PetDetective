@@ -33,7 +33,7 @@ public class DetectiveBoardRepositoryCustomImpl implements DetectiveBoardReposit
 
 
     @Override
-    public List<DetectiveBoardDTO> findAllDetectBoardDTO(int page) {
+    public List<DetectiveBoardDTO> findAllDetectBoardDto(int page) {
         List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime" +
                         " from DetectiveBoard d join d.pet p join p.image i order by d.createAt desc ")
                 .setFirstResult((page - 1) * SHOW_DETECTIVE_BOARD_COUNT)
@@ -41,4 +41,63 @@ public class DetectiveBoardRepositoryCustomImpl implements DetectiveBoardReposit
                 .getResultList();
         return createDetectBoardDTO(list);
     }
+
+    @Override
+    public List<DetectiveBoardDTO> findDetectBoardDtoByLocation(int page, String condition) {
+
+        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime" +
+                        " from DetectiveBoard d join d.pet p join p.image i where  d.missLocation like :condition order by d.createAt desc ")
+                .setParameter("condition" , '%' + condition +'%')
+                .setFirstResult((page - 1) * SHOW_DETECTIVE_BOARD_COUNT)
+                .setMaxResults(SHOW_DETECTIVE_BOARD_COUNT)
+                .getResultList();
+        return createDetectBoardDTO(list);
+    }
+
+    @Override
+    public long countDetectBoardDtoSearchedByLocation(String condition) {
+        return em.createQuery("select count(d.missLocation) from DetectiveBoard d where d.missLocation  like :condition", Long.class)
+                .setParameter("condition" , '%' + condition +'%')
+                .getSingleResult();
+    }
+
+    @Override
+    public List<DetectiveBoardDTO> findDetectBoardDtoByBreed(int page, String condition) {
+        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime" +
+                        " from DetectiveBoard d join d.pet p join p.image i where i.breed like :condition order by d.createAt desc ")
+                .setParameter("condition" , '%' +  condition + '%')
+                .setFirstResult((page - 1) * SHOW_DETECTIVE_BOARD_COUNT)
+                .setMaxResults(SHOW_DETECTIVE_BOARD_COUNT)
+                .getResultList();
+
+        return createDetectBoardDTO(list);
+    }
+
+    @Override
+    public long countDetectBoardDtoSearchedByBreed(String condition) {
+        return em.createQuery("select count(i.breed) from DetectiveBoard d join d.pet p join p.image i where i.breed like :condition", Long.class)
+                .setParameter("condition" , '%' +  condition + '%')
+                .getSingleResult();
+    }
+    @Override
+    public List<DetectiveBoardDTO> findDetectBoardDtoByColor(int page, String condition) {
+        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime" +
+                        " from DetectiveBoard d join d.pet p join p.image i where i.color like :condition order by d.createAt desc ")
+                .setParameter("condition" , '%' +  condition + '%')
+                .setFirstResult((page - 1) * SHOW_DETECTIVE_BOARD_COUNT)
+                .setMaxResults(SHOW_DETECTIVE_BOARD_COUNT)
+                .getResultList();
+        return createDetectBoardDTO(list);
+
+    }
+    @Override
+    public long countDetectBoardDtoSearchedByColor(String condition) {
+        return em.createQuery("select count(i.breed) from DetectiveBoard d join d.pet p join p.image i where i.color like :condition", Long.class)
+                .setParameter("condition" , '%' +  condition + '%')
+                .getSingleResult();
+    }
+
+
+
+
 }
