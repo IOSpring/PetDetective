@@ -36,7 +36,7 @@ public class DetectiveController {
             CustomNotification customNotification = new CustomNotification();
             customNotification.setAlertBody("현상금 " + detectBoardDTO.getMoney() + "원!");
             customNotification.setAlertTitle("신고 알림!");
-            customNotification.setAlertId(detectBoardDTO.getId() + "");
+            customNotification.createNotificationData("새로운 게시글 작성", "의뢰", detectBoardDTO.getId() + "");
             customNotification.setImageUrl(detectBoardDTO.getMainImageUrl());
 
             apnsConfig.pushCustomNotification(customNotification);
@@ -104,6 +104,7 @@ public class DetectiveController {
 
         } else if (category.equals("breed")) {
             List<DetectiveBoardDTO> detectBoardDtoByBreed = detectBoardRepository.findDetectBoardDtoByBreed(page, condition);
+
             long totalPageCount = detectBoardService.getPageCountSearchedByBreed(condition);
 
             if (page > totalPageCount) throw new RuntimeException("페이지를 초과했습니다.");
