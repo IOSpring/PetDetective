@@ -76,10 +76,10 @@ public class FinderBoardService {
         return id;
     }
 
+    @Transactional
     public FinderBoard updateBoardImage(Long id, MultipartFile file, String host) {
         FinderBoard finderBoard = finderBoardRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found board"));
-
 
         Image image = finderBoard.getPet().getImage();
         fileUploadService.s3DeleteImage(image.getFileName());
