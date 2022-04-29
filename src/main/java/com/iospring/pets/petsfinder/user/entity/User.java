@@ -40,6 +40,8 @@ public class User extends BaseEntity {
     @Column(columnDefinition = "int(2) default 0")
     private int alterCount;
 
+    @Column
+    private String deviceToken;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     List<DetectiveBoard> detectiveBoards = new ArrayList<>();

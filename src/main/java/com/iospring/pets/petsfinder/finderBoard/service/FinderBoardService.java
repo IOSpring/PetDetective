@@ -84,6 +84,7 @@ public class FinderBoardService {
         Image image = finderBoard.getPet().getImage();
         fileUploadService.s3DeleteImage(image.getFileName());
         String newFileName = fileUploadService.s3Upload(file, host,"finder");
+        System.out.println("newFileName = " + newFileName);
         image.setUrl(newFileName);
         return finderBoard;
     }

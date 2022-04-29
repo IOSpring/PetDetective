@@ -27,11 +27,15 @@ public class FileUploadService {
     public String s3Upload(MultipartFile file,String host, String folderName) {
 
         String fileName;
+        System.out.println("file.getOriginalFilename() = " + file.getOriginalFilename());
+
         if (host.equals("localhost:8080"))
             fileName = "local/"+createFileName(file.getOriginalFilename());
         else
             fileName = folderName + "/" + createFileName(file.getOriginalFilename());
 
+        System.out.println("fileName = " + fileName);
+        
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());
         objectMetadata.setContentType(file.getContentType());
