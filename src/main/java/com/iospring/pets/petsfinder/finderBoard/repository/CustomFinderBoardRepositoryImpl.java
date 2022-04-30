@@ -42,6 +42,7 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
             userDTO.setPhoneNumber((String) objects[1]);
             userDTO.setLatitude((Double) objects[2]);
             userDTO.setLongitude((Double) objects[3]);
+            userDTO.setDeviceToken((String) objects[4]);
             userDTOList.add(userDTO);
         }
 
@@ -52,7 +53,7 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
     @Override
     public List<UserDTO> findUserListMatchingBreedAndColor(String breed, String color) {
 
-        List<Object[]> resultListObj = em.createQuery("select u.id, u.phoneNumber,u.latitude, u.longitude from DetectiveBoard db inner join db.user u inner join db.pet p inner  join p.image i where i.color = :color and i.breed = :breed")
+        List<Object[]> resultListObj = em.createQuery("select u.id, u.phoneNumber,u.latitude, u.longitude , u.deviceToken from DetectiveBoard db inner join db.user u inner join db.pet p inner  join p.image i where i.color = :color and i.breed = :breed")
                 .setParameter("breed", breed)
                 .setParameter("color", color)
                 .getResultList();

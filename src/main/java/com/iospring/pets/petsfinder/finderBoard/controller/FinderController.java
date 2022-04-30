@@ -1,5 +1,7 @@
 package com.iospring.pets.petsfinder.finderBoard.controller;
 
+import com.iospring.pets.petsfinder.commond.apns.entity.CustomNotification;
+import com.iospring.pets.petsfinder.commond.apns.service.ApnsService;
 import com.iospring.pets.petsfinder.detectiveBoard.controller.DetectiveController;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
@@ -23,6 +25,9 @@ public class FinderController {
 
     private final FinderBoardService finderBoardService;
     private final FinderBoardRepository finderBoardRepository;
+    private final ApnsService apnsService;
+
+
 
 
     @PostMapping("/finder")
@@ -32,9 +37,20 @@ public class FinderController {
         FinderBoardDTO finderBoardDTO = finderBoardService.addFindBoard(finderBoardForm, file, host);
 
         List<UserDTO> userDTOList = finderBoardService.userListMatchingBreedAndColor(finderBoardForm.getBreed(), finderBoardForm.getColor());
-        /*
-        TODO Alarm
-         */
+
+        for (UserDTO userDTO : userDTOList) {
+            CustomNotification customNotification = new CustomNotification();
+
+            customNotification.setAlertTitle("목격 알림!");
+            if(finderBoardDTO.isCare())
+                customNotification.createNotificationData("새로운 게시글 작성", "보관", finderBoardDTO.getId() + "");
+            else
+                customNotification.createNotificationData("새로운 게시글 작성", "발견", finderBoardDTO.getId() + "");
+
+            customNotification.setImageUrl(finderBoardDTO.getMainImageUrl());
+
+            apnsService.pushCustomNotification(customNotification, userDTO.getDeviceToken());
+        }
 
         return new CreateFinderBoardDTOAndUserMatchingBoardAndColor(finderBoardDTO, userDTOList);
     }

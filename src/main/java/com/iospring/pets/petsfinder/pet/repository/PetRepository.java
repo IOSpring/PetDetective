@@ -1,4 +1,4 @@
-package com.iospring.pets.petsfinder.image;
+package com.iospring.pets.petsfinder.pet.repository;
 
 import com.iospring.pets.petsfinder.pet.entity.Pet;
 import org.springframework.data.jpa.repository.JpaRepository;

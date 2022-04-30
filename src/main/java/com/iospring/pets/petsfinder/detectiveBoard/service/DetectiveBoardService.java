@@ -8,7 +8,6 @@ import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDetailDTO;
 import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepository;
 import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepositoryCustomImpl;
-import com.iospring.pets.petsfinder.image.PetRepository;
 import com.iospring.pets.petsfinder.image.entity.Image;
 import com.iospring.pets.petsfinder.image.service.ImageService;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
@@ -55,11 +54,7 @@ public class DetectiveBoardService {
 
         DetectiveBoard detectiveBoard = DetectiveBoard.toEntity(detectBoardForm);
         detectiveBoard.setPet(pet);
-        // test user
-            User user = userRepository.findByPhoneNumber("01099043322").orElseThrow(()->new RuntimeException("NO USER"));
-            System.out.println("user.getEmail() = " + user.getEmail());
-            detectiveBoard.setUser(user);
-        //
+
         detectBoardRepository.save(detectiveBoard);
 
 

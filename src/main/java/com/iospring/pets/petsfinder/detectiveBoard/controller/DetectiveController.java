@@ -27,6 +27,18 @@ public class DetectiveController {
     private final UserService userService;
     private final ApnsService apnsConfig;
 
+    @GetMapping("/a")
+    public void testNotification() {
+        CustomNotification customNotification = new CustomNotification();
+        customNotification.setAlertBody("현상금 12341234"  + "원!");
+        customNotification.setAlertTitle("신고 알림!");
+        customNotification.createNotificationData("새로운  test 게시글 작성", "의뢰", "494");
+        customNotification.setImageUrl("test image url");
+
+        apnsConfig.pushCustomNotification(customNotification);
+
+
+    }
 
    @PostMapping("/detect")
         public CreatedDetectiveBoardDTOAndFoundIn10KmUsers addDetectiveBoard(DetectiveBoardForm detectBoardForm, MultipartFile file, @RequestHeader("host") String host) {

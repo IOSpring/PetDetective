@@ -98,4 +98,45 @@ ApnsService {
         }
     }
 
+    public String pushCustomNotification(CustomNotification customNotification, String  deviceToken) {
+        try {
+            ApnsClient client = this.getClient();
+
+            ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
+
+            payloadBuilder.setAlertTitle(customNotification.getAlertTitle());
+            payloadBuilder.setAlertBody(customNotification.getAlertBody());
+            payloadBuilder.setSummaryArgument(customNotification.notificationDataObjToJson());
+            payloadBuilder.setSound("default");
+
+            String payload = payloadBuilder.buildWithDefaultMaximumLength();
+
+            System.out.println("deviceToken = " + deviceToken);
+            String token = TokenUtil.sanitizeTokenString(deviceToken);
+
+            SimpleApnsPushNotification pushNotification = new SimpleApnsPushNotification(token, topic, payload);
+            PushNotificationFuture<SimpleApnsPushNotification, PushNotificationResponse<SimpleApnsPushNotification>> simpleApnsPushNotificationPushNotificationResponsePushNotificationFuture = client.sendNotification(pushNotification);
+
+            PushNotificationResponse<SimpleApnsPushNotification> response = simpleApnsPushNotificationPushNotificationResponsePushNotificationFuture.get();
+            if (!response.isAccepted()) {
+                System.out.println("response.getRejectionReason() = " + response.getRejectionReason());
+            }
+            else{
+                System.out.println("=================================================================");
+                System.out.println("response = " + response);
+                System.out.println("=================================================================");
+            }
+
+            return response.getPushNotification().getPayload();
+        }  catch (ExecutionException e) {
+            e.printStackTrace();
+
+            return e.getLocalizedMessage();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+
+            return e.getLocalizedMessage();
+        }
+    }
+
 }
