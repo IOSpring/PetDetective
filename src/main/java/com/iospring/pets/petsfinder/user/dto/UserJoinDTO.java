@@ -9,4 +9,5 @@ public class UserJoinDTO {
     private String loadAddress;
     private Double latitude;
     private Double longitude;
+    private String deviceToken;
 }

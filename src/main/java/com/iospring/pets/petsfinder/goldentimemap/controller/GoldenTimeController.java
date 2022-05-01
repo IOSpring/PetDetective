@@ -1,12 +1,9 @@
 package com.iospring.pets.petsfinder.goldentimemap.controller;
 
 import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;
-import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepositoryCustomImpl;
 import com.iospring.pets.petsfinder.finderBoard.entity.FinderBoard;
-import com.iospring.pets.petsfinder.finderBoard.repository.CustomFinderBoardRepositoryImpl;
 import com.iospring.pets.petsfinder.goldentimemap.dto.GoldenTimeDto;
 import com.iospring.pets.petsfinder.goldentimemap.repository.query.GoldenTimeQueryRepository;
-import com.iospring.pets.petsfinder.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
