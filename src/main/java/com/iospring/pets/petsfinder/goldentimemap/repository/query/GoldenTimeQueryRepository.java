@@ -15,12 +15,12 @@ public class GoldenTimeQueryRepository {
 
     public List<FinderBoard> finderBoards() {
         return em.createQuery(
-                "select fb from FinderBoard fb")
+                "select fb from FinderBoard fb",FinderBoard.class)
                 .getResultList();
     }
     public List<DetectiveBoard> detectiveBoards() {
         return em.createQuery(
-                "select db from DetectiveBoard db")
+                "select db from DetectiveBoard db",DetectiveBoard.class)
                 .getResultList();
     }
 }
