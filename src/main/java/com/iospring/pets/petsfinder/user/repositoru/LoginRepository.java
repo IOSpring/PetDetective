@@ -41,7 +41,8 @@ public class LoginRepository {
     }
 
     @Transactional
-    public void updateDviceToken(User user,String diviceToken) {
+    public void updateDviceToken(String phoneNumber,String diviceToken) {
+        User user=findOneUserByPhoneNum(phoneNumber);
         user.setDeviceToken(diviceToken);
         em.persist(user);
     }

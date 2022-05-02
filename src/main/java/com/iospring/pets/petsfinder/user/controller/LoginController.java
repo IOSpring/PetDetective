@@ -30,12 +30,8 @@ public class LoginController {
 //        인증번호 :  numStr
         String numStr = cft.certifiedPhoneNumber(phoneNumber);
         LoginResponseDto loginResponseDto=userService.createLoginResponsedto(phoneNumber, numStr);
-        if(!loginResponseDto.isNeedjoin()){
-            User user =loginRepository.findOneUserByPhoneNum(phoneNumber);
-            if(!diviceToken.equals(user.getDeviceToken())){
-                loginRepository.updateDviceToken(user,diviceToken);
-            }
-        }
+        loginRepository.updateDviceToken(phoneNumber,diviceToken);
+
 
         // 유저 휴대폰 <- 인증 번호 발송
         // 프론트 <- 인증번호, 회원가입 필요여부 반환
