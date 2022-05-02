@@ -19,12 +19,12 @@ public class AuthController {
 
     private final UserService userService;
     private final UserRepository userRepository;
-    @PostMapping("/join")
-    public UserDTO joinUser(@RequestBody UserJoinDTO userJoinDTO) {
-        User newUser = userService.join(userJoinDTO);
-
-        return UserDTO.createUserDTO(newUser);
-    }
+//    @PostMapping("/join")
+//    public UserDTO joinUser(@RequestBody UserJoinDTO userJoinDTO) {
+//        User newUser = userService.join(userJoinDTO);
+//
+//        return UserDTO.createUserDTO(newUser);
+//    }
 
     @GetMapping("/users")
     public List<UserDTO> findUser() {
