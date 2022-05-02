@@ -39,10 +39,10 @@ public class LoginController {
 
 
     @PostMapping("/join")
-    public UserDTO joinUser(@RequestBody UserJoinDTO userJoinDTO) {
+    public Long joinUser(@RequestBody UserJoinDTO userJoinDTO) {
         User newUser = userService.join(userJoinDTO);
 
-        return UserDTO.createUserDTO(newUser);
+        return newUser.getId();
     }
 
 
