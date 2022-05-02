@@ -45,7 +45,7 @@ public class LoginRepository {
         User user=findOneUserByPhoneNum(phoneNumber);
         if(user !=null) {
             user.setDeviceToken(diviceToken);
+            em.persist(user);
         }
-        em.persist(user);
     }
 }
