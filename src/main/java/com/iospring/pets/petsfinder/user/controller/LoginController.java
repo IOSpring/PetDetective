@@ -22,7 +22,7 @@ public class LoginController {
 
     private final UserService userService;
     private final LoginRepository loginRepository;
-    @GetMapping("/check/sendSMS")
+    @PostMapping("/check/sendSMS")
     public @ResponseBody
     LoginResponseDto sendSMS(String phoneNumber, String diviceToken) {
 
