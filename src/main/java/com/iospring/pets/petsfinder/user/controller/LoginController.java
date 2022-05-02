@@ -28,10 +28,9 @@ public class LoginController {
 
 //        수신자 번호 :  phoneNumber
 //        인증번호 :  numStr
-        String numStr = cft.certifiedPhoneNumber(phoneNumber);
-        LoginResponseDto loginResponseDto=userService.createLoginResponsedto(phoneNumber, numStr);
+       // String numStr = cft.certifiedPhoneNumber(phoneNumber);
+        LoginResponseDto loginResponseDto=userService.createLoginResponsedto(phoneNumber, "1234");
         loginRepository.updateDviceToken(phoneNumber,diviceToken);
-
 
         // 유저 휴대폰 <- 인증 번호 발송
         // 프론트 <- 인증번호, 회원가입 필요여부 반환
