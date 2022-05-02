@@ -43,7 +43,9 @@ public class LoginRepository {
     @Transactional
     public void updateDviceToken(String phoneNumber,String diviceToken) {
         User user=findOneUserByPhoneNum(phoneNumber);
-        user.setDeviceToken(diviceToken);
+        if(user !=null) {
+            user.setDeviceToken(diviceToken);
+        }
         em.persist(user);
     }
 }
