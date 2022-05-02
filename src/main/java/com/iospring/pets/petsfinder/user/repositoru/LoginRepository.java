@@ -39,4 +39,10 @@ public class LoginRepository {
 
         em.persist(user);
     }
+
+    @Transactional
+    public void updateDviceToken(User user,String diviceToken) {
+        user.setDeviceToken(diviceToken);
+        em.persist(user);
+    }
 }

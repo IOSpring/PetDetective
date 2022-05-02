@@ -11,7 +11,6 @@ public class LoginResponseDto {
     public LoginResponseDto(User user, String cernum) {
         this.needjoin = user==null ? true : false;
         this.cernum = cernum;
-
     }
 
 }
