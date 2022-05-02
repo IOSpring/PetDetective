@@ -32,8 +32,8 @@ public class LoginRepository {
         user.setEmail(userJoinDTO.getEmail());
         user.setAlterCount(0);
         user.setPhoneNumber(userJoinDTO.getPhoneNumber());
-        user.setLatitude(userJoinDTO.getLatitude());
-        user.setLongitude(userJoinDTO.getLongitude());
+        user.setLatitude(Double.parseDouble(userJoinDTO.getLatitude()));
+        user.setLongitude(Double.parseDouble(userJoinDTO.getLongitude()));
         user.setLoadAddress(userJoinDTO.getLoadAddress());
         user.setDeviceToken(userJoinDTO.getDeviceToken());
 

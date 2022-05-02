@@ -7,7 +7,7 @@ public class UserJoinDTO {
     private String phoneNumber;
     private String email;
     private String loadAddress;
-    private Double latitude;
-    private Double longitude;
+    private String  latitude;
+    private String longitude;
     private String deviceToken;
 }
