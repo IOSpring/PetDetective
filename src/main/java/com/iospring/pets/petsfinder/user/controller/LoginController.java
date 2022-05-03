@@ -45,5 +45,8 @@ public class LoginController {
         return newUser.getId();
     }
 
-
+    @GetMapping("/delete/{phoneNumber}")
+    public void deleteUser(@PathVariable("phoneNumber") String phoneNumber){
+        userService.delete(phoneNumber);
+    }
 }

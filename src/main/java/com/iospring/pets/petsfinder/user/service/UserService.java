@@ -47,5 +47,9 @@ public class UserService {
 
         return foundIn10KM;
     }
+    @Transactional
+    public void delete(String phoneNumber){
+        loginRepository.deleteByPhone(phoneNumber);
+    }
 
 }

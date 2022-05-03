@@ -48,4 +48,11 @@ public class LoginRepository {
             em.persist(user);
         }
     }
+
+    public void deleteByPhone(String phoneNumber) {
+        em.createQuery(
+                "delete from User u where u.phoneNumber = :phoneNumber")
+                .setParameter("phoneNumber",phoneNumber)
+                .executeUpdate();
+    }
 }
