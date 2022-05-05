@@ -109,7 +109,7 @@ public class DetectiveController {
         }
 
         detectiveBoard = detectBoardService.updateBoardForm(id, detectBoardForm,phoneNumber);
-        return DetectiveBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
+        return DetectiveBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl(), phoneNumber);
     }
 
 

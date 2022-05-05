@@ -59,7 +59,7 @@ public class DetectiveBoardService {
         detectBoardRepository.save(detectiveBoard);
 
 
-        DetectiveBoardDTO detectBoardDTO = DetectiveBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
+        DetectiveBoardDTO detectBoardDTO = DetectiveBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl(),phoneNumber);
 
         return detectBoardDTO;
     }

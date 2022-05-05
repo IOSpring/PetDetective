@@ -8,9 +8,9 @@ import lombok.Data;
 public class FinderBoardDTO extends BoardDTO {
     private boolean isCare;
 
-    public static FinderBoardDTO createDetectBoardDTO(FinderBoard finderBoardForm, String url) {
+    public static FinderBoardDTO createDetectBoardDTO(FinderBoard finderBoardForm, String url, String userPhoneNumber) {
         FinderBoardDTO finderBoardDTO = new FinderBoardDTO();
-
+        finderBoardDTO.setUserPhoneNumber(userPhoneNumber);
         finderBoardDTO.setId(finderBoardForm.getId());
         finderBoardDTO.setCare(finderBoardForm.isCare());
         finderBoardDTO.setMainImageUrl(url);

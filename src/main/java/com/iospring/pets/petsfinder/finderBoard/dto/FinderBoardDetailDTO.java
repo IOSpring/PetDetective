@@ -31,11 +31,12 @@ public class FinderBoardDetailDTO {
                 .feature(pet.getFeature())
                 .disease(pet.getDisease())
                 .gender(pet.getGender())
+                .userPhoneNumber(finderBoard.getUser().getPhoneNumber())
                 .build();
         return detectBoardDetailDTO;
 
     }
-
+    private String userPhoneNumber;
     private String breed;
     private String color;
     private String missingTime;

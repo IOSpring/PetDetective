@@ -25,6 +25,7 @@ public class DetectiveBoardRepositoryCustomImpl implements DetectiveBoardReposit
             detectBoardDTO.setMissingLatitude((Double) objects[4]);
             detectBoardDTO.setMissingLongitude((Double) objects[5]);
             detectBoardDTO.setMissingTime((String) objects[6]);
+            detectBoardDTO.setUserPhoneNumber((String) objects[7]);
             resultList.add(detectBoardDTO);
         }
         return resultList;
@@ -34,8 +35,8 @@ public class DetectiveBoardRepositoryCustomImpl implements DetectiveBoardReposit
 
     @Override
     public List<DetectiveBoardDTO> findAllDetectBoardDto(int page) {
-        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime" +
-                        " from DetectiveBoard d join d.pet p join p.image i order by d.createAt desc ")
+        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime, u.phoneNumber" +
+                        " from DetectiveBoard d join d.pet p join p.image i join d.user u order by d.createAt desc ")
                 .setFirstResult((page - 1) * SHOW_DETECTIVE_BOARD_COUNT)
                 .setMaxResults(SHOW_DETECTIVE_BOARD_COUNT)
                 .getResultList();

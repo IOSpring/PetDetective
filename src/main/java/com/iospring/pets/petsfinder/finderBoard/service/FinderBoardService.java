@@ -54,7 +54,7 @@ public class FinderBoardService {
         finderBoardRepository.save(finderBoard);
 
 
-        return FinderBoardDTO.createDetectBoardDTO(finderBoard, imageUrl);
+        return FinderBoardDTO.createDetectBoardDTO(finderBoard, imageUrl,phoneNumber);
     }
 
 

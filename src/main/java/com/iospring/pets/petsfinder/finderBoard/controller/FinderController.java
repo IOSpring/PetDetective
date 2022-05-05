@@ -114,7 +114,7 @@ public class FinderController {
         }
 
         finderBoard = finderBoardService.updateBoardForm(id, finderBoardForm,phoneNumber);
-        return FinderBoardDTO.createDetectBoardDTO(finderBoard, finderBoard.getPet().getImage().getUrl());
+        return FinderBoardDTO.createDetectBoardDTO(finderBoard, finderBoard.getPet().getImage().getUrl(),phoneNumber);
     }
 
 

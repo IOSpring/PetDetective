@@ -11,4 +11,5 @@ public class BoardDTO {
     private Double missingLatitude;
     private Double missingLongitude;
     private String missingTime;
+    private String userPhoneNumber;
 }

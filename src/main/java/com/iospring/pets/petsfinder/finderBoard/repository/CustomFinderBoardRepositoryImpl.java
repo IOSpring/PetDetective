@@ -26,6 +26,7 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
             finderBoardDTO.setMissingLatitude((Double) objects[4]);
             finderBoardDTO.setMissingLongitude((Double) objects[5]);
             finderBoardDTO.setMissingTime((String) objects[6]);
+            finderBoardDTO.setUserPhoneNumber((String) objects[7]);
             resultList.add(finderBoardDTO);
         }
         return resultList;
@@ -43,6 +44,7 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
             userDTO.setLatitude((Double) objects[2]);
             userDTO.setLongitude((Double) objects[3]);
             userDTO.setDeviceToken((String) objects[4]);
+
             userDTOList.add(userDTO);
         }
 
@@ -68,8 +70,8 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
 
     @Override
     public List<FinderBoardDTO> getCareFinderBoardDTO(int page) {
-        List<Object[]> list = em.createQuery("select f.id , f.missLocation , f.isCare, i.url, f.missingLatitude , f.missingLongitude , f.missingTime" +
-                        " from FinderBoard f join f.pet p join p.image i where f.isCare = :isCare order by f.createAt desc ")
+        List<Object[]> list = em.createQuery("select f.id , f.missLocation , f.isCare, i.url, f.missingLatitude , f.missingLongitude , f.missingTime, u.phoneNumber" +
+                        " from FinderBoard f join f.pet p join p.image i join f.user u where f.isCare = :isCare order by f.createAt desc ")
                 .setParameter("isCare", true)
                 .setFirstResult((page - 1) * SHOW_FINDER_BOARD_COUNT)
                 .setMaxResults(SHOW_FINDER_BOARD_COUNT)
@@ -79,8 +81,8 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
 
     @Override
     public List<FinderBoardDTO> getNotCareFinderBoardDTO(int page) {
-        List<Object[]> list = em.createQuery("select f.id , f.missLocation , f.isCare, i.url, f.missingLatitude , f.missingLongitude , f.missingTime" +
-                        " from FinderBoard f join f.pet p join p.image i where f.isCare = :isCare order by f.createAt desc")
+        List<Object[]> list = em.createQuery("select f.id , f.missLocation , f.isCare, i.url, f.missingLatitude , f.missingLongitude , f.missingTime, u.phoneNumber" +
+                        " from FinderBoard f join f.pet p join p.image i join f.user u where f.isCare = :isCare order by f.createAt desc")
                 .setParameter("isCare", false)
                 .setFirstResult((page - 1) * SHOW_FINDER_BOARD_COUNT)
                 .setMaxResults(SHOW_FINDER_BOARD_COUNT)
@@ -92,8 +94,8 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
 
     @Override
     public List<FinderBoardDTO> getAllFinderBoardDTO(int page) {
-        List<Object[]> list = em.createQuery("select f.id , f.missLocation , f.isCare, i.url, f.missingLatitude , f.missingLongitude , f.missingTime" +
-                        " from FinderBoard f join f.pet p join p.image i order by f.createAt desc")
+        List<Object[]> list = em.createQuery("select f.id , f.missLocation , f.isCare, i.url, f.missingLatitude , f.missingLongitude , f.missingTime, u.phoneNumber" +
+                        " from FinderBoard f join f.pet p join p.image i join f.user u order by f.createAt desc")
                 .setFirstResult((page - 1) * SHOW_FINDER_BOARD_COUNT)
                 .setMaxResults(SHOW_FINDER_BOARD_COUNT)
                 .getResultList();
@@ -103,8 +105,8 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
 
     @Override
     public List<FinderBoardDTO> findFinderBoardDtoByLocation(int page, String condition) {
-        List<Object[]> list = em.createQuery("select f.id , f.missLocation, f.isCare , i.url, f.missingLatitude , f.missingLongitude , f.missingTime" +
-                        " from FinderBoard f join f.pet p join p.image i where  f.missLocation like :condition order by f.createAt desc ")
+        List<Object[]> list = em.createQuery("select f.id , f.missLocation, f.isCare , i.url, f.missingLatitude , f.missingLongitude , f.missingTime, u.phoneNumber" +
+                        " from FinderBoard f join f.pet p join p.image i join f.user u where  f.missLocation like :condition order by f.createAt desc ")
                 .setParameter("condition" , '%' + condition +'%')
                 .setFirstResult((page - 1) * SHOW_FINDER_BOARD_COUNT)
                 .setMaxResults(SHOW_FINDER_BOARD_COUNT)
@@ -123,8 +125,8 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
 
     @Override
     public List<FinderBoardDTO> findFinderBoardDtoByBreed(int page, String condition) {
-        List<Object[]> list = em.createQuery("select f.id , f.missLocation, f.isCare , i.url, f.missingLatitude , f.missingLongitude , f.missingTime" +
-                        " from FinderBoard f join f.pet p join p.image i where i.breed like :condition order by f.createAt desc ")
+        List<Object[]> list = em.createQuery("select f.id , f.missLocation, f.isCare , i.url, f.missingLatitude , f.missingLongitude , f.missingTime, u.phoneNumber" +
+                        " from FinderBoard f join f.pet p join p.image i join f.user u where i.breed like :condition order by f.createAt desc ")
                 .setParameter("condition" , '%' + condition +'%')
                 .setFirstResult((page - 1) * SHOW_FINDER_BOARD_COUNT)
                 .setMaxResults(SHOW_FINDER_BOARD_COUNT)
