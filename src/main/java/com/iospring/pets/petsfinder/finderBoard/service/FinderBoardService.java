@@ -14,6 +14,8 @@ import com.iospring.pets.petsfinder.image.service.ImageService;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
 import com.iospring.pets.petsfinder.pet.service.PetService;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
+import com.iospring.pets.petsfinder.user.entity.User;
+import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,9 +31,17 @@ public class FinderBoardService {
     private final ImageService imageService;
     private final PetService petService;
     private final FileUploadService fileUploadService;
+    private final UserRepository userRepository;
+
+    private User getUserOrThrow(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> new RuntimeException("User Not Found"));
+    }
 
     @Transactional
-    public FinderBoardDTO addFindBoard(FinderBoardForm finderBoardForm, MultipartFile file, String host) {
+    public FinderBoardDTO addFindBoard(FinderBoardForm finderBoardForm, MultipartFile file, String host,String phoneNumber) {
+
+        User user = getUserOrThrow(phoneNumber);
 
         String imageUrl = fileUploadService.s3Upload(file, host,"finder");
 
@@ -40,6 +50,7 @@ public class FinderBoardService {
         pet.connectImage(image);
         FinderBoard finderBoard = finderBoardForm.toEntity(finderBoardForm);
         finderBoard.setPet(pet);
+        finderBoard.setUser(user);
         finderBoardRepository.save(finderBoard);
 
 
@@ -63,8 +74,18 @@ public class FinderBoardService {
         return (finderBoardRepository.count() / CustomFinderBoardRepositoryImpl.SHOW_FINDER_BOARD_COUNT) +1;
     }
     @Transactional
-    public Long deleteBoard(Long id) {
+    public Long deleteBoard(Long id, String phoneNumber) {
+
+        User user = getUserOrThrow(phoneNumber);
+
         FinderBoard finderBoard = finderBoardRepository.getById(id);
+
+        List<FinderBoard> finderBoards = user.getFinderBoards();
+        if (!finderBoards.contains(finderBoard)) {
+            throw new RuntimeException("발견/분실 게시판을 작성한 유저가 아닙니다.");
+        }
+
+
         Image image = finderBoard.getPet().getImage();
         try {
             fileUploadService.s3DeleteImage(image.getFileName());
@@ -77,9 +98,18 @@ public class FinderBoardService {
     }
 
     @Transactional
-    public FinderBoard updateBoardImage(Long id, MultipartFile file, String host) {
+    public FinderBoard updateBoardImage(Long id, MultipartFile file, String host,String phoneNumber) {
+        User user = getUserOrThrow(phoneNumber);
+
         FinderBoard finderBoard = finderBoardRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found board"));
+
+        List<FinderBoard> finderBoards = user.getFinderBoards();
+        if (!finderBoards.contains(finderBoard)) {
+            throw new RuntimeException("발견/분실 게시판을 작성한 유저가 아닙니다.");
+        }
+
+
 
         Image image = finderBoard.getPet().getImage();
         fileUploadService.s3DeleteImage(image.getFileName());
@@ -90,10 +120,18 @@ public class FinderBoardService {
     }
 
     @Transactional
-    public FinderBoard updateBoardForm(Long id, FinderBoardForm finderBoardForm) {
+    public FinderBoard updateBoardForm(Long id, FinderBoardForm finderBoardForm,String phoneNumber) {
+
+        User user = getUserOrThrow(phoneNumber);
 
         FinderBoard finderBoard = finderBoardRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found board"));
+
+        List<FinderBoard> finderBoards = user.getFinderBoards();
+        if (!finderBoards.contains(finderBoard)) {
+            throw new RuntimeException("발견/분실 게시판을 작성한 유저가 아닙니다.");
+        }
+
 
         finderBoard.updateImage(finderBoardForm);
         finderBoard.updateBoard(finderBoardForm);

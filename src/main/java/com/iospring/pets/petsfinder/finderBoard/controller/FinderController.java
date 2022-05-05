@@ -11,12 +11,15 @@ import com.iospring.pets.petsfinder.finderBoard.entity.FinderBoard;
 import com.iospring.pets.petsfinder.finderBoard.repository.FinderBoardRepository;
 import com.iospring.pets.petsfinder.finderBoard.service.FinderBoardService;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
+import com.iospring.pets.petsfinder.user.entity.User;
+import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController()
@@ -31,10 +34,11 @@ public class FinderController {
 
 
     @PostMapping("/finder")
-    public CreateFinderBoardDTOAndUserMatchingBoardAndColor addFinderBoard(FinderBoardForm finderBoardForm,
-                               MultipartFile file,
-                               @RequestHeader("host") String host) {
-        FinderBoardDTO finderBoardDTO = finderBoardService.addFindBoard(finderBoardForm, file, host);
+    public CreateFinderBoardDTOAndUserMatchingBoardAndColor addFinderBoard(FinderBoardForm finderBoardForm, MultipartFile file, @RequestHeader("host") String host, HttpSession httpSession) {
+
+        String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
+
+        FinderBoardDTO finderBoardDTO = finderBoardService.addFindBoard(finderBoardForm, file, host,phoneNumber);
 
         List<UserDTO> userDTOList = finderBoardService.userListMatchingBreedAndColor(finderBoardForm.getBreed(), finderBoardForm.getColor());
 
@@ -42,7 +46,7 @@ public class FinderController {
             CustomNotification customNotification = new CustomNotification();
 
             customNotification.setAlertTitle("목격 알림!");
-            if(finderBoardDTO.isCare())
+            if (finderBoardDTO.isCare())
                 customNotification.createNotificationData("새로운 게시글 작성", "보관", finderBoardDTO.getId() + "");
             else
                 customNotification.createNotificationData("새로운 게시글 작성", "발견", finderBoardDTO.getId() + "");
@@ -86,8 +90,10 @@ public class FinderController {
 
 
     @DeleteMapping("/finder/{board_id}")
-    public Long deleteFinderBoard(@PathVariable(name = "board_id") Long id) {
-        Long deleteBoardId = finderBoardService.deleteBoard(id);
+    public Long deleteFinderBoard(@PathVariable(name = "board_id") Long id, HttpSession httpSession) {
+        String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
+
+        Long deleteBoardId = finderBoardService.deleteBoard(id,phoneNumber);
 
         return  deleteBoardId;
     }
@@ -96,16 +102,18 @@ public class FinderController {
     public FinderBoardDTO updateBoardForm(@PathVariable(name = "board_id") Long id,
                                              FinderBoardForm finderBoardForm,
                                              @RequestPart(required = false) MultipartFile file,
-                                             @RequestHeader("host") String host
+                                             @RequestHeader("host") String host,
+                                          HttpSession httpSession
     ) {
-        System.out.println("detectBoardForm = " + finderBoardForm);
+        String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
+
         FinderBoard finderBoard = null;
 
         if (file != null) {
-            finderBoard = finderBoardService.updateBoardImage(id, file,host);
+            finderBoard = finderBoardService.updateBoardImage(id, file,host,phoneNumber);
         }
 
-        finderBoard = finderBoardService.updateBoardForm(id, finderBoardForm);
+        finderBoard = finderBoardService.updateBoardForm(id, finderBoardForm,phoneNumber);
         return FinderBoardDTO.createDetectBoardDTO(finderBoard, finderBoard.getPet().getImage().getUrl());
     }
 

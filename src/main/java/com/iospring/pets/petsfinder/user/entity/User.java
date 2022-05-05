@@ -50,6 +50,11 @@ public class User extends BaseEntity {
     List<FinderBoard> finderBoards = new ArrayList<>();
 
 
+    public void checkDeviceToken(String deviceToken) {
+        if(!this.deviceToken.equals(deviceToken)){
+            this.deviceToken = deviceToken;
+        }
+    }
 
 
 }

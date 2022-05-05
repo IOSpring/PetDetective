@@ -32,19 +32,20 @@ public class DetectiveBoardService {
     private final ImageService imageService;
     private final PetService petService;
 
-    public void test() {
-        List<DetectiveBoard> all = detectBoardRepository.findAll();
 
-        CustomNotification customNotification = new CustomNotification();
-        customNotification.setAlertBody("this is test123");
-        customNotification.setAlertTitle("this is colaboration of 종서와 석준!!");
 
+    private User getUserOrThrow(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> new RuntimeException("User Not Found"));
     }
 
 
 
     @Transactional
-    public DetectiveBoardDTO addDetectiveBoard(BoardForm detectBoardForm, MultipartFile file, String host) {
+    public DetectiveBoardDTO addDetectiveBoard(BoardForm detectBoardForm, MultipartFile file, String host, String phoneNumber) {
+
+        User user = getUserOrThrow(phoneNumber);
+
 
         String imageUrl = fileUploadService.s3Upload(file,host, "detective");
         Image image = imageService.createImage(detectBoardForm ,imageUrl);
@@ -54,7 +55,7 @@ public class DetectiveBoardService {
 
         DetectiveBoard detectiveBoard = DetectiveBoard.toEntity(detectBoardForm);
         detectiveBoard.setPet(pet);
-
+        detectiveBoard.setUser(user);
         detectBoardRepository.save(detectiveBoard);
 
 
@@ -65,9 +66,19 @@ public class DetectiveBoardService {
 
 
     @Transactional
-    public DetectiveBoard updateBoardImage(Long id, MultipartFile file, String host) {
+    public DetectiveBoard updateBoardImage(Long id, MultipartFile file, String host, String phoneNumber) {
+        User user = getUserOrThrow(phoneNumber);
+
         DetectiveBoard detectiveBoard = detectBoardRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found board"));
+
+
+        List<DetectiveBoard> detectiveBoards = user.getDetectiveBoards();
+
+        if (!detectiveBoards.contains(detectiveBoard)) {
+            throw new RuntimeException("신고 게시판을 작성한 유저가 아닙니다.");
+        }
+
 
         Image image = detectiveBoard.getPet().getImage();
 
@@ -82,10 +93,20 @@ public class DetectiveBoardService {
     }
 
     @Transactional
-    public DetectiveBoard updateBoardForm(Long id, BoardForm detectBoardForm) {
+    public DetectiveBoard updateBoardForm(Long id, BoardForm detectBoardForm, String phoneNumber) {
+
+        User user = getUserOrThrow(phoneNumber);
 
         DetectiveBoard detectiveBoard = detectBoardRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found board"));
+
+
+        List<DetectiveBoard> detectiveBoards = user.getDetectiveBoards();
+
+        if (!detectiveBoards.contains(detectiveBoard)) {
+            throw new RuntimeException("신고 게시판을 작성한 유저가 아닙니다.");
+        }
+
 
         detectiveBoard.updateImage(detectBoardForm);
         detectiveBoard.updateBoard(detectBoardForm);
@@ -112,6 +133,7 @@ public class DetectiveBoardService {
         return (detectBoardRepository.countDetectBoardDtoSearchedByColor(condition) / DetectiveBoardRepositoryCustomImpl.SHOW_DETECTIVE_BOARD_COUNT) +1;
 
     }
+
     public DetectiveBoardDetailDTO getDetailDetectBoard(Long boardId) {
         DetectiveBoard detectiveBoard = detectBoardRepository.getById(boardId);
 
@@ -123,9 +145,18 @@ public class DetectiveBoardService {
 
 
     @Transactional
-    public Long deleteBoard(Long id) {
+    public Long deleteBoard(Long id, String phoneNumber) {
+        User user = getUserOrThrow(phoneNumber);
 
         DetectiveBoard detectiveBoard = detectBoardRepository.getById(id);
+
+
+        List<DetectiveBoard> detectiveBoards = user.getDetectiveBoards();
+
+        if (!detectiveBoards.contains(detectiveBoard)) {
+            throw new RuntimeException("신고 게시판을 작성한 유저가 아닙니다.");
+        }
+
         Image image = detectiveBoard.getPet().getImage();
         try {
             fileUploadService.s3DeleteImage(image.getFileName());
@@ -133,41 +164,27 @@ public class DetectiveBoardService {
             throw e;
         }
 
+        detectBoardRepository.deleteById(id);
+
+        return id;
+    }
+
+    @Transactional
+    public Long deleteBoard(Long id) {
+
+        DetectiveBoard detectiveBoard = detectBoardRepository.getById(id);
+
+
+
+        Image image = detectiveBoard.getPet().getImage();
+        try {
+            fileUploadService.s3DeleteImage(image.getFileName());
+        } catch (RuntimeException e) {
+            throw e;
+        }
 
         detectBoardRepository.deleteById(id);
 
         return id;
     }
 }
-/*
-        detectiveBoard.getPet().getImage().setBreed(detectBoardForm.getBreed());
-        detectiveBoard.getPet().getImage().setColor(detectBoardForm.getColor());
-        ->
-
-        detectiveBoard.updateImage(detectBoardForm);
-        */
-
-
-
-        /*detectiveBoard.setMissingTime(detectBoardForm.getMissingTime());
-        detectiveBoard.setMissLocation(detectBoardForm.getMissingLocation());
-        detectiveBoard.setMissingLongitude(detectBoardForm.getMissingLongitude());
-        detectiveBoard.setContent(detectBoardForm.getContent());
-        detectiveBoard.setMoney(detectBoardForm.getMoney());
-        detectiveBoard.setMissingLatitude(detectBoardForm.getMissingLatitude())
-        ->
-
-        detectiveBoard.updateBoard(detectBoardForm);
-        */
-
-
-
-        /*detectiveBoard.getPet().setGender(detectBoardForm.getGender());
-        detectiveBoard.getPet().setDisease(detectBoardForm.getDisease());
-        detectiveBoard.getPet().setOperation(detectBoardForm.isOperation());
-        detectiveBoard.getPet().setFeature(detectBoardForm.getFeature());
-        detectiveBoard.getPet().setAge(detectBoardForm.getAge());
-        ->
-        detectiveBoard.updatePet(detectBoardForm);
-        */
-

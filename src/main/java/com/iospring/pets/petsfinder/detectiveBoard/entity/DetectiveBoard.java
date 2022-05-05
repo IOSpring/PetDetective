@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Setter
@@ -23,10 +24,10 @@ public class DetectiveBoard extends BaseEntity {
     private Long id;
 
     @JoinColumn(name = "D_board_user_fk")
-    @ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "D_board_pet_fk")
     private Pet pet;
 
@@ -77,4 +78,12 @@ public class DetectiveBoard extends BaseEntity {
         this.setMoney(boardForm.getMoney());
         this.setMissingLatitude(boardForm.getMissingLatitude());
     }
+
+    public void setUser(User user) {
+        if (!user.getDetectiveBoards().contains(this)) {
+            user.getDetectiveBoards().add(this);
+        }
+            this.user = user;
+    }
+
 }

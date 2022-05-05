@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DetectiveBoardRepository extends JpaRepository<DetectiveBoard, Long> , DetectiveBoardRepositoryCustom {
 
-
+    @Override
+    void deleteById(Long aLong);
 }

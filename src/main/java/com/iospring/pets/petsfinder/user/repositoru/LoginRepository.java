@@ -15,6 +15,7 @@ import java.util.List;
 public class LoginRepository {
 
     private final EntityManager em;
+
     public User findOneUserByPhoneNum (String phoneNumber){
         List<User> user = em.createQuery("select u from User u where u.phoneNumber = :phoneNumber", User.class)
                 .setParameter("phoneNumber", phoneNumber)
@@ -43,6 +44,8 @@ public class LoginRepository {
     @Transactional
     public void updateDviceToken(String phoneNumber,String diviceToken) {
         User user=findOneUserByPhoneNum(phoneNumber);
+        // 전화번호로 찾은 유저가 없으면 유저 정보가 없는것인데.
+        // 디바이스 토큰만 저장하면 나머지 유저정보는 어디서 받아 ?
         if(user !=null) {
             user.setDeviceToken(diviceToken);
             em.persist(user);

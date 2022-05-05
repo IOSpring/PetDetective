@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -37,13 +38,14 @@ public class DetectiveController {
 
         apnsConfig.pushCustomNotification(customNotification);
 
-
     }
 
-   @PostMapping("/detect")
-        public CreatedDetectiveBoardDTOAndFoundIn10KmUsers addDetectiveBoard(DetectiveBoardForm detectBoardForm, MultipartFile file, @RequestHeader("host") String host) {
+        @PostMapping("/detect")
+        public CreatedDetectiveBoardDTOAndFoundIn10KmUsers addDetectiveBoard(DetectiveBoardForm detectBoardForm, MultipartFile file, @RequestHeader("host") String host,
+                                                                             HttpSession httpSession) {
+            String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
 
-            DetectiveBoardDTO detectBoardDTO = detectBoardService.addDetectiveBoard(detectBoardForm, file,host);
+            DetectiveBoardDTO detectBoardDTO = detectBoardService.addDetectiveBoard(detectBoardForm, file,host,phoneNumber);
 
             CustomNotification customNotification = new CustomNotification();
             customNotification.setAlertBody("현상금 " + detectBoardDTO.getMoney() + "원!");
@@ -76,7 +78,15 @@ public class DetectiveController {
     }
 
     @DeleteMapping("/detect/{board_id}")
-    public Long deleteDetectiveBoard(@PathVariable(name = "board_id") Long id) {
+    public Long deleteDetectiveBoard(@PathVariable(name = "board_id") Long id , HttpSession httpSession) {
+        String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
+
+        Long deleteBoardId = detectBoardService.deleteBoard(id,phoneNumber);
+        return deleteBoardId;
+    }
+
+    @DeleteMapping("/a/detect/{board_id}")
+    public Long aa(@PathVariable(name = "board_id") Long id ) {
         Long deleteBoardId = detectBoardService.deleteBoard(id);
         return deleteBoardId;
     }
@@ -86,16 +96,19 @@ public class DetectiveController {
     public DetectiveBoardDTO updateBoardForm(@PathVariable(name = "board_id") Long id,
                                              DetectiveBoardForm detectBoardForm,
                                              @RequestPart(required = false) MultipartFile file,
-                                             @RequestHeader("host") String host
+                                             @RequestHeader("host") String host,
+                                             HttpSession httpSession
     ) {
-        System.out.println("detectBoardForm = " + detectBoardForm);
+
+        String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
+
         DetectiveBoard detectiveBoard = null;
 
         if (file != null) {
-            detectiveBoard = detectBoardService.updateBoardImage(id, file,host);
+            detectiveBoard = detectBoardService.updateBoardImage(id, file,host,phoneNumber);
         }
 
-        detectiveBoard = detectBoardService.updateBoardForm(id, detectBoardForm);
+        detectiveBoard = detectBoardService.updateBoardForm(id, detectBoardForm,phoneNumber);
         return DetectiveBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl());
     }
 
@@ -135,6 +148,8 @@ public class DetectiveController {
         }
 
     }
+
+
 
 
 

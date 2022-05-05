@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class LoginResponseDto {
+
     private boolean needjoin;
     private String cernum;
 

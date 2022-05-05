@@ -30,7 +30,7 @@ public class FinderBoard extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
     @JoinColumn(name = "F_board_pet_fk")
     private Pet pet;
 
@@ -83,4 +83,12 @@ public class FinderBoard extends BaseEntity {
         this.isCare = isCare;
         this.content = content;
     }
+    public void setUser(User user) {
+        if (!user.getFinderBoards().contains(this)) {
+            user.getFinderBoards().add(this);
+        }
+        this.user = user;
+    }
+
+
 }
