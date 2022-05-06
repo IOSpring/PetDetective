@@ -67,7 +67,6 @@ public class LoginController {
 
     @GetMapping("/delete/{phoneNumber}")
     public void deleteUser(@PathVariable("phoneNumber") String phoneNumber){
-        System.out.println("휴대폰 번호 : "+phoneNumber);
         userService.delete(phoneNumber);
     }
 
