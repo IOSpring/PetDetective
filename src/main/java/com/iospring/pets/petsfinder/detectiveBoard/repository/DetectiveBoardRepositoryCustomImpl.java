@@ -46,8 +46,8 @@ public class DetectiveBoardRepositoryCustomImpl implements DetectiveBoardReposit
     @Override
     public List<DetectiveBoardDTO> findDetectBoardDtoByLocation(int page, String condition) {
 
-        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime" +
-                        " from DetectiveBoard d join d.pet p join p.image i where  d.missLocation like :condition order by d.createAt desc ")
+        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime, u.phoneNumber" +
+                        " from DetectiveBoard d join d.pet p join p.image i join d.user u where  d.missLocation like :condition order by d.createAt desc ")
                 .setParameter("condition" , '%' + condition +'%')
                 .setFirstResult((page - 1) * SHOW_DETECTIVE_BOARD_COUNT)
                 .setMaxResults(SHOW_DETECTIVE_BOARD_COUNT)
@@ -64,8 +64,8 @@ public class DetectiveBoardRepositoryCustomImpl implements DetectiveBoardReposit
 
     @Override
     public List<DetectiveBoardDTO> findDetectBoardDtoByBreed(int page, String condition) {
-        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime" +
-                        " from DetectiveBoard d join d.pet p join p.image i where i.breed like :condition order by d.createAt desc ")
+        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime, u.phoneNumber" +
+                        " from DetectiveBoard d join d.pet p join p.image i join d.user u where i.breed like :condition order by d.createAt desc ")
                 .setParameter("condition" , '%' +  condition + '%')
                 .setFirstResult((page - 1) * SHOW_DETECTIVE_BOARD_COUNT)
                 .setMaxResults(SHOW_DETECTIVE_BOARD_COUNT)
@@ -82,8 +82,8 @@ public class DetectiveBoardRepositoryCustomImpl implements DetectiveBoardReposit
     }
     @Override
     public List<DetectiveBoardDTO> findDetectBoardDtoByColor(int page, String condition) {
-        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime" +
-                        " from DetectiveBoard d join d.pet p join p.image i where i.color like :condition order by d.createAt desc ")
+        List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime, u.phoneNumber" +
+                        " from DetectiveBoard d join d.pet p join p.image i join d.user u where i.color like :condition order by d.createAt desc ")
                 .setParameter("condition" , '%' +  condition + '%')
                 .setFirstResult((page - 1) * SHOW_DETECTIVE_BOARD_COUNT)
                 .setMaxResults(SHOW_DETECTIVE_BOARD_COUNT)
