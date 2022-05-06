@@ -2,25 +2,17 @@ package com.iospring.pets.petsfinder.user.controller;
 
 import com.iospring.pets.petsfinder.user.dto.LoginRequestDto;
 import com.iospring.pets.petsfinder.user.dto.LoginResponseDto;
-import com.iospring.pets.petsfinder.user.dto.UserDTO;
 import com.iospring.pets.petsfinder.user.dto.UserJoinDTO;
 import com.iospring.pets.petsfinder.user.entity.User;
 import com.iospring.pets.petsfinder.user.repositoru.LoginRepository;
 import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
 import com.iospring.pets.petsfinder.user.service.UserService;
 import com.iospring.pets.petsfinder.user.service.certificationService;
-import jdk.internal.net.http.common.Log;
-import lombok.Data;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
-import java.util.Random;
 
 @RestController
 @RequiredArgsConstructor
