@@ -9,9 +9,12 @@ import com.iospring.pets.petsfinder.user.repositoru.LoginRepository;
 import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
 import com.iospring.pets.petsfinder.user.service.UserService;
 import com.iospring.pets.petsfinder.user.service.certificationService;
+import jdk.internal.net.http.common.Log;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
@@ -64,6 +67,7 @@ public class LoginController {
 
     @GetMapping("/delete/{phoneNumber}")
     public void deleteUser(@PathVariable("phoneNumber") String phoneNumber){
+        System.out.println("휴대폰 번호 : "+phoneNumber);
         userService.delete(phoneNumber);
     }
 
