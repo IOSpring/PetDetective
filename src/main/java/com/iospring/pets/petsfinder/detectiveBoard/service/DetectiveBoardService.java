@@ -8,6 +8,7 @@ import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDetailDTO;
 import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepository;
 import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepositoryCustomImpl;
+import com.iospring.pets.petsfinder.exception.CustomException;
 import com.iospring.pets.petsfinder.image.entity.Image;
 import com.iospring.pets.petsfinder.image.service.ImageService;
 import com.iospring.pets.petsfinder.pet.entity.Pet;
@@ -20,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
+import static com.iospring.pets.petsfinder.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +39,7 @@ public class DetectiveBoardService {
 
     private User getUserOrThrow(String phoneNumber) {
         return userRepository.findByPhoneNumber(phoneNumber)
-                .orElseThrow(() -> new RuntimeException("User Not Found"));
+                .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
     }
 
 
@@ -70,13 +73,13 @@ public class DetectiveBoardService {
         User user = getUserOrThrow(phoneNumber);
 
         DetectiveBoard detectiveBoard = detectBoardRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Not found board"));
+                .orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
 
 
         List<DetectiveBoard> detectiveBoards = user.getDetectiveBoards();
 
         if (!detectiveBoards.contains(detectiveBoard)) {
-            throw new RuntimeException("신고 게시판을 작성한 유저가 아닙니다.");
+            throw new CustomException(INVALID_UPDATE);
         }
 
 
@@ -98,13 +101,14 @@ public class DetectiveBoardService {
         User user = getUserOrThrow(phoneNumber);
 
         DetectiveBoard detectiveBoard = detectBoardRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Not found board"));
+                .orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
 
 
         List<DetectiveBoard> detectiveBoards = user.getDetectiveBoards();
 
         if (!detectiveBoards.contains(detectiveBoard)) {
-            throw new RuntimeException("신고 게시판을 작성한 유저가 아닙니다.");
+            throw new CustomException(INVALID_UPDATE);
+
         }
 
 
@@ -154,14 +158,14 @@ public class DetectiveBoardService {
         List<DetectiveBoard> detectiveBoards = user.getDetectiveBoards();
 
         if (!detectiveBoards.contains(detectiveBoard)) {
-            throw new RuntimeException("신고 게시판을 작성한 유저가 아닙니다.");
+            throw new CustomException(INVALID_DELETE);
         }
 
         Image image = detectiveBoard.getPet().getImage();
         try {
             fileUploadService.s3DeleteImage(image.getFileName());
         } catch (RuntimeException e) {
-            throw e;
+            throw new CustomException(FAIL_DELETE_IN_S3);
         }
 
         detectBoardRepository.deleteById(id);
@@ -175,12 +179,11 @@ public class DetectiveBoardService {
         DetectiveBoard detectiveBoard = detectBoardRepository.getById(id);
 
 
-
         Image image = detectiveBoard.getPet().getImage();
         try {
             fileUploadService.s3DeleteImage(image.getFileName());
         } catch (RuntimeException e) {
-            throw e;
+            throw new CustomException(FAIL_DELETE_IN_S3);
         }
 
         detectBoardRepository.deleteById(id);

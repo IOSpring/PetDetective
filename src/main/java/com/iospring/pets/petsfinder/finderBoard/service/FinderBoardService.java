@@ -3,6 +3,8 @@ package com.iospring.pets.petsfinder.finderBoard.service;
 import com.iospring.pets.petsfinder.config.file.FileUploadService;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDetailDTO;
 import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepositoryCustomImpl;
+import com.iospring.pets.petsfinder.exception.CustomException;
+import com.iospring.pets.petsfinder.exception.ErrorCode;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDetailDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardForm;
@@ -35,7 +37,7 @@ public class FinderBoardService {
 
     private User getUserOrThrow(String phoneNumber) {
         return userRepository.findByPhoneNumber(phoneNumber)
-                .orElseThrow(() -> new RuntimeException("User Not Found"));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
     }
 
     @Transactional
@@ -82,7 +84,7 @@ public class FinderBoardService {
 
         List<FinderBoard> finderBoards = user.getFinderBoards();
         if (!finderBoards.contains(finderBoard)) {
-            throw new RuntimeException("발견/분실 게시판을 작성한 유저가 아닙니다.");
+            throw new CustomException(ErrorCode.INVALID_DELETE);
         }
 
 
@@ -90,8 +92,7 @@ public class FinderBoardService {
         try {
             fileUploadService.s3DeleteImage(image.getFileName());
         } catch (RuntimeException e) {
-            // Todo Exception Process
-            throw e;
+            throw new CustomException(ErrorCode.FAIL_DELETE_IN_S3);
         }
         finderBoardRepository.deleteById(id);
         return id;
@@ -102,11 +103,11 @@ public class FinderBoardService {
         User user = getUserOrThrow(phoneNumber);
 
         FinderBoard finderBoard = finderBoardRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Not found board"));
+                .orElseThrow(() -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
 
         List<FinderBoard> finderBoards = user.getFinderBoards();
         if (!finderBoards.contains(finderBoard)) {
-            throw new RuntimeException("발견/분실 게시판을 작성한 유저가 아닙니다.");
+            throw new CustomException(ErrorCode.INVALID_UPDATE);
         }
 
 
@@ -114,7 +115,6 @@ public class FinderBoardService {
         Image image = finderBoard.getPet().getImage();
         fileUploadService.s3DeleteImage(image.getFileName());
         String newFileName = fileUploadService.s3Upload(file, host,"finder");
-        System.out.println("newFileName = " + newFileName);
         image.setUrl(newFileName);
         return finderBoard;
     }
@@ -125,11 +125,11 @@ public class FinderBoardService {
         User user = getUserOrThrow(phoneNumber);
 
         FinderBoard finderBoard = finderBoardRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Not found board"));
+                .orElseThrow(() -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
 
         List<FinderBoard> finderBoards = user.getFinderBoards();
         if (!finderBoards.contains(finderBoard)) {
-            throw new RuntimeException("발견/분실 게시판을 작성한 유저가 아닙니다.");
+            throw new CustomException(ErrorCode.INVALID_UPDATE);
         }
 
 

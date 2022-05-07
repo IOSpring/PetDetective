@@ -1,5 +1,7 @@
 package com.iospring.pets.petsfinder.user.controller;
 
+import com.iospring.pets.petsfinder.exception.CustomException;
+import com.iospring.pets.petsfinder.exception.ErrorCode;
 import com.iospring.pets.petsfinder.user.dto.LoginRequestDto;
 import com.iospring.pets.petsfinder.user.dto.LoginResponseDto;
 import com.iospring.pets.petsfinder.user.dto.UserJoinDTO;
@@ -24,9 +26,7 @@ public class LoginController {
     private final UserService userService;
     private final LoginRepository loginRepository;
 
-// jongseo
     private final UserRepository userRepository;
-    //
 
 
 
@@ -70,7 +70,7 @@ public class LoginController {
     public void login(String phoneNumber, String deviceToken, HttpSession httpSession) {
         System.out.println("phoneNumber = " + phoneNumber);
         User user = userRepository.findByPhoneNumber(phoneNumber)
-                .orElseThrow(() -> new RuntimeException("User Not found"));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         /*
         if(유저가 입력한 인증번호 != 서버에서 만든 인증번호 ) {
             throw new RuntimeException("인증번호 일치하지 않습니다.");

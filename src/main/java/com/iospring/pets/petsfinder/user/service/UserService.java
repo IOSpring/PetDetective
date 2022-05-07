@@ -1,6 +1,8 @@
 package com.iospring.pets.petsfinder.user.service;
 
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDTO;
+import com.iospring.pets.petsfinder.exception.CustomException;
+import com.iospring.pets.petsfinder.exception.ErrorCode;
 import com.iospring.pets.petsfinder.user.dto.LoginResponseDto;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
 import com.iospring.pets.petsfinder.user.dto.UserJoinDTO;
@@ -33,7 +35,7 @@ public class UserService {
     public User join(UserJoinDTO userJoinDTO) {
 
         if (isDupPhone(userJoinDTO.getPhoneNumber())) {
-            throw new RuntimeException("Dup phone number");
+            throw new CustomException(ErrorCode.DUPLICATE_PHONENUMBER);
         }
         loginRepository.saveUserJoinDto(userJoinDTO);
         User user = loginRepository.findOneUserByPhoneNum(userJoinDTO.getPhoneNumber());

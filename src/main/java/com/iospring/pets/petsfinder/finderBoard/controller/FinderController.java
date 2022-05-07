@@ -4,6 +4,8 @@ import com.iospring.pets.petsfinder.commond.apns.entity.CustomNotification;
 import com.iospring.pets.petsfinder.commond.apns.service.ApnsService;
 import com.iospring.pets.petsfinder.detectiveBoard.controller.DetectiveController;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDTO;
+import com.iospring.pets.petsfinder.exception.CustomException;
+import com.iospring.pets.petsfinder.exception.ErrorCode;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDetailDTO;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardForm;
@@ -65,18 +67,18 @@ public class FinderController {
                                   @RequestParam(name = "page") int page) {
         if(care == null) {
             long totalPage = finderBoardService.getFindBoardPage();
-            if (page > totalPage) throw new RuntimeException("페이지를 초과했습니다.");
+            if (page > totalPage) throw new CustomException(ErrorCode.INVALID_PAGE);
             List<FinderBoardDTO> fullFinderBoardDTO = finderBoardRepository.getAllFinderBoardDTO(page);
             return new FindBoardDTOListAndToTalPage(fullFinderBoardDTO, totalPage);
         }
          else if (care.equals("true") ) {
             long totalPage = finderBoardService.getCareFindBoardPage();
-            if (page > totalPage) throw new RuntimeException("페이지를 초과했습니다.");
+            if (page > totalPage) throw new CustomException(ErrorCode.INVALID_PAGE);
             List<FinderBoardDTO> allCareFindBoardDTO = finderBoardRepository.getCareFinderBoardDTO(page);
             return new FindBoardDTOListAndToTalPage(allCareFindBoardDTO, totalPage);
         } else{
             long totalPage = finderBoardService.getNotCareFindBoardPage();
-            if (page > totalPage) throw new RuntimeException("페이지를 초과했습니다.");
+            if (page > totalPage) throw new CustomException(ErrorCode.INVALID_PAGE);
             List<FinderBoardDTO> notCareFinderBoardDTO = finderBoardRepository.getNotCareFinderBoardDTO(page);
             return new FindBoardDTOListAndToTalPage(notCareFinderBoardDTO, totalPage);
         }
@@ -129,7 +131,7 @@ public class FinderController {
             List<FinderBoardDTO> finderBoardDTOList = finderBoardRepository.findFinderBoardDtoByLocation(page, condition);
             long totalPageCount = finderBoardService.getPageCountSearchedByLocation(condition);
 
-            if (page > totalPageCount) throw new RuntimeException("페이지를 초과했습니다.");
+            if (page > totalPageCount) throw new CustomException(ErrorCode.INVALID_PAGE);
 
             return new FindBoardDTOListAndToTalPage(finderBoardDTOList,totalPageCount);
 
@@ -139,7 +141,7 @@ public class FinderController {
 
             long totalPageCount = finderBoardService.getPageCountSearchedByBreed(condition);
 
-            if (page > totalPageCount) throw new RuntimeException("페이지를 초과했습니다.");
+            if (page > totalPageCount) throw new CustomException(ErrorCode.INVALID_PAGE);
 
             return new FindBoardDTOListAndToTalPage(finderBoardDTOList,totalPageCount);
 
@@ -148,12 +150,12 @@ public class FinderController {
 
             long totalPageCount = finderBoardService.getPageCountSearchedByColor(condition);
 
-            if (page > totalPageCount) throw new RuntimeException("페이지를 초과했습니다.");
+            if (page > totalPageCount) throw new CustomException(ErrorCode.INVALID_PAGE);
 
             return new FindBoardDTOListAndToTalPage(finderBoardDTOList,totalPageCount);
 
         } else {
-            throw new RuntimeException("해당 조건으로 검색할 수 없습니다.");
+            throw new CustomException(ErrorCode.INVALID_CONDITION);
         }
 
     }
