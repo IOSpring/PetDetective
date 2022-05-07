@@ -59,7 +59,7 @@ public class DetectiveController {
 
             apnsConfig.pushCustomNotification(customNotification);
 
-            List<UserDTO> userWithIn10KM = userService.findUserWithIn10KM(detectBoardDTO);
+            List<UserDTO> userWithIn10KM = userService.findUsersIn3KmWhenUploadDetectiveBoard(detectBoardDTO,detectBoardForm.getBreed(),detectBoardForm.getColor());
 
             return new CreatedDetectiveBoardDTOAndFoundIn10KmUsers(detectBoardDTO, userWithIn10KM);
     }

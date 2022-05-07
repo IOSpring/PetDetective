@@ -15,6 +15,7 @@ import com.iospring.pets.petsfinder.finderBoard.service.FinderBoardService;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
 import com.iospring.pets.petsfinder.user.entity.User;
 import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
+import com.iospring.pets.petsfinder.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class FinderController {
     private final FinderBoardService finderBoardService;
     private final FinderBoardRepository finderBoardRepository;
     private final ApnsService apnsService;
-
+    private final UserService userService;
 
 
 
@@ -42,7 +43,7 @@ public class FinderController {
 
         FinderBoardDTO finderBoardDTO = finderBoardService.addFindBoard(finderBoardForm, file, host,phoneNumber);
 
-        List<UserDTO> userDTOList = finderBoardService.userListMatchingBreedAndColor(finderBoardForm.getBreed(), finderBoardForm.getColor());
+        List<UserDTO> userDTOList = userService.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO, finderBoardForm.getBreed(), finderBoardForm.getColor());
 
         for (UserDTO userDTO : userDTOList) {
             CustomNotification customNotification = new CustomNotification();

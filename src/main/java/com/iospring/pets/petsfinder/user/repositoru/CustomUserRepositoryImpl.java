@@ -26,6 +26,7 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
             userDTO.setPhoneNumber((String) objects[1]);
             userDTO.setLatitude((Double) objects[2]);
             userDTO.setLongitude((Double) objects[3]);
+            userDTO.setDeviceToken((String) objects[4]);
             userDTOList.add(userDTO);
         }
 

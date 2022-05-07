@@ -3,6 +3,7 @@ package com.iospring.pets.petsfinder.user.service;
 import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDTO;
 import com.iospring.pets.petsfinder.exception.CustomException;
 import com.iospring.pets.petsfinder.exception.ErrorCode;
+import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
 import com.iospring.pets.petsfinder.user.dto.LoginResponseDto;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
 import com.iospring.pets.petsfinder.user.dto.UserJoinDTO;
@@ -33,7 +34,6 @@ public class UserService {
     }
     @Transactional
     public User join(UserJoinDTO userJoinDTO) {
-
         if (isDupPhone(userJoinDTO.getPhoneNumber())) {
             throw new CustomException(ErrorCode.DUPLICATE_PHONENUMBER);
         }
@@ -42,8 +42,16 @@ public class UserService {
         return user;
     }
 
-    public List<UserDTO> findUserWithIn10KM(DetectiveBoardDTO detectBoardDTO) {
-        List<Object[]> getDataInDB = userRepository.findUsersIn10KM(detectBoardDTO.getMissingLatitude(), detectBoardDTO.getMissingLongitude());
+    public List<UserDTO> findUsersIn3KmWhenUploadDetectiveBoard(DetectiveBoardDTO detectBoardDTO, String breed , String color) {
+        List<Object[]> getDataInDB = userRepository.findUsersIn3KmWhenUploadDetectiveBoard(detectBoardDTO.getMissingLatitude(), detectBoardDTO.getMissingLongitude(), breed, color);
+
+        List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObject(getDataInDB);
+
+        return foundIn10KM;
+    }
+
+    public List<UserDTO> findUsersIn3KmWhenUploadFinderBoard(FinderBoardDTO finderBoardDTO, String breed , String color) {
+        List<Object[]> getDataInDB = userRepository.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO.getMissingLatitude(), finderBoardDTO.getMissingLongitude(), breed, color);
 
         List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObject(getDataInDB);
 
