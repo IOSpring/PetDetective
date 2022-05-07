@@ -80,7 +80,13 @@ public class FinderBoardService {
 
         User user = getUserOrThrow(phoneNumber);
 
-        FinderBoard finderBoard = finderBoardRepository.getById(id);
+        FinderBoard finderBoard= null;
+        try {
+            finderBoard = finderBoardRepository.getById(id);
+        } catch (CustomException e) {
+            new CustomException(ErrorCode.BOARD_NOT_FOUND);
+        }
+
 
         List<FinderBoard> finderBoards = user.getFinderBoards();
         if (!finderBoards.contains(finderBoard)) {

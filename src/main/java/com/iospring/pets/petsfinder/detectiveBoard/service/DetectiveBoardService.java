@@ -152,7 +152,13 @@ public class DetectiveBoardService {
     public Long deleteBoard(Long id, String phoneNumber) {
         User user = getUserOrThrow(phoneNumber);
 
-        DetectiveBoard detectiveBoard = detectBoardRepository.getById(id);
+        DetectiveBoard detectiveBoard =null;
+        try {
+
+            detectiveBoard = detectBoardRepository.getById(id);
+        } catch (CustomException e) {
+            new CustomException(BOARD_NOT_FOUND);
+        }
 
 
         List<DetectiveBoard> detectiveBoards = user.getDetectiveBoards();
