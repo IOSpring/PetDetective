@@ -144,8 +144,8 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
 
     @Override
     public List<FinderBoardDTO> findFinderBoardDtoByColor(int page, String condition) {
-        List<Object[]> list = em.createQuery("select f.id , f.missLocation, f.isCare , i.url, f.missingLatitude , f.missingLongitude , f.missingTime" +
-                        " from FinderBoard f join f.pet p join p.image i where i.color like :condition order by f.createAt desc ")
+        List<Object[]> list = em.createQuery("select f.id , f.missLocation, f.isCare , i.url, f.missingLatitude , f.missingLongitude , f.missingTime, u.phoneNumber" +
+                        " from FinderBoard f join f.pet p join p.image i join f.user u  where i.color like :condition order by f.createAt desc ")
                 .setParameter("condition" , '%' + condition +'%')
                 .setFirstResult((page - 1) * SHOW_FINDER_BOARD_COUNT)
                 .setMaxResults(SHOW_FINDER_BOARD_COUNT)
