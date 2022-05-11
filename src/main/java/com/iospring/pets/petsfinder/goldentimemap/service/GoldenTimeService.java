@@ -47,7 +47,7 @@ public class GoldenTimeService {
         List<DetectiveRequestDto> result =new ArrayList<>();
         for (Object[] object : objects) {
             DetectiveRequestDto input = new DetectiveRequestDto();
-            input.setBoardId((Long)object[0]);
+//            input.setBoardId((Long)object[0]);
 //            input.setMainImageUrl((String)object[1]);
 //            input.setMissingTime((String)object[2]);
 //            input.setMissingLatitude((Double)object[3]);
@@ -55,7 +55,16 @@ public class GoldenTimeService {
 //            input.setMissingLocation((String)object[5]);
 //            input.setMoney((Integer)object[6]);
 //            input.setDistance((Double)object[7]);
+            input.setBoardId(1L);
+            input.setMainImageUrl(null);
+            input.setMissingTime(null);
+            input.setMissingLatitude(null);
+            input.setMissingLongitude(null);
+            input.setMissingLocation(null);
+            input.setMoney(null);
+            input.setDistance(null);
             result.add(input);
+
         }
         return result;
     }
