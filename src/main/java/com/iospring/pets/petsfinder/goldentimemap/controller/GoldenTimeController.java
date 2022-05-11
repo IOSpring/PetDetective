@@ -54,7 +54,13 @@ public class GoldenTimeController {
 
 
 //        return new GoldenTimeDto(detectiveBoards, finderBoards,u.getLatitude(),u.getLongitude(),petLatitude,petLongitude);
-        return goldenTimeService.creatDetectiveRequestDto(detectiveBoards);
+        List<DetectiveRequestDto> detectiveRequestDtos=null;
+        try{
+          detectiveRequestDtos = goldenTimeService.creatDetectiveRequestDto(detectiveBoards);
+        }catch (Exception e){
+            System.out.println("뭐가 문제지 ..?");
+        }
+        return detectiveRequestDtos;
     }
 
 
