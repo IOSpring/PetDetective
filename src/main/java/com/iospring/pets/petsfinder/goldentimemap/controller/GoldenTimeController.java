@@ -20,7 +20,7 @@ public class GoldenTimeController {
     private final GoldenTimeService goldenTimeService;
     private final UserService userService;
     @GetMapping("/goldentime")
-    public GoldenTimeDto GoldenTimeRequest(@RequestParam(name = "userId") Long userId){
+    public List<Object[]> GoldenTimeRequest(@RequestParam(name = "userId") Long userId){
         Double petLatitude;
         Double petLongitude;
         String dbtargetTime =goldenTimeService.getThreeHoursAgo();
@@ -49,6 +49,7 @@ public class GoldenTimeController {
 
 
 
-        return new GoldenTimeDto(detectiveBoards, finderBoards,u.getLatitude(),u.getLongitude(),petLatitude,petLongitude);
+//        return new GoldenTimeDto(detectiveBoards, finderBoards,u.getLatitude(),u.getLongitude(),petLatitude,petLongitude);
+        return detectiveBoards;
     }
 }
