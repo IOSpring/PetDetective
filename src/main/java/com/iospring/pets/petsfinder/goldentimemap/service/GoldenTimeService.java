@@ -1,6 +1,7 @@
 package com.iospring.pets.petsfinder.goldentimemap.service;
 
 import com.iospring.pets.petsfinder.goldentimemap.dto.DetectiveRequestDto;
+import com.iospring.pets.petsfinder.goldentimemap.dto.FinderRequestDto;
 import com.iospring.pets.petsfinder.goldentimemap.repository.GoldenTimeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,14 +48,7 @@ public class GoldenTimeService {
         List<DetectiveRequestDto> result =new ArrayList<>();
         for (Object[] object : objects) {
             DetectiveRequestDto input = new DetectiveRequestDto();
-//            input.setBoardId((Long)object[0]);
-//            input.setMainImageUrl((String)object[1]);
-//            input.setMissingTime((String)object[2]);
-//            input.setMissingLatitude((Double)object[3]);
-//            input.setMissingLongitude((Double)object[4]);
-//            input.setMissingLocation((String)object[5]);
-//            input.setMoney((Integer)object[6]);
-//            input.setDistance((Double)object[7]);
+
             input.setBoardId(1L);
             input.setMainImageUrl((String)object[1]);
             input.setMissingTime((String)object[2]);
@@ -68,5 +62,21 @@ public class GoldenTimeService {
         }
         return result;
     }
+    public List<FinderRequestDto> creatFinderRequestDto(List<Object[]> objects) {
+        List<FinderRequestDto> result =new ArrayList<>();
+        for (Object[] object : objects) {
+            FinderRequestDto input = new FinderRequestDto();
 
+            input.setBoardId(1L);
+            input.setMainImageUrl((String)object[1]);
+            input.setFindTime((String)object[2]);
+            input.setFindLatitude((Double)object[3]);
+            input.setFindLongitude((Double)object[4]);
+            input.setFindLocation((String)object[5]);
+            input.setDistance((Double)object[6]);
+            result.add(input);
+
+        }
+        return result;
+    }
 }
