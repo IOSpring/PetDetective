@@ -22,7 +22,7 @@ public class DetectiveRequestDto {
         this.boardId = (Long)detectiveBoard[0];
 //        this.mainImageUrl =detectiveBoard.getPet().getImage().getUrl();
         this.mainImageUrl ="이미지 URL";
-        this.missingTime = ((Date)detectiveBoard[2]).toString();
+//        this.missingTime = ((Date)detectiveBoard[2]).toString();
         this.missingLatitude = (Double)detectiveBoard[3];
         this.missingLongitude = (Double)detectiveBoard[4];
         this.missingLocation = (String)detectiveBoard[5];
