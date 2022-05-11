@@ -67,7 +67,7 @@ public class GoldenTimeService {
         for (Object[] object : objects) {
             FinderRequestDto input = new FinderRequestDto();
 
-            input.setBoardId(1L);
+            input.setBoardId((Long)object[0]);
             input.setMainImageUrl((String)object[1]);
             input.setFindTime((String)object[2]);
             input.setFindLatitude((Double)object[3]);
