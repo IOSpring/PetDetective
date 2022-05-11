@@ -25,7 +25,6 @@ public class GoldenTimeRepository {
                         "ORDER BY distance DESC;")
                 .setParameter("latitude",latitude)
                 .setParameter("longitude",longitude)
-                //                .setParameter("targetTime",targetTime)
                 .setParameter("targetTime","2020-05-07 08:20:19")
                 .setParameter("breed",breed)
                 .setParameter("color",color)
@@ -55,7 +54,6 @@ public class GoldenTimeRepository {
                 "ORDER BY distance DESC;").
                 setParameter("latitude", latitude).
                 setParameter("longitude", longitude)
-                //                .setParameter("targetTime",targetTime)
                 .setParameter("targetTime","2020-05-07 08:20:19").
                 getResultList();
         return resultList;
@@ -72,9 +70,8 @@ public class GoldenTimeRepository {
                         "HAVING distance < 3\n" +
                         "ORDER BY distance DESC;").
                 setParameter("latitude", latitude).
-                setParameter("longitude", longitude)
-                //                .setParameter("targetTime",targetTime)
-                .setParameter("targetTime","2020-05-07 08:20:19").
+                setParameter("longitude", longitude).
+                setParameter("targetTime","2020-05-07 08:20:19").
                 getResultList();
         return resultList;
     }
