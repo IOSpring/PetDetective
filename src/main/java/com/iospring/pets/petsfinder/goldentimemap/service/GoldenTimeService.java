@@ -57,12 +57,12 @@ public class GoldenTimeService {
 //            input.setDistance((Double)object[7]);
             input.setBoardId(1L);
             input.setMainImageUrl((String)object[1]);
-            input.setMissingTime(null);
-            input.setMissingLatitude(null);
-            input.setMissingLongitude(null);
-            input.setMissingLocation(null);
-            input.setMoney(null);
-            input.setDistance(null);
+            input.setMissingTime((String)object[2]);
+            input.setMissingLatitude((Double)object[3]);
+            input.setMissingLongitude((Double)object[4]);
+            input.setMissingLocation((String)object[5]);
+            input.setMoney((Integer)object[6]);
+            input.setDistance((Double)object[7]);
             result.add(input);
 
         }
