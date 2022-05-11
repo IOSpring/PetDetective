@@ -4,6 +4,8 @@ import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.finderBoard.entity.FinderBoard;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class DetectiveRequestDto {
     private Long boardId;
@@ -20,7 +22,7 @@ public class DetectiveRequestDto {
         this.boardId = (Long)detectiveBoard[0];
 //        this.mainImageUrl =detectiveBoard.getPet().getImage().getUrl();
         this.mainImageUrl ="이미지 URL";
-        this.missingTime = (String)detectiveBoard[2];
+        this.missingTime = ((Date)detectiveBoard[2]).toString();
         this.missingLatitude = (Double)detectiveBoard[3];
         this.missingLongitude = (Double)detectiveBoard[4];
         this.missingLocation = (String)detectiveBoard[5];

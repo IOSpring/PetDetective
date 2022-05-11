@@ -3,6 +3,8 @@ package com.iospring.pets.petsfinder.goldentimemap.dto;
 import com.iospring.pets.petsfinder.finderBoard.entity.FinderBoard;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class FinderRequestDto {
     private Long boardId;
@@ -17,7 +19,7 @@ public class FinderRequestDto {
         this.boardId = (Long)finderBoard[0];
 //        this.mainImageUrl =detectiveBoard.getPet().getImage().getUrl();
         this.mainImageUrl ="이미지 URL";
-        this.findTime = (String)finderBoard[2];
+        this.findTime = ((Date)finderBoard[2]).toString();
         this.findLatitude = (Double)finderBoard[3];
         this.findLongitude = (Double)finderBoard[4];
         this.findLocation = (String)finderBoard[5];
