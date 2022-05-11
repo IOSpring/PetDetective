@@ -48,13 +48,13 @@ public class GoldenTimeService {
         for (Object[] object : objects) {
             DetectiveRequestDto input = new DetectiveRequestDto();
             input.setBoardId((Long)object[0]);
-            input.setMainImageUrl((String)object[1]);
-            input.setMissingTime((String)object[2]);
-            input.setMissingLatitude((Double)object[3]);
-            input.setMissingLongitude((Double)object[4]);
-            input.setMissingLocation((String)object[5]);
-            input.setMoney((Integer)object[6]);
-            input.setDistance((Double)object[7]);
+//            input.setMainImageUrl((String)object[1]);
+//            input.setMissingTime((String)object[2]);
+//            input.setMissingLatitude((Double)object[3]);
+//            input.setMissingLongitude((Double)object[4]);
+//            input.setMissingLocation((String)object[5]);
+//            input.setMoney((Integer)object[6]);
+//            input.setDistance((Double)object[7]);
             result.add(input);
         }
         return result;
