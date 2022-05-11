@@ -49,7 +49,7 @@ public class GoldenTimeService {
         for (Object[] object : objects) {
             DetectiveRequestDto input = new DetectiveRequestDto();
 
-            input.setBoardId(1L);
+            input.setBoardId(Long.valueOf((String)object[0]));
             input.setMainImageUrl((String)object[1]);
             input.setMissingTime((String)object[2]);
             input.setMissingLatitude((Double)object[3]);
@@ -67,7 +67,7 @@ public class GoldenTimeService {
         for (Object[] object : objects) {
             FinderRequestDto input = new FinderRequestDto();
 
-            input.setBoardId((Long)object[0]);
+            input.setBoardId(Long.valueOf((String)object[0]));
             input.setMainImageUrl((String)object[1]);
             input.setFindTime((String)object[2]);
             input.setFindLatitude((Double)object[3]);
