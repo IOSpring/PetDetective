@@ -1,11 +1,13 @@
 package com.iospring.pets.petsfinder.goldentimemap.service;
 
+import com.iospring.pets.petsfinder.goldentimemap.dto.DetectiveRequestDto;
 import com.iospring.pets.petsfinder.goldentimemap.repository.GoldenTimeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +43,21 @@ public class GoldenTimeService {
         String targettime = sdformat.format(cal.getTime());
         return targettime;
     }
-
+    public List<DetectiveRequestDto> creatDetectiveRequestDto(List<Object[]> objects) {
+        List<DetectiveRequestDto> result =new ArrayList<>();
+        for (Object[] object : objects) {
+            DetectiveRequestDto input = new DetectiveRequestDto();
+            input.setBoardId((Long)object[0]);
+            input.setMainImageUrl((String)object[1]);
+            input.setMissingTime((String)object[2]);
+            input.setMissingLatitude((Double)object[3]);
+            input.setMissingLongitude((Double)object[4]);
+            input.setMissingLocation((String)object[5]);
+            input.setMoney((Integer)object[6]);
+            input.setDistance((Double)object[7]);
+            result.add(input);
+        }
+        return result;
+    }
 
 }
