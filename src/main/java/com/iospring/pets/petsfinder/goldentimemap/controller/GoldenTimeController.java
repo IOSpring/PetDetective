@@ -27,29 +27,29 @@ public class GoldenTimeController {
         System.out.println("여긴가?0");
 
         User u = userService.findByUserId(userId);
-        List<Object[]> detectiveBoards =goldenTimeService.detectBoardsByLocatoin(u.getLatitude(),u.getLongitude(),dbtargetTime);
-//        List<Object[]> finderBoards;
-//        System.out.println("여긴가?1");
-//        //해당 유저의 3시간 이내 최신 게시판 추출
-//        List<Object[]> latestFindBoarder = goldenTimeService.findeBoardsByUserId(userId, dbtargetTime);
-//        //해당 유저가 3시간 이내 올린 게시판이 존재하지않을경우 유저 주변 모든 목격 정보 보내주기
-//        if(latestFindBoarder.isEmpty()){
-//            System.out.println("여긴가?2");
-//            finderBoards = goldenTimeService.findeBoardsByAll(u.getLatitude(), u.getLongitude(), dbtargetTime);
-//            petLongitude= u.getLongitude();
-//            petLatitude = u.getLatitude();
-//        }
-//        // 존재 할시 해당 정보에 대한 목격 정보 보내주기
-//        else{
-//            System.out.println("여긴가?3");
-//            finderBoards =goldenTimeService.finderBoardsByLocationAndPet((Double) latestFindBoarder.get(0)[0],(Double) latestFindBoarder.get(0)[1],(String)latestFindBoarder.get(0)[2],(String)latestFindBoarder.get(0)[3],(String)latestFindBoarder.get(0)[4]);
-//            petLatitude = (Double) latestFindBoarder.get(0)[0];
-//            petLongitude=(Double) latestFindBoarder.get(0)[1];
-//        }
-//
+//        List<Object[]> detectiveBoards =goldenTimeService.detectBoardsByLocatoin(u.getLatitude(),u.getLongitude(),dbtargetTime);
+        List<Object[]> finderBoards;
+        System.out.println("여긴가?1");
+        //해당 유저의 3시간 이내 최신 게시판 추출
+        List<Object[]> latestFindBoarder = goldenTimeService.findeBoardsByUserId(userId, dbtargetTime);
+        //해당 유저가 3시간 이내 올린 게시판이 존재하지않을경우 유저 주변 모든 목격 정보 보내주기
+        if(latestFindBoarder.isEmpty()){
+            System.out.println("여긴가?2");
+            finderBoards = goldenTimeService.findeBoardsByAll(u.getLatitude(), u.getLongitude(), dbtargetTime);
+            petLongitude= u.getLongitude();
+            petLatitude = u.getLatitude();
+        }
+        // 존재 할시 해당 정보에 대한 목격 정보 보내주기
+        else{
+            System.out.println("여긴가?3");
+            finderBoards =goldenTimeService.finderBoardsByLocationAndPet((Double) latestFindBoarder.get(0)[0],(Double) latestFindBoarder.get(0)[1],(String)latestFindBoarder.get(0)[2],(String)latestFindBoarder.get(0)[3],(String)latestFindBoarder.get(0)[4]);
+            petLatitude = (Double) latestFindBoarder.get(0)[0];
+            petLongitude=(Double) latestFindBoarder.get(0)[1];
+        }
+
 
 
 //        return new GoldenTimeDto(detectiveBoards, finderBoards,u.getLatitude(),u.getLongitude(),petLatitude,petLongitude);
-        return detectiveBoards;
+        return finderBoards;
     }
 }
