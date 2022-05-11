@@ -2,6 +2,8 @@ package com.iospring.pets.petsfinder.goldentimemap.controller;
 
 import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.finderBoard.entity.FinderBoard;
+import com.iospring.pets.petsfinder.goldentimemap.dto.DetectiveRequestDto;
+import com.iospring.pets.petsfinder.goldentimemap.dto.FinderRequestDto;
 import com.iospring.pets.petsfinder.goldentimemap.dto.GoldenTimeDto;
 import com.iospring.pets.petsfinder.goldentimemap.repository.query.GoldenTimeQueryRepository;
 import com.iospring.pets.petsfinder.goldentimemap.service.GoldenTimeService;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +23,7 @@ public class GoldenTimeController {
     private final GoldenTimeService goldenTimeService;
     private final UserService userService;
     @GetMapping("/goldentime")
-    public List<Object[]> GoldenTimeRequest(@RequestParam(name = "userId") Long userId){
+    public List<DetectiveRequestDto> GoldenTimeRequest(@RequestParam(name = "userId") Long userId){
         Double petLatitude;
         Double petLongitude;
         String dbtargetTime =goldenTimeService.getThreeHoursAgo();
@@ -50,6 +53,8 @@ public class GoldenTimeController {
 
 
 //        return new GoldenTimeDto(detectiveBoards, finderBoards,u.getLatitude(),u.getLongitude(),petLatitude,petLongitude);
-        return detectiveBoards;
+        return detectiveBoards.stream()
+                .map(fdb -> new DetectiveRequestDto(fdb))
+                .collect(Collectors.toList());
     }
 }

@@ -20,9 +20,8 @@ public class DetectiveRequestDto {
 
     public DetectiveRequestDto(Object[] detectiveBoard) {
         this.boardId = (Long)detectiveBoard[0];
-//        this.mainImageUrl =detectiveBoard.getPet().getImage().getUrl();
-        this.mainImageUrl ="이미지 URL";
-//        this.missingTime = ((Date)detectiveBoard[2]).toString();
+        this.mainImageUrl =(String)detectiveBoard[1];
+        this.missingTime = (String)detectiveBoard[2];
         this.missingLatitude = (Double)detectiveBoard[3];
         this.missingLongitude = (Double)detectiveBoard[4];
         this.missingLocation = (String)detectiveBoard[5];
