@@ -111,7 +111,8 @@ private final EntityManager em;
     }
     public List<Object[]> findeBoardByALLIn3km(Double latitude, Double longitude,String targetTime) {
         targetTime = "'2022-05-00 07:07:24'";
-        List<Object[]> resultList = em.createNativeQuery("SELECT fb.finder_board_id,i.url ,fb.modified_at,fb.missing_latitude,fb.missing_longitude,fb.miss_location,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(missing_latitude))*COS(RADIANS(missing_longitude)-RADIANS(:longitude))+SIN(RADIANS(:latitude))*SIN(RADIANS(missing_latitude)))) AS distance\n" +
+        List<Object[]> resultList = em.createNativeQuery(
+                "SELECT fb.finder_board_id,i.url ,fb.modified_at,fb.missing_latitude,fb.missing_longitude,fb.miss_location,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(missing_latitude))*COS(RADIANS(missing_longitude)-RADIANS(:longitude))+SIN(RADIANS(:latitude))*SIN(RADIANS(missing_latitude)))) AS distance\n" +
                 "FROM finder_board fb\n" +
                 "inner join pet p\n" +
                 "on fb.f_board_pet_fk = p.pet_id\n" +
