@@ -35,6 +35,7 @@ public class DetectiveBoard extends BaseEntity {
     private String missLocation;
     private Double missingLatitude;
     private Double missingLongitude;
+
     @Column
     private Integer money;
 

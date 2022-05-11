@@ -9,14 +9,24 @@ import java.util.stream.Collectors;
 
 @Data
 public class GoldenTimeDto {
+    private Double userLatitude;
+    private Double userLongitude;
+    private Double petLatitude;
+    private Double petLongitude;
+
     private List<FinderRequestDto> findRequestDto;
-    private List<DetectiveRequestDto> missingRequestDto;
-    public GoldenTimeDto(List<DetectiveBoard> detectiveBoards, List<FinderBoard> finderBoards) {
+    private List<DetectiveRequestDto> detectiveRequestDtos;
+
+    public GoldenTimeDto(List<Object[]> detectiveBoards, List<Object[]> finderBoards,Double userLatitude,Double userLongitude,Double petLatitude,Double petLongitude) {
         findRequestDto = finderBoards.stream()
                 .map(fdb -> new FinderRequestDto(fdb))
                 .collect(Collectors.toList());
-        missingRequestDto = detectiveBoards.stream()
+        detectiveRequestDtos = detectiveBoards.stream()
                 .map(dtb -> new DetectiveRequestDto(dtb))
                 .collect(Collectors.toList());
+        this.userLatitude =userLatitude;
+        this.userLongitude =userLongitude;
+        this.petLatitude =petLatitude;
+        this.petLongitude =petLongitude;
     }
 }

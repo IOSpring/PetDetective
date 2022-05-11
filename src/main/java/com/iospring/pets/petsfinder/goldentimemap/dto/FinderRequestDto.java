@@ -11,12 +11,16 @@ public class FinderRequestDto {
     private Double findLatitude;
     private Double findLongitude;
     private String findLocation;
-    public FinderRequestDto(FinderBoard finderBoard) {
-        this.boardId = finderBoard.getId();
-        this.mainImageUrl = finderBoard.getPet().getImage().getUrl();
-        this.findTime = finderBoard.getMissingTime();
-        this.findLatitude = finderBoard.getMissingLatitude();
-        this.findLongitude = finderBoard.getMissingLongitude();
-        this.findLocation = finderBoard.getMissLocation();
+    private Double distance;
+
+    public FinderRequestDto(Object[] finderBoard) {
+        this.boardId = (Long)finderBoard[0];
+//        this.mainImageUrl =detectiveBoard.getPet().getImage().getUrl();
+        this.mainImageUrl ="이미지 URL";
+        this.findTime = (String)finderBoard[2];
+        this.findLatitude = (Double)finderBoard[3];
+        this.findLongitude = (Double)finderBoard[4];
+        this.findLocation = (String)finderBoard[5];
+        this.distance =(Double)finderBoard[6];
     }
 }

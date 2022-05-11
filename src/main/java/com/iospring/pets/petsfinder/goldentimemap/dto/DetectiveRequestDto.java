@@ -14,13 +14,17 @@ public class DetectiveRequestDto {
     private String missingLocation;
     private Integer money;
 
-    public DetectiveRequestDto(DetectiveBoard detectiveBoard) {
-        this.boardId = detectiveBoard.getId();
-        this.mainImageUrl =detectiveBoard.getPet().getImage().getUrl();
-        this.missingTime = detectiveBoard.getMissingTime();
-        this.missingLatitude = detectiveBoard.getMissingLatitude();
-        this.missingLongitude = detectiveBoard.getMissingLongitude();
-        this.missingLocation = detectiveBoard.getMissLocation();
-        this.money = detectiveBoard.getMoney();
+    private Double distance;
+
+    public DetectiveRequestDto(Object[] detectiveBoard) {
+        this.boardId = (Long)detectiveBoard[0];
+//        this.mainImageUrl =detectiveBoard.getPet().getImage().getUrl();
+        this.mainImageUrl ="이미지 URL";
+        this.missingTime = (String)detectiveBoard[2];
+        this.missingLatitude = (Double)detectiveBoard[3];
+        this.missingLongitude = (Double)detectiveBoard[4];
+        this.missingLocation = (String)detectiveBoard[5];
+        this.money = (Integer)detectiveBoard[6];
+        this.distance =(Double)detectiveBoard[7];
     }
 }

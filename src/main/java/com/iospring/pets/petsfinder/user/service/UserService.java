@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -63,4 +64,8 @@ public class UserService {
     }
 
 
+    public User findByUserId(Long userId){
+        Optional<User> user=  userRepository.findById(userId);
+        return user.orElseThrow(() -> new RuntimeException("사용자 없음"));
+    }
 }
