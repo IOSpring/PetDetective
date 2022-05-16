@@ -27,6 +27,7 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
             userDTO.setLatitude((Double) objects[2]);
             userDTO.setLongitude((Double) objects[3]);
             userDTO.setDeviceToken((String) objects[4]);
+            userDTO.setMissingTime((String) objects[5]);
             userDTOList.add(userDTO);
         }
 
