@@ -38,14 +38,16 @@ public class FinderController {
 
     @PostMapping("/finder")
     public CreateFinderBoardDTOAndUserMatchingBoardAndColor addFinderBoard(FinderBoardForm finderBoardForm, MultipartFile file, @RequestHeader("host") String host, HttpSession httpSession) {
-
+        //세션에서 유저 정보 가져온다
         String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
-
+        // finder 게시글 저장한다.
         FinderBoardDTO finderBoardDTO = finderBoardService.addFindBoard(finderBoardForm, file, host,phoneNumber);
-
+        // 유저가 finder 게시글을 올렸을 때 기존에 저장되어 있는 detective 게시판 중 품종과, 색이 같은 게시판을 올린 유저 리스트를 찾는다. (! 시간에 대한 로직은 없음 )
         List<UserDTO> userDTOList = userService.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO, finderBoardForm.getBreed(), finderBoardForm.getColor());
 
+
         for (UserDTO userDTO : userDTOList) {
+            // 각 유저들에게 알람을 보낻다.
             CustomNotification customNotification = new CustomNotification();
 
             customNotification.setAlertTitle("목격 알림!");
