@@ -12,6 +12,7 @@ import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardForm;
 import com.iospring.pets.petsfinder.finderBoard.entity.FinderBoard;
 import com.iospring.pets.petsfinder.finderBoard.repository.FinderBoardRepository;
 import com.iospring.pets.petsfinder.finderBoard.service.FinderBoardService;
+import com.iospring.pets.petsfinder.goldentimemap.service.GoldenTimeService;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
 import com.iospring.pets.petsfinder.user.entity.User;
 import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
@@ -33,7 +34,7 @@ public class FinderController {
     private final FinderBoardRepository finderBoardRepository;
     private final ApnsService apnsService;
     private final UserService userService;
-
+    private final GoldenTimeService goldenTimeService;
 
 
     @PostMapping("/finder")
@@ -43,8 +44,16 @@ public class FinderController {
         // finder 게시글 저장한다.
         FinderBoardDTO finderBoardDTO = finderBoardService.addFindBoard(finderBoardForm, file, host,phoneNumber);
         // 유저가 finder 게시글을 올렸을 때 기존에 저장되어 있는 detective 게시판 중 품종과, 색이 같은 게시판을 올린 유저 리스트를 찾는다. (! 시간에 대한 로직은 없음 )
-        List<UserDTO> userDTOList = userService.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO, finderBoardForm.getBreed(), finderBoardForm.getColor());
-
+        /**
+         * 발견한 시간 이전에 올린 유저들 만 추출
+         */
+        List<UserDTO> userDTOList = userService.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO, finderBoardForm.getBreed(), finderBoardForm.getColor(),finderBoardForm.getMissingTime());
+        //현재 시간 -3 시간 뽑기
+        String threeHoursAgo = goldenTimeService.getThreeHoursAgo();
+        String type;
+        /**
+         * 여기서 저 시간으로 아래 조건 만 넣어서 분기하면 되는데 모드는 어디서 설정..?
+         */
 
         for (UserDTO userDTO : userDTOList) {
             // 각 유저들에게 알람을 보낻다.
@@ -54,11 +63,12 @@ public class FinderController {
             // 알람에 프로퍼티 설정.
             customNotification.setAlertTitle("목격 알림!");
 
+            //발견시간이
             if (finderBoardDTO.isCare())
                 //발견을 한다면
-                customNotification.createNotificationData("새로운 게시글 작성", "보관", finderBoardDTO.getId() + "");
+                customNotification.createNotificationData("게시글 작성", "보관", finderBoardDTO.getId() + "");
             else
-                customNotification.createNotificationData("새로운 게시글 작성", "발견", finderBoardDTO.getId() + "");
+                customNotification.createNotificationData("게시글 작성", "발견", finderBoardDTO.getId() + "");
 
             // 이것도 알림 프로퍼티 설정
             customNotification.setImageUrl(finderBoardDTO.getMainImageUrl());

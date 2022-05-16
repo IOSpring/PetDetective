@@ -9,6 +9,7 @@ import com.iospring.pets.petsfinder.detectiveBoard.entity.DetectiveBoard;
 import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepository;
 import com.iospring.pets.petsfinder.detectiveBoard.service.DetectiveBoardService;
 import com.iospring.pets.petsfinder.exception.CustomException;
+import com.iospring.pets.petsfinder.goldentimemap.service.GoldenTimeService;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
 import com.iospring.pets.petsfinder.user.service.UserService;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ public class DetectiveController {
     private final DetectiveBoardRepository detectBoardRepository;
     private final UserService userService;
     private final ApnsService apnsConfig;
-
+    private final GoldenTimeService goldenTimeService;
     @GetMapping("/a")
     public void testNotification() {
         CustomNotification customNotification = new CustomNotification();
@@ -49,19 +50,42 @@ public class DetectiveController {
                                   HttpSession httpSession) {
             //세션에서 유저 정보 가져온다
             String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
+
             // detective 게시판 저장한다.
             DetectiveBoardDTO detectBoardDTO = detectBoardService.addDetectiveBoard(detectBoardForm, file,host,phoneNumber);
 
-
             CustomNotification customNotification = new CustomNotification();
+
+
+            // 강아지를 잃어버린 위치 기준 반경 3km 유저 들 정보 출력
+            List<UserDTO> userWithIn10KM = userService.findUsersIn3KmWhenUploadDetectiveBoard(detectBoardDTO);
+
             customNotification.setAlertBody("현상금 " + detectBoardDTO.getMoney() + "원!");
             customNotification.setAlertTitle("신고 알림!");
-            customNotification.createNotificationData("새로운 게시글 작성", "의뢰", detectBoardDTO.getId() + "");
             customNotification.setImageUrl(detectBoardDTO.getMainImageUrl());
+            /**
+             * 병민 추가
+             */
+            //현재 시간 -3 시간 추출 폼 (yyyy-MM-dd HH:mm:ss)
+            String threeHoursAgo = goldenTimeService.getThreeHoursAgo();
+
+            //잃어 버린 시간이 현재시간 -3 시간 초과일 경우 (골든타임)
+            if(detectBoardForm.getMissingTime().compareTo(threeHoursAgo)>0){
+                customNotification.createNotificationData("골든타임", "의뢰", detectBoardDTO.getId() + "");
+            }
+            // 아닐 경우 (일반 알람)
+            else{
+                customNotification.createNotificationData("게시글 작성", "의뢰", detectBoardDTO.getId() + "");
+            }
+            /**
+             * 끝
+             */
+
+
+
 
             apnsConfig.pushCustomNotification(customNotification);
 
-            List<UserDTO> userWithIn10KM = userService.findUsersIn3KmWhenUploadDetectiveBoard(detectBoardDTO,detectBoardForm.getBreed(),detectBoardForm.getColor());
 
             return new CreatedDetectiveBoardDTOAndFoundIn10KmUsers(detectBoardDTO, userWithIn10KM);
     }

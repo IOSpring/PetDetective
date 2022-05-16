@@ -43,16 +43,16 @@ public class UserService {
         return user;
     }
 
-    public List<UserDTO> findUsersIn3KmWhenUploadDetectiveBoard(DetectiveBoardDTO detectBoardDTO, String breed , String color) {
-        List<Object[]> getDataInDB = userRepository.findUsersIn3KmWhenUploadDetectiveBoard(detectBoardDTO.getMissingLatitude(), detectBoardDTO.getMissingLongitude(), breed, color);
+    public List<UserDTO> findUsersIn3KmWhenUploadDetectiveBoard(DetectiveBoardDTO detectBoardDTO) {
+        List<Object[]> getDataInDB = userRepository.findUsersIn3KmWhenUploadDetectiveBoard(detectBoardDTO.getMissingLatitude(), detectBoardDTO.getMissingLongitude());
 
         List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObject(getDataInDB);
 
         return foundIn10KM;
     }
 
-    public List<UserDTO> findUsersIn3KmWhenUploadFinderBoard(FinderBoardDTO finderBoardDTO, String breed , String color) {
-        List<Object[]> getDataInDB = userRepository.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO.getMissingLatitude(), finderBoardDTO.getMissingLongitude(), breed, color);
+    public List<UserDTO> findUsersIn3KmWhenUploadFinderBoard(FinderBoardDTO finderBoardDTO, String breed , String color,String missingTime) {
+        List<Object[]> getDataInDB = userRepository.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO.getMissingLatitude(), finderBoardDTO.getMissingLongitude(), breed, color,missingTime);
 
         List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObject(getDataInDB);
 
