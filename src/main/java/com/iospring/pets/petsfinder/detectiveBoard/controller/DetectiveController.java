@@ -46,10 +46,12 @@ public class DetectiveController {
 
         @PostMapping("/detect")
         public CreatedDetectiveBoardDTOAndFoundIn10KmUsers addDetectiveBoard(DetectiveBoardForm detectBoardForm, MultipartFile file, @RequestHeader("host") String host,
-                                                                             HttpSession httpSession) {
+                                  HttpSession httpSession) {
+            //세션에서 유저 정보 가져온다
             String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
-
+            // detective 게시판 저장한다.
             DetectiveBoardDTO detectBoardDTO = detectBoardService.addDetectiveBoard(detectBoardForm, file,host,phoneNumber);
+
 
             CustomNotification customNotification = new CustomNotification();
             customNotification.setAlertBody("현상금 " + detectBoardDTO.getMoney() + "원!");

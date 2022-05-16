@@ -48,16 +48,23 @@ public class FinderController {
 
         for (UserDTO userDTO : userDTOList) {
             // 각 유저들에게 알람을 보낻다.
-            CustomNotification customNotification = new CustomNotification();
 
+            // 종서가 만든 클래스, 알람 보내는 용도임
+            CustomNotification customNotification = new CustomNotification();
+            // 알람에 프로퍼티 설정.
             customNotification.setAlertTitle("목격 알림!");
+
             if (finderBoardDTO.isCare())
+                //발견을 한다면
                 customNotification.createNotificationData("새로운 게시글 작성", "보관", finderBoardDTO.getId() + "");
             else
                 customNotification.createNotificationData("새로운 게시글 작성", "발견", finderBoardDTO.getId() + "");
 
+            // 이것도 알림 프로퍼티 설정
             customNotification.setImageUrl(finderBoardDTO.getMainImageUrl());
 
+
+            // 알람 보내기
             apnsService.pushCustomNotification(customNotification, userDTO.getDeviceToken());
         }
 
