@@ -15,8 +15,8 @@ public interface UserRepository extends JpaRepository<User, Long>, CustomUserRep
             "+SIN(RADIANS(:latitude))*SIN(RADIANS(latitude)))) AS distance FROM user HAVING distance < 10 ORDER BY distance DESC", nativeQuery = true)
     List<Object[]> findUsersIn10KM(double latitude, double longitude);
 
-    @Query(value = "SELECT user_id, phone_number,latitude, longitude, device_token ,db.missing_time,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(latitude))*COS(RADIANS(longitude)-RADIANS(:longitude))\n" +
-            "            +SIN(RADIANS(:latitude))*SIN(RADIANS(latitude)))) AS distance, i.breed , i.color\n" +
+    @Query(value = "SELECT user_id, phone_number,user.latitude, user.longitude, device_token ,db.missing_time,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(db.missing_latitude))*COS(RADIANS(db.missing_longitude)-RADIANS(:longitude))\n" +
+            "            +SIN(RADIANS(:latitude))*SIN(RADIANS(db.missing_latitude)))) AS distance, i.breed , i.color\n" +
             "FROM user\n" +
             "    join detective_board db on user.user_id = db.d_board_user_fk\n" +
             "    join pet p on p.pet_id = db.d_board_pet_fk\n" +

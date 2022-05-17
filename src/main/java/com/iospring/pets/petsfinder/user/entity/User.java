@@ -52,7 +52,7 @@ public class User extends BaseEntity {
 
     public void checkDeviceToken(String deviceToken) {
         if(!this.deviceToken.equals(deviceToken)){
-            this.deviceToken = deviceToken;
+            this.setDeviceToken(deviceToken);
         }
     }
 

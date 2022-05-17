@@ -41,8 +41,8 @@ public class DetectiveController {
         customNotification.createNotificationData("새로운  test 게시글 작성", "의뢰", "494");
         customNotification.setImageUrl("test image url");
 
-        apnsConfig.pushCustomNotification(customNotification);
-
+        apnsConfig.pushCustomNotification(customNotification, "c8d65914803efa3226aff076d1c0a4a9350ae30423de8179dcae1a92b4b31b07");
+        apnsConfig.pushCustomNotification(customNotification, "bee1aa84eedc207f4ae1c591b96782c1ab13f3d937dd09087eef835a43e48fb4");
     }
 
         @PostMapping("/detect")
