@@ -73,10 +73,9 @@ public class DetectiveController {
             if(detectBoardForm.getMissingTime().compareTo(threeHoursAgo)>0){
                 customNotification.createNotificationData("골든타임", "의뢰", detectBoardDTO.getId() + "");
             }
-            // 아닐 경우 (일반 알람)
-            else{
-                customNotification.createNotificationData("게시글 작성", "의뢰", detectBoardDTO.getId() + "");
-            }
+            //일반 알람
+            customNotification.createNotificationData("게시글 작성", "의뢰", detectBoardDTO.getId() + "");
+            
             /**
              * 끝
              */

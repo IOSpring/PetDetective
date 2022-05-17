@@ -72,13 +72,12 @@ public class FinderController {
                     customNotification.createNotificationData("골든타임", "발견", finderBoardDTO.getId() + "");
             }
             //골든타임이 아니면
-            else{
-                if (finderBoardDTO.isCare())
-                    //발견을 한다면
-                    customNotification.createNotificationData("게시글 작성", "보호", finderBoardDTO.getId() + "");
-                else
-                    customNotification.createNotificationData("게시글 작성", "발견", finderBoardDTO.getId() + "");
-            }
+
+            if (finderBoardDTO.isCare())
+                //발견을 한다면
+                customNotification.createNotificationData("게시글 작성", "보호", finderBoardDTO.getId() + "");
+            else
+                customNotification.createNotificationData("게시글 작성", "발견", finderBoardDTO.getId() + "");
 
 
             // 이것도 알림 프로퍼티 설정
