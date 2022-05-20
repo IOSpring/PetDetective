@@ -5,6 +5,7 @@ import com.iospring.pets.petsfinder.exception.ErrorCode;
 import com.iospring.pets.petsfinder.user.dto.LoginRequestDto;
 import com.iospring.pets.petsfinder.user.dto.LoginResponseDto;
 import com.iospring.pets.petsfinder.user.dto.UserJoinDTO;
+import com.iospring.pets.petsfinder.user.dto.UserLocationDto;
 import com.iospring.pets.petsfinder.user.entity.User;
 import com.iospring.pets.petsfinder.user.repositoru.LoginRepository;
 import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
@@ -82,5 +83,8 @@ public class LoginController {
 
     }
 
-
+    @PostMapping("/user/updatepoint")
+    public void updateLocation(@RequestBody UserLocationDto userLocationDto){
+        userService.updateLocationByPhoneNumber(userLocationDto);
+    }
 }

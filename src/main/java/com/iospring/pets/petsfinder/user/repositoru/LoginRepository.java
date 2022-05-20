@@ -1,6 +1,9 @@
 package com.iospring.pets.petsfinder.user.repositoru;
 
+import com.iospring.pets.petsfinder.exception.CustomException;
+import com.iospring.pets.petsfinder.exception.ErrorCode;
 import com.iospring.pets.petsfinder.user.dto.UserJoinDTO;
+import com.iospring.pets.petsfinder.user.dto.UserLocationDto;
 import com.iospring.pets.petsfinder.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -51,6 +54,18 @@ public class LoginRepository {
             em.persist(user);
         }
     }
+    @Transactional
+    public void updateLocationByPhoneNumber(UserLocationDto userLocationDtoto){
+        User u = em.createQuery(
+                "select u from User u where u.phoneNumber = :phoneNumber",User.class
+        ).setParameter("phoneNumber",userLocationDtoto.getPhoneNumber()).getSingleResult();
+        if(u != null) {
+            u.setLatitude(userLocationDtoto.getLatitude());
+            u.setLongitude(userLocationDtoto.getLongitude());
+            u.setLoadAddress(userLocationDtoto.getLoadAddress());
+        }
+    }
+
 
     public void deleteByPhone(String phoneNumber) {
         em.createQuery(

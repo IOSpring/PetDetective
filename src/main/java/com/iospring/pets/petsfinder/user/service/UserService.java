@@ -7,6 +7,7 @@ import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
 import com.iospring.pets.petsfinder.user.dto.LoginResponseDto;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
 import com.iospring.pets.petsfinder.user.dto.UserJoinDTO;
+import com.iospring.pets.petsfinder.user.dto.UserLocationDto;
 import com.iospring.pets.petsfinder.user.entity.User;
 import com.iospring.pets.petsfinder.user.repositoru.LoginRepository;
 import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
@@ -67,5 +68,9 @@ public class UserService {
     public User findByUserId(Long userId){
         Optional<User> user=  userRepository.findById(userId);
         return user.orElseThrow(() -> new RuntimeException("사용자 없음"));
+    }
+    public void updateLocationByPhoneNumber(UserLocationDto userDto){
+        loginRepository.updateLocationByPhoneNumber(userDto);
+
     }
 }
