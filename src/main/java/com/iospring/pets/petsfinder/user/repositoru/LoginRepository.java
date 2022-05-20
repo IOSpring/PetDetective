@@ -60,15 +60,13 @@ public class LoginRepository {
                 "select u from User u where u.phoneNumber = :phoneNumber", User.class
         ).setParameter("phoneNumber", PhoneNumber).getSingleResult();
         System.out.println(u.getId()+"유저 ");
-//        if(u != null) {
-//            u.setLatitude(latitude);
-//            u.setLongitude(longitude);
-//            u.setLoadAddress(loadAddress);
-//            return u;
-//        }else{
-//            System.out.println("존재 x");
-//            return null;
-//        }
+        if(u != null) {
+            u.setLatitude(latitude);
+            u.setLongitude(longitude);
+            u.setLoadAddress(loadAddress);
+        }else{
+            System.out.println("존재 x");
+        }
     }
 
 
