@@ -55,14 +55,16 @@ public class LoginRepository {
         }
     }
     @Transactional
-    public User updateLocationByPhoneNumber(UserLocationDto userLocationDtoto){
+    public User updateLocationByPhoneNumber(String PhoneNumber, Double latitude,Double longitude,String loadAddress){
         User u = em.createQuery(
                 "select u from User u where u.phoneNumber = :phoneNumber",User.class
-        ).setParameter("phoneNumber",userLocationDtoto.getPhoneNumber()).getSingleResult();
+        ).setParameter("phoneNumber",PhoneNumber).getSingleResult();
         if(u != null) {
-            u.setLatitude(userLocationDtoto.getLatitude());
-            u.setLongitude(userLocationDtoto.getLongitude());
-            u.setLoadAddress(userLocationDtoto.getLoadAddress());
+            u.setLatitude(latitude);
+            u.setLongitude(longitude);
+            u.setLoadAddress(loadAddress);
+        }else{
+                throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
         return u;
     }
