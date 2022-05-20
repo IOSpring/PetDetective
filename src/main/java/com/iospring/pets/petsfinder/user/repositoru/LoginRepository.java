@@ -64,6 +64,7 @@ public class LoginRepository {
             u.setLatitude(latitude);
             u.setLongitude(longitude);
             u.setLoadAddress(loadAddress);
+            em.persist(u);
         }else{
             System.out.println("존재 x");
         }
