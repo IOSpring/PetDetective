@@ -56,19 +56,18 @@ public class LoginRepository {
     }
     @Transactional
     public void updateLocationByPhoneNumber(String PhoneNumber, Double latitude,Double longitude,String loadAddress){
-        User u = em.createQuery(
-                "select u from User u where u.phoneNumber = :phoneNumber", User.class
-        ).setParameter("phoneNumber", PhoneNumber).getSingleResult();
-        System.out.println(u.getId()+"유저 ");
-        System.out.println(u.getLatitude()+"유저 ");
-        System.out.println(u.getLongitude()+"유저 ");
+        User user=findOneUserByPhoneNum(PhoneNumber);
+        System.out.println(user.getId()+"유저 ");
+        System.out.println(user.getLatitude()+"유저 ");
+        System.out.println(user.getLongitude()+"유저 ");
 
-        u.setLatitude(latitude);
-        u.setLongitude(longitude);
-        u.setLoadAddress(loadAddress);
-        em.persist(u);
-        System.out.println(u.getLatitude()+"유저 ");
-        System.out.println(u.getLongitude()+"유저 ");
+        user.setLatitude(latitude);
+        user.setLongitude(longitude);
+        user.setLoadAddress(loadAddress);
+
+        em.persist(user);
+        System.out.println(user.getLatitude()+"유저 ");
+        System.out.println(user.getLongitude()+"유저 ");
 
     }
 
