@@ -84,7 +84,8 @@ public class LoginController {
     }
 
     @PostMapping("/user/updatepoint")
-    public User updateLocation(@RequestBody UserLocationDto userLocationDto){
-        return userService.updateLocation(userLocationDto);
+    public UserLocationDto updateLocation(@RequestBody UserLocationDto userLocationDto){
+        userService.updateLocation(userLocationDto);
+        return userLocationDto;
     }
 }

@@ -57,9 +57,9 @@ public class LoginRepository {
     @Transactional
     public User updateLocationByPhoneNumber(String PhoneNumber, Double latitude,Double longitude,String loadAddress){
         User u = em.createQuery(
-                "select u from User u where u.phoneNumber = :phoneNumber",User.class
-        ).setParameter("phoneNumber",PhoneNumber).getSingleResult();
-        return u;
+                "select u from User u where u.phoneNumber = :phoneNumber", User.class
+        ).setParameter("phoneNumber", PhoneNumber).getSingleResult();
+        System.out.println(u.getId()+"유저 ");
 //        if(u != null) {
 //            u.setLatitude(latitude);
 //            u.setLongitude(longitude);
