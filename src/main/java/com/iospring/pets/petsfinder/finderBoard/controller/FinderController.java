@@ -50,42 +50,35 @@ public class FinderController {
         List<UserDTO> userDTOList = userService.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO, finderBoardForm.getBreed(), finderBoardForm.getColor(),finderBoardForm.getMissingTime());
         //현재 시간 -3 시간 뽑기
         String threeHoursAgo = goldenTimeService.getThreeHoursAgo();
-        String type;
-        /**
-         * 여기서 저 시간으로 아래 조건 만 넣어서 분기하면 되는데 모드는 어디서 설정..?
-         */
 
+        // 종서가 만든 클래스, 알람 보내는 용도임
+        CustomNotification customNotificationForGoldenTime = new CustomNotification();
+        CustomNotification customNotificationForNormal = new CustomNotification();
+        // 알람에 프로퍼티 설정.
+        customNotificationForGoldenTime.setAlertTitle("목격 알림!");
+        customNotificationForNormal.setAlertTitle("목격 알림!");
+        // 이것도 알림 프로퍼티 설정
+        customNotificationForGoldenTime.setImageUrl(finderBoardDTO.getMainImageUrl());
+        customNotificationForNormal.setImageUrl(finderBoardDTO.getMainImageUrl());
+
+        if (finderBoardDTO.isCare()) {
+            customNotificationForGoldenTime.createNotificationData("골든타임", "보호", finderBoardDTO.getId() + "");
+            customNotificationForNormal.createNotificationData("게시글 작성", "보호", finderBoardDTO.getId() + "");
+        }
+        else {
+            customNotificationForGoldenTime.createNotificationData("골든타임", "발견", finderBoardDTO.getId() + "");
+            customNotificationForNormal.createNotificationData("게시글 작성", "발견", finderBoardDTO.getId() + "");
+        }
         for (UserDTO userDTO : userDTOList) {
             // 각 유저들에게 알람을 보낻다.
-
-            // 종서가 만든 클래스, 알람 보내는 용도임
-            CustomNotification customNotification = new CustomNotification();
-            // 알람에 프로퍼티 설정.
-            customNotification.setAlertTitle("목격 알림!");
-
             // 해당 정보가 골든타임이면
             if (userDTO.getMissingTime().compareTo(threeHoursAgo) > 0) {
-                if (finderBoardDTO.isCare())
-                    //발견을 한다면
-                    customNotification.createNotificationData("골든타임", "보호", finderBoardDTO.getId() + "");
-                else
-                    customNotification.createNotificationData("골든타임", "발견", finderBoardDTO.getId() + "");
+                // 골든 타임 알람 보내기
+                apnsService.pushCustomNotification(customNotificationForGoldenTime, userDTO.getDeviceToken());
             }
-            //골든타임이 아니면
+            // 일반 알람 보내기
+            apnsService.pushCustomNotification(customNotificationForNormal, userDTO.getDeviceToken());
 
-            if (finderBoardDTO.isCare())
-                //발견을 한다면
-                customNotification.createNotificationData("게시글 작성", "보호", finderBoardDTO.getId() + "");
-            else
-                customNotification.createNotificationData("게시글 작성", "발견", finderBoardDTO.getId() + "");
-
-
-            // 이것도 알림 프로퍼티 설정
-            customNotification.setImageUrl(finderBoardDTO.getMainImageUrl());
-
-
-            // 알람 보내기
-            apnsService.pushCustomNotification(customNotification, userDTO.getDeviceToken());
         }
 
         return new CreateFinderBoardDTOAndUserMatchingBoardAndColor(finderBoardDTO, userDTOList);

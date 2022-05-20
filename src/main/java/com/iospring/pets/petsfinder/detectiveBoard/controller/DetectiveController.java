@@ -60,6 +60,7 @@ public class DetectiveController {
             // 강아지를 잃어버린 위치 기준 반경 3km 유저 들 정보 출력
             List<UserDTO> userWithIn10KM = userService.findUsersIn3KmWhenUploadDetectiveBoard(detectBoardDTO);
 
+
             customNotification.setAlertBody("현상금 " + detectBoardDTO.getMoney() + "원!");
             customNotification.setAlertTitle("신고 알림!");
             customNotification.setImageUrl(detectBoardDTO.getMainImageUrl());
@@ -69,23 +70,22 @@ public class DetectiveController {
             //현재 시간 -3 시간 추출 폼 (yyyy-MM-dd HH:mm:ss)
             String threeHoursAgo = goldenTimeService.getThreeHoursAgo();
 
+
             //잃어 버린 시간이 현재시간 -3 시간 초과일 경우 (골든타임)
             if(detectBoardForm.getMissingTime().compareTo(threeHoursAgo)>0){
                 customNotification.createNotificationData("골든타임", "의뢰", detectBoardDTO.getId() + "");
+                for (UserDTO userDTO : userWithIn10KM) {
+                    apnsConfig.pushCustomNotification(customNotification,userDTO.getDeviceToken());
+                }
             }
             //일반 알람
             customNotification.createNotificationData("게시글 작성", "의뢰", detectBoardDTO.getId() + "");
-            
+            for (UserDTO userDTO : userWithIn10KM) {
+                apnsConfig.pushCustomNotification(customNotification,userDTO.getDeviceToken());
+            }
             /**
              * 끝
              */
-
-
-
-
-            apnsConfig.pushCustomNotification(customNotification);
-
-
             return new CreatedDetectiveBoardDTOAndFoundIn10KmUsers(detectBoardDTO, userWithIn10KM);
     }
 
