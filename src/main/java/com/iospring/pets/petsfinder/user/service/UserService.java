@@ -73,4 +73,15 @@ public class UserService {
         loginRepository.updateLocationByPhoneNumber(userDto.getPhoneNumber(),userDto.getLatitude(),userDto.getLongitude(),userDto.getLoadAddress());
 
     }
+
+    @Transactional
+    public void updateLocation2(UserLocationDto userLocationDto) {
+        User user = userRepository.findByPhoneNumber(userLocationDto.getPhoneNumber())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        user.setLatitude(userLocationDto.getLatitude());
+        user.setLongitude(userLocationDto.getLongitude());
+        user.setLoadAddress(userLocationDto.getLoadAddress());
+
+    }
 }

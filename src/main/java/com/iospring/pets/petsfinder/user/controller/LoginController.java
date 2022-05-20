@@ -2,10 +2,7 @@ package com.iospring.pets.petsfinder.user.controller;
 
 import com.iospring.pets.petsfinder.exception.CustomException;
 import com.iospring.pets.petsfinder.exception.ErrorCode;
-import com.iospring.pets.petsfinder.user.dto.LoginRequestDto;
-import com.iospring.pets.petsfinder.user.dto.LoginResponseDto;
-import com.iospring.pets.petsfinder.user.dto.UserJoinDTO;
-import com.iospring.pets.petsfinder.user.dto.UserLocationDto;
+import com.iospring.pets.petsfinder.user.dto.*;
 import com.iospring.pets.petsfinder.user.entity.User;
 import com.iospring.pets.petsfinder.user.repositoru.LoginRepository;
 import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
@@ -28,8 +25,6 @@ public class LoginController {
     private final LoginRepository loginRepository;
 
     private final UserRepository userRepository;
-
-
 
 
     @PostMapping("/check/sendSMS")
@@ -57,8 +52,8 @@ public class LoginController {
         return newUser.getId();
     }
     @GetMapping("/delete/{phoneNumber}")
-    public void deleteUser(@PathVariable("phoneNumber") String phoneNumber){
-        System.out.println("휴대폰 번호 : "+phoneNumber);
+    public void deleteUser(@PathVariable("phoneNumber") String phoneNumber) {
+        System.out.println("휴대폰 번호 : " + phoneNumber);
         userService.delete(phoneNumber);
     }
 
@@ -84,8 +79,16 @@ public class LoginController {
     }
 
     @PostMapping("/user/updatepoint")
-    public UserLocationDto updateLocation(@RequestBody UserLocationDto userLocationDto){
+    public UserLocationDto updateLocation(@RequestBody UserLocationDto userLocationDto) {
         userService.updateLocation(userLocationDto);
         return userLocationDto;
+    }
+
+    @PutMapping("/user/update-point")
+    public void updateLocation2(@RequestBody UserLocationDto userLocationDto) {
+        System.out.println("userLocationDto = " + userLocationDto);
+        userService.updateLocation2(userLocationDto);
+
+
     }
 }
