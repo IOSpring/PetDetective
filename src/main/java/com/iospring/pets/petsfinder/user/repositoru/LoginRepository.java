@@ -60,6 +60,7 @@ public class LoginRepository {
                 "select u from User u where u.phoneNumber = :phoneNumber",User.class
         ).setParameter("phoneNumber",userLocationDtoto.getPhoneNumber()).getSingleResult();
         if(u != null) {
+            em.persist(u);
             u.setLatitude(userLocationDtoto.getLatitude());
             u.setLongitude(userLocationDtoto.getLongitude());
             u.setLoadAddress(userLocationDtoto.getLoadAddress());
