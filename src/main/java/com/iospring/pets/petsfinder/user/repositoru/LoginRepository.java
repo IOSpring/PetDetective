@@ -63,10 +63,11 @@ public class LoginRepository {
             u.setLatitude(latitude);
             u.setLongitude(longitude);
             u.setLoadAddress(loadAddress);
+            return u;
         }else{
-                throw new CustomException(ErrorCode.USER_NOT_FOUND);
+            System.out.println("존재 x");
+            return null;
         }
-        return u;
     }
 
 
