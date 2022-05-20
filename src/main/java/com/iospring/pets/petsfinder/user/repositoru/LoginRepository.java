@@ -19,6 +19,7 @@ public class LoginRepository {
 
     private final EntityManager em;
 
+    @Transactional
     public User findOneUserByPhoneNum (String phoneNumber){
         List<User> user = em.createQuery("select u from User u where u.phoneNumber = :phoneNumber", User.class)
                 .setParameter("phoneNumber", phoneNumber)
