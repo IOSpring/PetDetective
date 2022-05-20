@@ -61,12 +61,12 @@ public class LoginRepository {
         System.out.println(user.getId()+"유저 ");
         System.out.println(user.getLatitude()+"유저 ");
         System.out.println(user.getLongitude()+"유저 ");
+        em.persist(user);
 
         user.setLatitude(latitude);
         user.setLongitude(longitude);
         user.setLoadAddress(loadAddress);
 
-        em.persist(user);
         System.out.println(user.getLatitude()+"유저 ");
         System.out.println(user.getLongitude()+"유저 ");
 
