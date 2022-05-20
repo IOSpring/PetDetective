@@ -55,7 +55,7 @@ public class LoginRepository {
         }
     }
     @Transactional
-    public void updateLocationByPhoneNumber(UserLocationDto userLocationDtoto){
+    public User updateLocationByPhoneNumber(UserLocationDto userLocationDtoto){
         User u = em.createQuery(
                 "select u from User u where u.phoneNumber = :phoneNumber",User.class
         ).setParameter("phoneNumber",userLocationDtoto.getPhoneNumber()).getSingleResult();
@@ -63,8 +63,8 @@ public class LoginRepository {
             u.setLatitude(userLocationDtoto.getLatitude());
             u.setLongitude(userLocationDtoto.getLongitude());
             u.setLoadAddress(userLocationDtoto.getLoadAddress());
-            em.persist(u);
         }
+        return u;
     }
 
 

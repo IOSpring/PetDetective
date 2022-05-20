@@ -69,8 +69,8 @@ public class UserService {
         Optional<User> user=  userRepository.findById(userId);
         return user.orElseThrow(() -> new RuntimeException("사용자 없음"));
     }
-    public void updateLocationByPhoneNumber(UserLocationDto userDto){
-        loginRepository.updateLocationByPhoneNumber(userDto);
+    public User updateLocation(UserLocationDto userDto){
+        return loginRepository.updateLocationByPhoneNumber(userDto);
 
     }
 }
