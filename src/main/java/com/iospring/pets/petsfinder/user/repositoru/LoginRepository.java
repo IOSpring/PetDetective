@@ -59,15 +59,16 @@ public class LoginRepository {
         User u = em.createQuery(
                 "select u from User u where u.phoneNumber = :phoneNumber",User.class
         ).setParameter("phoneNumber",PhoneNumber).getSingleResult();
-        if(u != null) {
-            u.setLatitude(latitude);
-            u.setLongitude(longitude);
-            u.setLoadAddress(loadAddress);
-            return u;
-        }else{
-            System.out.println("존재 x");
-            return null;
-        }
+        return u;
+//        if(u != null) {
+//            u.setLatitude(latitude);
+//            u.setLongitude(longitude);
+//            u.setLoadAddress(loadAddress);
+//            return u;
+//        }else{
+//            System.out.println("존재 x");
+//            return null;
+//        }
     }
 
 
