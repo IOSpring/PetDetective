@@ -59,7 +59,9 @@ public class DetectiveController {
 
             // 강아지를 잃어버린 위치 기준 반경 3km 유저 들 정보 출력
             List<UserDTO> userWithIn10KM = userService.findUsersIn3KmWhenUploadDetectiveBoard(detectBoardDTO);
-
+            for (UserDTO userDTO : userWithIn10KM) {
+                System.out.println("유저 아이디 : "+ userDTO.getId());
+            }
 
             customNotification.setAlertBody("현상금 " + detectBoardDTO.getMoney() + "원!");
             customNotification.setAlertTitle("신고 알림!");
