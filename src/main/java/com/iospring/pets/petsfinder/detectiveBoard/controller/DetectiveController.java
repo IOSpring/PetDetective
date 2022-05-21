@@ -67,6 +67,7 @@ public class DetectiveController {
             customNotification.setAlertBody("현상금 " + detectBoardDTO.getMoney() + "원!");
             customNotification.setAlertTitle("신고 알림!");
             customNotification.setImageUrl(detectBoardDTO.getMainImageUrl());
+            customNotification.createNotificationData("골든타임", "의뢰", detectBoardDTO.getId() + "");
             /**
              * 병민 추가
              */
@@ -75,9 +76,8 @@ public class DetectiveController {
 
             //잃어 버린 시간이 현재시간 -3 시간 초과일 경우 (골든타임)
             if(detectBoardForm.getMissingTime().compareTo(threeHoursAgo)>0){
-                customNotification.createNotificationData("골든타임", "의뢰", detectBoardDTO.getId() + "");
                 for (UserDTO userDTO : userWithIn10KM) {
-                    if(userDTO.getPhoneNumber() != phoneNumber)
+                    if(!userDTO.getPhoneNumber().equals(phoneNumber))
                         apnsConfig.pushCustomNotification(customNotification,userDTO.getDeviceToken());
                 }
             }
