@@ -24,7 +24,7 @@ public class LoginRepository {
                 .setParameter("phoneNumber", phoneNumber)
                 .getResultList();
         if(user.size()==0)
-            throw null;
+            return null;
         return user.get(0);
     }
 
