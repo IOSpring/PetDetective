@@ -80,11 +80,11 @@ public class DetectiveController {
                     apnsConfig.pushCustomNotification(customNotification,userDTO.getDeviceToken());
                 }
             }
-            //일반 알람
+         /*   //일반 알람
             customNotification.createNotificationData("게시글 작성", "의뢰", detectBoardDTO.getId() + "");
             for (UserDTO userDTO : userWithIn10KM) {
                 apnsConfig.pushCustomNotification(customNotification,userDTO.getDeviceToken());
-            }
+            }*/
             /**
              * 끝
              */
