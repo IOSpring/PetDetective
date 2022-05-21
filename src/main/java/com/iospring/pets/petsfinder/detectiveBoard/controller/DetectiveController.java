@@ -81,7 +81,8 @@ public class DetectiveController {
             if(detectBoardForm.getMissingTime().compareTo(threeHoursAgo)>0){
                 customNotification.createNotificationData("골든타임", "의뢰", detectBoardDTO.getId() + "");
                 for (UserDTO userDTO : userWithIn10KM) {
-                    apnsConfig.pushCustomNotification(customNotification,userDTO.getDeviceToken());
+                    if(userDTO.getPhoneNumber() != phoneNumber)
+                        apnsConfig.pushCustomNotification(customNotification,userDTO.getDeviceToken());
                 }
             }
          /*   //일반 알람

@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long>, CustomUserRep
     Optional<User> findByPhoneNumber(String phoneNumber);
 
     @Query(value = "SELECT user_id, phone_number,latitude, longitude,device_token,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(latitude))*COS(RADIANS(longitude)-RADIANS(:longitude))\n" +
-            "+SIN(RADIANS(:latitude))*SIN(RADIANS(latitude)))) AS distance FROM user HAVING distance < 3 ORDER BY distance DESC", nativeQuery = true)
+            "+SIN(RADIANS(:latitude))*SIN(RADIANS(latitude)))) AS distance FROM user  HAVING distance < 3 ORDER BY distance DESC", nativeQuery = true)
     List<Object[]> findUsersIn3KM(double latitude, double longitude);
 
     @Query(value = "SELECT user_id, phone_number,user.latitude, user.longitude, device_token ,db.missing_time,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(db.missing_latitude))*COS(RADIANS(db.missing_longitude)-RADIANS(:longitude))\n" +
