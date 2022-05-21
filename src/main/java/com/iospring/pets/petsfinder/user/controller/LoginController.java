@@ -88,7 +88,5 @@ public class LoginController {
     public void updateLocation2(@RequestBody UserLocationDto userLocationDto) {
         System.out.println("userLocationDto = " + userLocationDto);
         userService.updateLocation2(userLocationDto);
-
-
     }
 }
