@@ -72,7 +72,7 @@ public class DetectiveController {
             //현재 시간 -3 시간 추출 폼 (yyyy-MM-dd HH:mm:ss)
             String threeHoursAgo = goldenTimeService.getThreeHoursAgo();
             System.out.println("=============================================");
-            System.out.println("threeHoursAgo");
+            System.out.println(threeHoursAgo);
             System.out.println(detectBoardForm.getMissingTime());
             System.out.println(detectBoardForm.getMissingTime().compareTo(threeHoursAgo));
             System.out.println("=============================================");
