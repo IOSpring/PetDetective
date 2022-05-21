@@ -1,4 +1,4 @@
-package com.iospring.pets.petsfinder.user.repositoru;
+package com.iospring.pets.petsfinder.user.repository;
 
 import com.iospring.pets.petsfinder.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

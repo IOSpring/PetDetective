@@ -1,9 +1,8 @@
-package com.iospring.pets.petsfinder.user.repositoru;
+package com.iospring.pets.petsfinder.user.repository;
 
 import com.iospring.pets.petsfinder.exception.CustomException;
 import com.iospring.pets.petsfinder.exception.ErrorCode;
 import com.iospring.pets.petsfinder.user.dto.UserJoinDTO;
-import com.iospring.pets.petsfinder.user.dto.UserLocationDto;
 import com.iospring.pets.petsfinder.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -25,7 +24,7 @@ public class LoginRepository {
                 .setParameter("phoneNumber", phoneNumber)
                 .getResultList();
         if(user.size()==0)
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+            throw null;
         return user.get(0);
     }
 
@@ -47,7 +46,7 @@ public class LoginRepository {
     }
 
     @Transactional
-    public void updateDviceToken(String phoneNumber,String diviceToken) {
+    public void updateDeviceToken(String phoneNumber, String diviceToken) {
         User user=findOneUserByPhoneNum(phoneNumber);
 
         if(user !=null) {

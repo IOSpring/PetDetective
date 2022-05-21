@@ -1,14 +1,10 @@
 package com.iospring.pets.petsfinder.user;
 
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
-import com.iospring.pets.petsfinder.user.dto.UserJoinDTO;
-import com.iospring.pets.petsfinder.user.entity.User;
-import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
+import com.iospring.pets.petsfinder.user.repository.UserRepository;
 import com.iospring.pets.petsfinder.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;

@@ -4,8 +4,8 @@ import com.iospring.pets.petsfinder.exception.CustomException;
 import com.iospring.pets.petsfinder.exception.ErrorCode;
 import com.iospring.pets.petsfinder.user.dto.*;
 import com.iospring.pets.petsfinder.user.entity.User;
-import com.iospring.pets.petsfinder.user.repositoru.LoginRepository;
-import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
+import com.iospring.pets.petsfinder.user.repository.LoginRepository;
+import com.iospring.pets.petsfinder.user.repository.UserRepository;
 import com.iospring.pets.petsfinder.user.service.UserService;
 import com.iospring.pets.petsfinder.user.service.certificationService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ public class LoginController {
         //   인증번호 :  numStr
         // String numStr = cft.certifiedPhoneNumber(phoneNumber);
         LoginResponseDto loginResponseDto = userService.createLoginResponsedto(form.getPhoneNumber(), "1234");
-        loginRepository.updateDviceToken(form.getPhoneNumber(), form.getDeviceToken());
+        loginRepository.updateDeviceToken(form.getPhoneNumber(), form.getDeviceToken());
 
 
         httpSession.setAttribute("phoneNumber", form.getPhoneNumber());

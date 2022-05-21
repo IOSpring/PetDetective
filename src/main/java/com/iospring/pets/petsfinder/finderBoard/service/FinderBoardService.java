@@ -1,8 +1,6 @@
 package com.iospring.pets.petsfinder.finderBoard.service;
 
 import com.iospring.pets.petsfinder.config.file.FileUploadService;
-import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDetailDTO;
-import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepositoryCustomImpl;
 import com.iospring.pets.petsfinder.exception.CustomException;
 import com.iospring.pets.petsfinder.exception.ErrorCode;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
@@ -17,7 +15,7 @@ import com.iospring.pets.petsfinder.pet.entity.Pet;
 import com.iospring.pets.petsfinder.pet.service.PetService;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
 import com.iospring.pets.petsfinder.user.entity.User;
-import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
+import com.iospring.pets.petsfinder.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

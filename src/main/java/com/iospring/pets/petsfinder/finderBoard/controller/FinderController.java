@@ -2,8 +2,6 @@ package com.iospring.pets.petsfinder.finderBoard.controller;
 
 import com.iospring.pets.petsfinder.commond.apns.entity.CustomNotification;
 import com.iospring.pets.petsfinder.commond.apns.service.ApnsService;
-import com.iospring.pets.petsfinder.detectiveBoard.controller.DetectiveController;
-import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDTO;
 import com.iospring.pets.petsfinder.exception.CustomException;
 import com.iospring.pets.petsfinder.exception.ErrorCode;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
@@ -14,8 +12,6 @@ import com.iospring.pets.petsfinder.finderBoard.repository.FinderBoardRepository
 import com.iospring.pets.petsfinder.finderBoard.service.FinderBoardService;
 import com.iospring.pets.petsfinder.goldentimemap.service.GoldenTimeService;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
-import com.iospring.pets.petsfinder.user.entity.User;
-import com.iospring.pets.petsfinder.user.repositoru.UserRepository;
 import com.iospring.pets.petsfinder.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Data;

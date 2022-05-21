@@ -1,13 +1,8 @@
-package com.iospring.pets.petsfinder.user.repositoru;
+package com.iospring.pets.petsfinder.user.repository;
 
-import com.iospring.pets.petsfinder.user.dto.LoginResponseDto;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
-import com.iospring.pets.petsfinder.user.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.security.core.parameters.P;
 
-import javax.persistence.EntityManager;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
