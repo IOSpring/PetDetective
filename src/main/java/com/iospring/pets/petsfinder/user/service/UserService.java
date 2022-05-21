@@ -45,9 +45,9 @@ public class UserService {
     }
 
     public List<UserDTO> findUsersIn3KmWhenUploadDetectiveBoard(DetectiveBoardDTO detectBoardDTO) {
-        List<Object[]> getDataInDB = userRepository.findUsersIn3KmWhenUploadDetectiveBoard(detectBoardDTO.getMissingLatitude(), detectBoardDTO.getMissingLongitude());
+        List<Object[]> getDataInDB = userRepository.findUsersIn3KM(detectBoardDTO.getMissingLatitude(), detectBoardDTO.getMissingLongitude());
 
-        List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObject(getDataInDB);
+        List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObjectForDetectBoard(getDataInDB);
 
         return foundIn10KM;
     }
@@ -55,7 +55,7 @@ public class UserService {
     public List<UserDTO> findUsersIn3KmWhenUploadFinderBoard(FinderBoardDTO finderBoardDTO, String breed , String color,String missingTime) {
         List<Object[]> getDataInDB = userRepository.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO.getMissingLatitude(), finderBoardDTO.getMissingLongitude(), breed, color,missingTime);
 
-        List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObject(getDataInDB);
+        List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObjectForFindeBoard(getDataInDB);
 
         return foundIn10KM;
     }

@@ -10,7 +10,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomUserRepositoryImpl implements CustomUserRepository{
 
-     public List<UserDTO> createUserDTOFromObject(List<Object[]> list) {
+     public List<UserDTO> createUserDTOFromObjectForFindeBoard(List<Object[]> list) {
 
         List<UserDTO> userDTOList = new ArrayList<>();
 
@@ -23,6 +23,23 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
             userDTO.setLongitude((Double) objects[3]);
             userDTO.setDeviceToken((String) objects[4]);
             userDTO.setMissingTime((String) objects[5]);
+            userDTOList.add(userDTO);
+        }
+
+        return userDTOList;
+    }
+    public List<UserDTO> createUserDTOFromObjectForDetectBoard(List<Object[]> list) {
+
+        List<UserDTO> userDTOList = new ArrayList<>();
+
+        for (Object[] objects : list) {
+            BigInteger bigInteger = new BigInteger(String.valueOf(objects[0]));
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(bigInteger.longValue());
+            userDTO.setPhoneNumber((String) objects[1]);
+            userDTO.setLatitude((Double) objects[2]);
+            userDTO.setLongitude((Double) objects[3]);
+            userDTO.setDeviceToken((String) objects[4]);
             userDTOList.add(userDTO);
         }
 

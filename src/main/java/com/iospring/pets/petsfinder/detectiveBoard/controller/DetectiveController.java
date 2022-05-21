@@ -71,8 +71,12 @@ public class DetectiveController {
              */
             //현재 시간 -3 시간 추출 폼 (yyyy-MM-dd HH:mm:ss)
             String threeHoursAgo = goldenTimeService.getThreeHoursAgo();
-
+            System.out.println("=============================================");
+            System.out.println("threeHoursAgo");
             System.out.println(detectBoardForm.getMissingTime());
+            System.out.println(detectBoardForm.getMissingTime().compareTo(threeHoursAgo));
+            System.out.println("=============================================");
+
             //잃어 버린 시간이 현재시간 -3 시간 초과일 경우 (골든타임)
             if(detectBoardForm.getMissingTime().compareTo(threeHoursAgo)>0){
                 customNotification.createNotificationData("골든타임", "의뢰", detectBoardDTO.getId() + "");

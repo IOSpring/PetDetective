@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface CustomUserRepository {
 
-      List<UserDTO> createUserDTOFromObject(List<Object[]> list);
+      List<UserDTO> createUserDTOFromObjectForFindeBoard(List<Object[]> list);
+      List<UserDTO> createUserDTOFromObjectForDetectBoard(List<Object[]> list);
 
 
 
