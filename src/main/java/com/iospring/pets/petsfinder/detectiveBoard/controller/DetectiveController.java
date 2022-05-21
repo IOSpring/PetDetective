@@ -33,6 +33,7 @@ public class DetectiveController {
     private final UserService userService;
     private final ApnsService apnsConfig;
     private final GoldenTimeService goldenTimeService;
+
     @GetMapping("/a")
     public void testNotification() {
         CustomNotification customNotification = new CustomNotification();
@@ -71,11 +72,6 @@ public class DetectiveController {
              */
             //현재 시간 -3 시간 추출 폼 (yyyy-MM-dd HH:mm:ss)
             String threeHoursAgo = goldenTimeService.getThreeHoursAgo();
-            System.out.println("=============================================");
-            System.out.println(threeHoursAgo);
-            System.out.println(detectBoardForm.getMissingTime());
-            System.out.println(detectBoardForm.getMissingTime().compareTo(threeHoursAgo));
-            System.out.println("=============================================");
 
             //잃어 버린 시간이 현재시간 -3 시간 초과일 경우 (골든타임)
             if(detectBoardForm.getMissingTime().compareTo(threeHoursAgo)>0){
@@ -85,14 +81,6 @@ public class DetectiveController {
                         apnsConfig.pushCustomNotification(customNotification,userDTO.getDeviceToken());
                 }
             }
-         /*   //일반 알람
-            customNotification.createNotificationData("게시글 작성", "의뢰", detectBoardDTO.getId() + "");
-            for (UserDTO userDTO : userWithIn10KM) {
-                apnsConfig.pushCustomNotification(customNotification,userDTO.getDeviceToken());
-            }*/
-            /**
-             * 끝
-             */
             return new CreatedDetectiveBoardDTOAndFoundIn10KmUsers(detectBoardDTO, userWithIn10KM);
     }
 
