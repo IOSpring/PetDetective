@@ -28,7 +28,7 @@ public interface UserRepository extends JpaRepository<User, Long>, CustomUserRep
 
 
 
-    @Query(value = "SELECT user_id, phone_number,latitude, longitude,device_token,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(latitude))*COS(RADIANS(longitude)-RADIANS(:longitude))\n" +
+    @Query(value = "SELECT user_id, phone_number,latitude, longitude,device_token, fb.missing_time,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(latitude))*COS(RADIANS(longitude)-RADIANS(:longitude))\n" +
             "            +SIN(RADIANS(:latitude))*SIN(RADIANS(latitude)))) AS distance, i.breed , i.color\n" +
             "FROM user\n" +
             "    join finder_board fb on user.user_id = fb.f_board_user_fk\n" +
