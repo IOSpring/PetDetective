@@ -33,8 +33,8 @@ public class LoginController {
 
         //   수신자 번호 :  phoneNumber
         //   인증번호 :  numStr
-        // String numStr = cft.certifiedPhoneNumber(phoneNumber);
-        LoginResponseDto loginResponseDto = userService.createLoginResponsedto(form.getPhoneNumber(), "1234");
+         String numStr = cft.certifiedPhoneNumber(form.getPhoneNumber());
+        LoginResponseDto loginResponseDto = userService.createLoginResponsedto(form.getPhoneNumber(), numStr);
         loginRepository.updateDeviceToken(form.getPhoneNumber(), form.getDeviceToken());
 
 

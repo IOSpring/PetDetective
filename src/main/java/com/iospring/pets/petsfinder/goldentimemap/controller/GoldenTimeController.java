@@ -33,7 +33,6 @@ public class GoldenTimeController {
     public GoldenTimeDto GoldenTimeRequest(HttpSession httpSession) {
 
         String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
-
         System.out.println("phoneNumber = " + phoneNumber);
 
         Double petLatitude;
