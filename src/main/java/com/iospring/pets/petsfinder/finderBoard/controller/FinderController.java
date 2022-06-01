@@ -52,7 +52,7 @@ public class FinderController {
         CustomNotification customNotificationForNormal = new CustomNotification();
         // 알람에 프로퍼티 설정.
         customNotificationForGoldenTime.setAlertTitle("긴급구조- 목격");
-        customNotificationForNormal.setAlertTitle("목격 알림!");
+        customNotificationForNormal.setAlertTitle("새로운 목격");
         // 이것도 알림 프로퍼티 설정
         customNotificationForGoldenTime.setImageUrl(finderBoardDTO.getMainImageUrl());
         customNotificationForNormal.setImageUrl(finderBoardDTO.getMainImageUrl());
