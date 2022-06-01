@@ -65,7 +65,7 @@ public class DetectiveController {
             }
 
             customNotification.setAlertBody("현상금 " + detectBoardDTO.getMoney() + "원!");
-            customNotification.setAlertTitle("새로운 게시글 - 의뢰");
+            customNotification.setAlertTitle("새로운 의뢰");
             customNotification.setImageUrl(detectBoardDTO.getMainImageUrl());
             customNotification.createNotificationData("골든타임", "의뢰", detectBoardDTO.getId() + "");
             /**
