@@ -110,7 +110,6 @@ private final EntityManager em;
                 .getResultList();
     }
     public List<Object[]> findeBoardByALLIn3km(Double latitude, Double longitude,String targetTime) {
-        targetTime = "'2022-4-4 13:30:46 +0000'";
         List<Object[]> resultList = em.createNativeQuery(
                 "SELECT fb.finder_board_id,i.url ,fb.missing_time,fb.missing_latitude,fb.missing_longitude,fb.miss_location,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(missing_latitude))*COS(RADIANS(missing_longitude)-RADIANS(:longitude))+SIN(RADIANS(:latitude))*SIN(RADIANS(missing_latitude)))) AS distance\n" +
                 "FROM finder_board fb\n" +
@@ -128,7 +127,6 @@ private final EntityManager em;
         return resultList;
     }
     public List<Object[]> detectiveBoardIn3km(Double latitude, Double longitude,String targetTime) {
-        targetTime = "'2022-4-4 13:30:46 +0000'";
         List<Object[]> resultList = em.createNativeQuery(
                 "SELECT detective_board_id,i.url ,db.missing_time,db.missing_latitude,db.missing_longitude,db.miss_location,db.money,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(missing_latitude))*COS(RADIANS(missing_longitude)-RADIANS(:longitude))+SIN(RADIANS(:latitude))*SIN(RADIANS(missing_latitude)))) AS distance\n" +
                         "FROM detective_board db\n" +
