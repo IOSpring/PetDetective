@@ -30,9 +30,6 @@ public class DetectiveBoardRepositoryCustomImpl implements DetectiveBoardReposit
         }
         return resultList;
     }
-
-
-
     @Override
     public List<DetectiveBoardDTO> findAllDetectBoardDto(int page) {
         List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime, u.phoneNumber" +
@@ -45,7 +42,6 @@ public class DetectiveBoardRepositoryCustomImpl implements DetectiveBoardReposit
 
     @Override
     public List<DetectiveBoardDTO> findDetectBoardDtoByLocation(int page, String condition) {
-
         List<Object[]> list = em.createQuery("select d.id , d.missLocation , d.money, i.url, d.missingLatitude , d.missingLongitude , d.missingTime, u.phoneNumber" +
                         " from DetectiveBoard d join d.pet p join p.image i join d.user u where  d.missLocation like :condition order by d.createAt desc ")
                 .setParameter("condition" , '%' + condition +'%')
@@ -97,8 +93,4 @@ public class DetectiveBoardRepositoryCustomImpl implements DetectiveBoardReposit
                 .setParameter("condition" , '%' +  condition + '%')
                 .getSingleResult();
     }
-
-
-
-
 }

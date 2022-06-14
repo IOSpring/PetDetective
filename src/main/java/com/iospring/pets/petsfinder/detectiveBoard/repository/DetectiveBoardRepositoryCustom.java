@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface DetectiveBoardRepositoryCustom {
      List<DetectiveBoardDTO> findAllDetectBoardDto(int page);
-
-
      List<DetectiveBoardDTO> findDetectBoardDtoByLocation(int page, String condition);
      List<DetectiveBoardDTO> findDetectBoardDtoByBreed(int page, String condition);
      List<DetectiveBoardDTO> findDetectBoardDtoByColor(int page, String condition);

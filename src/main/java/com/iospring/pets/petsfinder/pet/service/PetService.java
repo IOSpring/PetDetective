@@ -12,10 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class PetService {
-
     private final PetRepository petRepository;
-
-
     @Transactional
     public Pet createPet(BoardForm boardForm) {
         Pet pet = Pet.builder()
@@ -27,8 +24,6 @@ public class PetService {
                 .build();
 
         petRepository.save(pet);
-
         return pet;
     }
-
 }

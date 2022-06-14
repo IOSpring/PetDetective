@@ -42,14 +42,11 @@ public class FinderBoard extends BaseEntity {
     @Column
     private String missingTime;
 
-
-
     @Column(columnDefinition = "varchar(12) default 'inprogress'")
     private String status;
 
     @Column(columnDefinition = "bool not null default false")
     private boolean isCare;
-
 
     @Column(columnDefinition = "text")
     private String content;
@@ -89,6 +86,4 @@ public class FinderBoard extends BaseEntity {
         }
         this.user = user;
     }
-
-
 }

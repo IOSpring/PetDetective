@@ -1,9 +1,6 @@
 package com.iospring.pets.petsfinder.goldentimemap.dto;
 
-import com.iospring.pets.petsfinder.finderBoard.entity.FinderBoard;
 import lombok.Data;
-
-import java.util.Date;
 
 @Data
 public class FinderRequestDto {
@@ -14,5 +11,4 @@ public class FinderRequestDto {
     private Double findLongitude;
     private String findLocation;
     private Double distance;
-
 }

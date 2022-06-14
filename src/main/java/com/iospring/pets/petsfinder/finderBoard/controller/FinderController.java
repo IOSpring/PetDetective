@@ -40,9 +40,7 @@ public class FinderController {
         // finder 게시글 저장한다.
         FinderBoardDTO finderBoardDTO = finderBoardService.addFindBoard(finderBoardForm, file, host,phoneNumber);
         // 유저가 finder 게시글을 올렸을 때 기존에 저장되어 있는 detective 게시판 중 품종과, 색이 같은 게시판을 올린 유저 리스트를 찾는다. (! 시간에 대한 로직은 없음 )
-        /**
-         * 발견한 시간 이전에 올린 유저들 만 추출
-         */
+
         List<UserDTO> userDTOList = userService.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO, finderBoardForm.getBreed(), finderBoardForm.getColor(),finderBoardForm.getMissingTime());
         //현재 시간 -3 시간 뽑기
         String threeHoursAgo = goldenTimeService.getThreeHoursAgo();
@@ -113,9 +111,7 @@ public class FinderController {
     @DeleteMapping("/finder/{board_id}")
     public Long deleteFinderBoard(@PathVariable(name = "board_id") Long id, HttpSession httpSession) {
         String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
-
         Long deleteBoardId = finderBoardService.deleteBoard(id,phoneNumber);
-
         return  deleteBoardId;
     }
 
@@ -127,7 +123,6 @@ public class FinderController {
                                           HttpSession httpSession
     ) {
         String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
-
         FinderBoard finderBoard = null;
 
         if (file != null) {
@@ -156,7 +151,6 @@ public class FinderController {
 
         } else if (category.equals("breed")) {
             List<FinderBoardDTO> finderBoardDTOList = finderBoardRepository.findFinderBoardDtoByBreed(page, condition);
-
 
             long totalPageCount = finderBoardService.getPageCountSearchedByBreed(condition);
 

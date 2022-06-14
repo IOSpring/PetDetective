@@ -34,38 +34,28 @@ public class DetectiveBoardService {
     private final ImageService imageService;
     private final PetService petService;
 
-
-
     private User getUserOrThrow(String phoneNumber) {
         return userRepository.findByPhoneNumber(phoneNumber)
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
     }
-
-
-
     @Transactional
     public DetectiveBoardDTO addDetectiveBoard(BoardForm detectBoardForm, MultipartFile file, String host, String phoneNumber) {
 
         User user = getUserOrThrow(phoneNumber);
-
 
         String imageUrl = fileUploadService.s3Upload(file,host, "detective");
         Image image = imageService.createImage(detectBoardForm ,imageUrl);
         Pet pet = petService.createPet(detectBoardForm);
         pet.connectImage(image);
 
-
         DetectiveBoard detectiveBoard = DetectiveBoard.toEntity(detectBoardForm);
         detectiveBoard.setPet(pet);
         detectiveBoard.setUser(user);
         detectBoardRepository.save(detectiveBoard);
 
-
         DetectiveBoardDTO detectBoardDTO = DetectiveBoardDTO.createDetectBoardDTO(detectiveBoard, detectiveBoard.getPet().getImage().getUrl(),phoneNumber);
-
         return detectBoardDTO;
     }
-
 
     @Transactional
     public DetectiveBoard updateBoardImage(Long id, MultipartFile file, String host, String phoneNumber) {
@@ -74,16 +64,13 @@ public class DetectiveBoardService {
         DetectiveBoard detectiveBoard = detectBoardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
 
-
         List<DetectiveBoard> detectiveBoards = user.getDetectiveBoards();
 
         if (!detectiveBoards.contains(detectiveBoard)) {
             throw new CustomException(INVALID_UPDATE);
         }
 
-
         Image image = detectiveBoard.getPet().getImage();
-
 
         fileUploadService.s3DeleteImage(image.getFileName());
 
@@ -102,14 +89,12 @@ public class DetectiveBoardService {
         DetectiveBoard detectiveBoard = detectBoardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
 
-
         List<DetectiveBoard> detectiveBoards = user.getDetectiveBoards();
 
         if (!detectiveBoards.contains(detectiveBoard)) {
             throw new CustomException(INVALID_UPDATE);
 
         }
-
 
         detectiveBoard.updateImage(detectBoardForm);
         detectiveBoard.updateBoard(detectBoardForm);
@@ -145,8 +130,6 @@ public class DetectiveBoardService {
 
     }
 
-
-
     @Transactional
     public Long deleteBoard(Long id, String phoneNumber) {
         User user = getUserOrThrow(phoneNumber);
@@ -158,7 +141,6 @@ public class DetectiveBoardService {
         } catch (CustomException e) {
             new CustomException(BOARD_NOT_FOUND);
         }
-
 
         List<DetectiveBoard> detectiveBoards = user.getDetectiveBoards();
 

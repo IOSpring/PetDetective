@@ -15,11 +15,9 @@ import java.util.UUID;
 
 import static com.iospring.pets.petsfinder.exception.ErrorCode.FAIL_UPLOAD_IN_S3;
 
-
 @RequiredArgsConstructor
 @Service
 public class FileUploadService {
-
 
     private final S3Service s3Service;
 
@@ -29,15 +27,8 @@ public class FileUploadService {
 
     public String s3Upload(MultipartFile file,String host, String folderName) {
 
-        String fileName;
 
-        if (host.equals("localhost:8080"))
-            fileName = "local/"+createFileName(file.getOriginalFilename());
-        else
-            fileName = folderName + "/" + createFileName(file.getOriginalFilename());
-
-        System.out.println("fileName = " + fileName);
-        
+        String  fileName = folderName + "/" + createFileName(file.getOriginalFilename());
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());
         objectMetadata.setContentType(file.getContentType());

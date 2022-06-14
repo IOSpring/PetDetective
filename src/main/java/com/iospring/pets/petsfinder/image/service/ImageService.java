@@ -22,7 +22,6 @@ public class ImageService {
                 .build();
 
         imageRepository.save(image);
-
         return image;
     }
 }

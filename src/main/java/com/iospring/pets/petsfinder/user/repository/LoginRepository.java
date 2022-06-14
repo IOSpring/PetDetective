@@ -18,6 +18,7 @@ public class LoginRepository {
 
     private final EntityManager em;
     private final UserRepository userRepository;
+
     @Transactional
     public User findOneUserByPhoneNum (String phoneNumber){
         List<User> user = em.createQuery("select u from User u where u.phoneNumber = :phoneNumber", User.class)
@@ -30,8 +31,6 @@ public class LoginRepository {
 
     @Transactional
     public void saveUserJoinDto(UserJoinDTO userJoinDTO){
-
-
         User user = new User();
         user.setEmail(userJoinDTO.getEmail());
         user.setAlterCount(0);
@@ -40,8 +39,6 @@ public class LoginRepository {
         user.setLongitude(Double.parseDouble(userJoinDTO.getLongitude()));
         user.setLoadAddress(userJoinDTO.getLoadAddress());
         user.setDeviceToken(userJoinDTO.getDeviceToken());
-
-
         em.persist(user);
     }
 
@@ -56,24 +53,12 @@ public class LoginRepository {
     }
     @Transactional
     public void updateLocationByPhoneNumber(String PhoneNumber, Double latitude,Double longitude,String loadAddress){
-        /*User user=findOneUserByPhoneNum(PhoneNumber);
-        System.out.println("user.getPhoneNumber() = " + user.getPhoneNumber());
-
-*/
-        System.out.println("longitude = " + longitude);
-        System.out.println("latitude = " + latitude);
-        System.out.println("loadAddress = " + loadAddress);
         User user = userRepository.findByPhoneNumber(PhoneNumber)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         
         user.setLatitude(latitude);
         user.setLongitude(longitude);
         user.setLoadAddress(loadAddress);
-
-        System.out.println("user.getLatitude() = " + user.getLatitude());
-        System.out.println("user.getLongitude() = " + user.getLongitude());
-        System.out.println("user.getLoadAddress() = " + user.getLoadAddress());
-//        userRepository.save(user);
     }
 
 

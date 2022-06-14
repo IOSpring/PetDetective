@@ -11,13 +11,6 @@ import lombok.Data;
 public class FinderBoardForm extends BoardForm {
     private boolean isCare;
 
-    @Override
-    public String toString() {
-        return  super.toString() + "FinderBoardForm{" +
-                "isCare=" + isCare +
-                '}';
-    }
-
     public FinderBoard toEntity(FinderBoardForm finderBoardForm) {
         FinderBoard finderBoard = FinderBoard.builder()
                 .isCare(finderBoardForm.isCare())

@@ -5,10 +5,8 @@ import lombok.Data;
 
 @Data
 public class LoginResponseDto {
-
     private boolean needjoin;
     private String cernum;
-
     public LoginResponseDto(User user, String cernum) {
         this.needjoin = user==null ? true : false;
         this.cernum = cernum;

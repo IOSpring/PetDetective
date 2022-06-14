@@ -29,11 +29,9 @@ public class GoldenTimeController {
     private final UserRepository userRepository;
 
     @GetMapping("/goldentime")
-//    public GoldenTimeDto GoldenTimeRequest(@RequestParam(name = "phoneNumber") String phoneNumber){
     public GoldenTimeDto GoldenTimeRequest(HttpSession httpSession) {
 
         String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
-        System.out.println("phoneNumber = " + phoneNumber);
 
         Double petLatitude;
         Double petLongitude;

@@ -16,10 +16,4 @@ public class DetectiveRequestDto {
     private String missingLocation;
     private Integer money;
     private Double distance;
-
-
-
-
-
-
 }
