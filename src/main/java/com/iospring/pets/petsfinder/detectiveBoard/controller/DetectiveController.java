@@ -47,18 +47,14 @@ public class DetectiveController {
     }
 
         @PostMapping("/detect")
-        public CreatedDetectiveBoardDTOAndFoundIn10KmUsers addDetectiveBoard(DetectiveBoardForm detectBoardForm, MultipartFile file, @RequestHeader("host") String host,
+        public CreatedDetectiveBoardDTOAndFoundIn10KmUsers addDetectiveBoard(DetectiveBoardForm detectBoardForm, MultipartFile file,
                                   HttpSession httpSession) {
-            //세션에서 유저 정보 가져온다
             String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
 
-            // detective 게시판 저장한다.
-            DetectiveBoardDTO detectBoardDTO = detectBoardService.addDetectiveBoard(detectBoardForm, file,host,phoneNumber);
+            DetectiveBoardDTO detectBoardDTO = detectBoardService.addDetectiveBoard(detectBoardForm, file,phoneNumber);
 
             CustomNotification customNotification = new CustomNotification();
 
-
-            // 강아지를 잃어버린 위치 기준 반경 3km 유저 들 정보 출력
             List<UserDTO> userWithIn10KM = userService.findUsersIn3KmWhenUploadDetectiveBoard(detectBoardDTO);
             for (UserDTO userDTO : userWithIn10KM) {
                 System.out.println("유저 아이디 : "+ userDTO.getId());
@@ -120,7 +116,6 @@ public class DetectiveController {
     public DetectiveBoardDTO updateBoardForm(@PathVariable(name = "board_id") Long id,
                                              DetectiveBoardForm detectBoardForm,
                                              @RequestPart(required = false) MultipartFile file,
-                                             @RequestHeader("host") String host,
                                              HttpSession httpSession
     ) {
 
@@ -129,7 +124,7 @@ public class DetectiveController {
         DetectiveBoard detectiveBoard = null;
 
         if (file != null) {
-            detectiveBoard = detectBoardService.updateBoardImage(id, file,host,phoneNumber);
+            detectiveBoard = detectBoardService.updateBoardImage(id, file,phoneNumber);
         }
 
         detectiveBoard = detectBoardService.updateBoardForm(id, detectBoardForm,phoneNumber);

@@ -41,24 +41,19 @@ public class FinderBoardDetailDTO {
     private String color;
     private String missingTime;
     private String missingLocation;
+    private String feature;
+    private String disease;
+    private String gender;
+    private String mainImageUrl;
+    private String content;
+
+    private Integer age;
 
     private Double missingLatitude;
     private Double missingLongitude;
 
-    private boolean isOperation;
-
-    private Integer age;
-    private String feature;
-    private String disease;
-    private String gender;
-
-    private String mainImageUrl;
-
     private Long id;
 
-    private String content;
-
+    private boolean isOperation;
     private boolean isCare;
-
-
 }

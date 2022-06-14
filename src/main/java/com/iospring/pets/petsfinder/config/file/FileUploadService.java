@@ -25,7 +25,7 @@ public class FileUploadService {
         s3Service.deleteFile(fileName);
     }
 
-    public String s3Upload(MultipartFile file,String host, String folderName) {
+    public String s3Upload(MultipartFile file, String folderName) {
 
 
         String  fileName = folderName + "/" + createFileName(file.getOriginalFilename());

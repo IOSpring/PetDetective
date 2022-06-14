@@ -52,7 +52,7 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
     }
     private final EntityManager em;
 
-    @Override
+    /*@Override
     public List<UserDTO> findUserListMatchingBreedAndColor(String breed, String color) {
 
         List<Object[]> resultListObj = em.createQuery("select u.id, u.phoneNumber,u.latitude, u.longitude , u.deviceToken from DetectiveBoard db inner join db.user u inner join db.pet p inner  join p.image i where i.color = :color and i.breed = :breed")
@@ -65,7 +65,7 @@ public class CustomFinderBoardRepositoryImpl implements CustomFinderBoardReposit
         return userDTOList;
 
     }
-
+*/
 
 
     @Override

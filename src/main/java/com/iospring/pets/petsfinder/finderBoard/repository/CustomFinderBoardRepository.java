@@ -8,21 +8,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CustomFinderBoardRepository  {
-    List<UserDTO> findUserListMatchingBreedAndColor(String breed , String color);
-
     List<FinderBoardDTO> getCareFinderBoardDTO(int page);
     List<FinderBoardDTO> getNotCareFinderBoardDTO(int page);
     List<FinderBoardDTO> getAllFinderBoardDTO(int page);
-
     List<FinderBoardDTO> findFinderBoardDtoByLocation(int page, String condition);
-
-    long countFinderBoardDtoSearchedByLocation(String condition);
-
     List<FinderBoardDTO> findFinderBoardDtoByBreed(int page, String condition);
-
-    long countDetectBoardDtoSearchedByBreed(String condition);
-
     List<FinderBoardDTO> findFinderBoardDtoByColor(int page, String condition);
 
+    long countFinderBoardDtoSearchedByLocation(String condition);
+    long countDetectBoardDtoSearchedByBreed(String condition);
     long countFinderBoardDtoSearchedByColor(String condition);
 }
+//    List<UserDTO> findUserListMatchingBreedAndColor(String breed , String color);

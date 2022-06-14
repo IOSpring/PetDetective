@@ -35,23 +35,20 @@ public class FinderController {
 
     @PostMapping("/finder")
     public CreateFinderBoardDTOAndUserMatchingBoardAndColor addFinderBoard(FinderBoardForm finderBoardForm, MultipartFile file, @RequestHeader("host") String host, HttpSession httpSession) {
-        //세션에서 유저 정보 가져온다
         String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
-        // finder 게시글 저장한다.
-        FinderBoardDTO finderBoardDTO = finderBoardService.addFindBoard(finderBoardForm, file, host,phoneNumber);
-        // 유저가 finder 게시글을 올렸을 때 기존에 저장되어 있는 detective 게시판 중 품종과, 색이 같은 게시판을 올린 유저 리스트를 찾는다. (! 시간에 대한 로직은 없음 )
+
+        FinderBoardDTO finderBoardDTO = finderBoardService.addFindBoard(finderBoardForm, file,phoneNumber);
 
         List<UserDTO> userDTOList = userService.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO, finderBoardForm.getBreed(), finderBoardForm.getColor(),finderBoardForm.getMissingTime());
-        //현재 시간 -3 시간 뽑기
+
         String threeHoursAgo = goldenTimeService.getThreeHoursAgo();
 
-        // 종서가 만든 클래스, 알람 보내는 용도임
         CustomNotification customNotificationForGoldenTime = new CustomNotification();
         CustomNotification customNotificationForNormal = new CustomNotification();
-        // 알람에 프로퍼티 설정.
+
         customNotificationForGoldenTime.setAlertTitle("긴급 알림 - 목격");
         customNotificationForNormal.setAlertTitle("새로운 게시글 - 목격");
-        // 이것도 알림 프로퍼티 설정
+
         customNotificationForGoldenTime.setImageUrl(finderBoardDTO.getMainImageUrl());
         customNotificationForNormal.setImageUrl(finderBoardDTO.getMainImageUrl());
 
@@ -64,17 +61,11 @@ public class FinderController {
             customNotificationForNormal.createNotificationData("게시글 작성", "발견", finderBoardDTO.getId() + "");
         }
         for (UserDTO userDTO : userDTOList) {
-            // 각 유저들에게 알람을 보낻다.
-            // 해당 정보가 골든타임이면
             if (userDTO.getMissingTime().compareTo(threeHoursAgo) > 0) {
-                // 골든 타임 알람 보내기
                 apnsService.pushCustomNotification(customNotificationForGoldenTime, userDTO.getDeviceToken());
             }
-            // 일반 알람 보내기
             apnsService.pushCustomNotification(customNotificationForNormal, userDTO.getDeviceToken());
-
         }
-
         return new CreateFinderBoardDTOAndUserMatchingBoardAndColor(finderBoardDTO, userDTOList);
     }
 
@@ -101,12 +92,10 @@ public class FinderController {
         }
     }
 
-
     @GetMapping("/finder/{board_id}")
     public FinderBoardDetailDTO getDetailDetectBoard(@PathVariable(name = "board_id") Long boardId) {
         return finderBoardService.getDetailDetectBoard(boardId);
     }
-
 
     @DeleteMapping("/finder/{board_id}")
     public Long deleteFinderBoard(@PathVariable(name = "board_id") Long id, HttpSession httpSession) {
@@ -119,20 +108,18 @@ public class FinderController {
     public FinderBoardDTO updateBoardForm(@PathVariable(name = "board_id") Long id,
                                              FinderBoardForm finderBoardForm,
                                              @RequestPart(required = false) MultipartFile file,
-                                             @RequestHeader("host") String host,
                                           HttpSession httpSession
     ) {
         String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
         FinderBoard finderBoard = null;
 
         if (file != null) {
-            finderBoard = finderBoardService.updateBoardImage(id, file,host,phoneNumber);
+            finderBoard = finderBoardService.updateBoardImage(id, file,phoneNumber);
         }
 
         finderBoard = finderBoardService.updateBoardForm(id, finderBoardForm,phoneNumber);
         return FinderBoardDTO.createDetectBoardDTO(finderBoard, finderBoard.getPet().getImage().getUrl(),phoneNumber);
     }
-
 
     @GetMapping("/finder/search")
     public FindBoardDTOListAndToTalPage searchDetectiveBoard(
@@ -153,35 +140,25 @@ public class FinderController {
             List<FinderBoardDTO> finderBoardDTOList = finderBoardRepository.findFinderBoardDtoByBreed(page, condition);
 
             long totalPageCount = finderBoardService.getPageCountSearchedByBreed(condition);
-
             if (page > totalPageCount) throw new CustomException(ErrorCode.INVALID_PAGE);
-
             return new FindBoardDTOListAndToTalPage(finderBoardDTOList,totalPageCount);
 
         } else if (category.equals("color")) {
             List<FinderBoardDTO> finderBoardDTOList = finderBoardRepository.findFinderBoardDtoByColor(page, condition);
-
             long totalPageCount = finderBoardService.getPageCountSearchedByColor(condition);
-
             if (page > totalPageCount) throw new CustomException(ErrorCode.INVALID_PAGE);
-
             return new FindBoardDTOListAndToTalPage(finderBoardDTOList,totalPageCount);
 
         } else {
             throw new CustomException(ErrorCode.INVALID_CONDITION);
         }
-
     }
-
-
-
 
     @Data
     @AllArgsConstructor
     class CreateFinderBoardDTOAndUserMatchingBoardAndColor {
         FinderBoardDTO finderBoardDTO;
         List<UserDTO> matchingBoardAndColorUserList;
-
     }
 
     @Data
@@ -190,5 +167,4 @@ public class FinderController {
         List<FinderBoardDTO> finderBoardDTOS;
         long totalPage;
     }
-
 }

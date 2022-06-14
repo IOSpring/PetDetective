@@ -13,6 +13,4 @@ public interface DetectiveBoardRepositoryCustom {
      long countDetectBoardDtoSearchedByLocation(String condition);
      long countDetectBoardDtoSearchedByBreed(String condition);
      long countDetectBoardDtoSearchedByColor(String condition);
-
-
 }

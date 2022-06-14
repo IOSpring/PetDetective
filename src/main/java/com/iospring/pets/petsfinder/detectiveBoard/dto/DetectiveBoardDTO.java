@@ -8,7 +8,6 @@ import lombok.Data;
 @Data
 public class DetectiveBoardDTO extends BoardDTO {
     private Integer money;
-
     public static DetectiveBoardDTO createDetectBoardDTO(DetectiveBoard detectiveBoard, String url, String userPhoneNumber) {
         DetectiveBoardDTO detectBoardDTO = new DetectiveBoardDTO();
 
@@ -20,11 +19,6 @@ public class DetectiveBoardDTO extends BoardDTO {
         detectBoardDTO.setMissingLatitude(detectiveBoard.getMissingLatitude());
         detectBoardDTO.setMissingTime(detectiveBoard.getMissingTime());
         detectBoardDTO.setUserPhoneNumber(userPhoneNumber);
-
         return detectBoardDTO;
     }
-
-
-
-
 }

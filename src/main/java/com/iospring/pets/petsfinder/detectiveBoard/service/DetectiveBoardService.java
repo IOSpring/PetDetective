@@ -39,11 +39,10 @@ public class DetectiveBoardService {
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
     }
     @Transactional
-    public DetectiveBoardDTO addDetectiveBoard(BoardForm detectBoardForm, MultipartFile file, String host, String phoneNumber) {
-
+    public DetectiveBoardDTO addDetectiveBoard(BoardForm detectBoardForm, MultipartFile file,  String phoneNumber) {
         User user = getUserOrThrow(phoneNumber);
 
-        String imageUrl = fileUploadService.s3Upload(file,host, "detective");
+        String imageUrl = fileUploadService.s3Upload(file, "detective");
         Image image = imageService.createImage(detectBoardForm ,imageUrl);
         Pet pet = petService.createPet(detectBoardForm);
         pet.connectImage(image);
@@ -58,7 +57,7 @@ public class DetectiveBoardService {
     }
 
     @Transactional
-    public DetectiveBoard updateBoardImage(Long id, MultipartFile file, String host, String phoneNumber) {
+    public DetectiveBoard updateBoardImage(Long id, MultipartFile file, String phoneNumber) {
         User user = getUserOrThrow(phoneNumber);
 
         DetectiveBoard detectiveBoard = detectBoardRepository.findById(id)
@@ -71,11 +70,9 @@ public class DetectiveBoardService {
         }
 
         Image image = detectiveBoard.getPet().getImage();
-
         fileUploadService.s3DeleteImage(image.getFileName());
 
-        String newFileName = fileUploadService.s3Upload(file, host,"detective");
-
+        String newFileName = fileUploadService.s3Upload(file,"detective");
         image.setUrl(newFileName);
 
         return detectiveBoard;
@@ -83,14 +80,12 @@ public class DetectiveBoardService {
 
     @Transactional
     public DetectiveBoard updateBoardForm(Long id, BoardForm detectBoardForm, String phoneNumber) {
-
         User user = getUserOrThrow(phoneNumber);
 
         DetectiveBoard detectiveBoard = detectBoardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
 
         List<DetectiveBoard> detectiveBoards = user.getDetectiveBoards();
-
         if (!detectiveBoards.contains(detectiveBoard)) {
             throw new CustomException(INVALID_UPDATE);
 
@@ -99,7 +94,6 @@ public class DetectiveBoardService {
         detectiveBoard.updateImage(detectBoardForm);
         detectiveBoard.updateBoard(detectBoardForm);
         detectiveBoard.updatePet(detectBoardForm);
-
         return detectiveBoard;
     }
 
@@ -107,64 +101,46 @@ public class DetectiveBoardService {
     public long getPageCount() {
         return (detectBoardRepository.count() / DetectiveBoardRepositoryCustomImpl.SHOW_DETECTIVE_BOARD_COUNT) +1;
     }
-
-
     public long getPageCountSearchedByLocation(String condition) {
         return (detectBoardRepository.countDetectBoardDtoSearchedByLocation(condition) / DetectiveBoardRepositoryCustomImpl.SHOW_DETECTIVE_BOARD_COUNT) +1;
     }
-
     public long getPageCountSearchedByBreed(String condition) {
         return (detectBoardRepository.countDetectBoardDtoSearchedByBreed(condition) / DetectiveBoardRepositoryCustomImpl.SHOW_DETECTIVE_BOARD_COUNT) +1;
     }
-
     public long getPageCountSearchedByColor(String condition){
         return (detectBoardRepository.countDetectBoardDtoSearchedByColor(condition) / DetectiveBoardRepositoryCustomImpl.SHOW_DETECTIVE_BOARD_COUNT) +1;
-
     }
-
     public DetectiveBoardDetailDTO getDetailDetectBoard(Long boardId) {
         DetectiveBoard detectiveBoard = detectBoardRepository.getById(boardId);
-
         DetectiveBoardDetailDTO detectBoardDetailDTO = DetectiveBoardDetailDTO.createDetectBoardDetailDTO(detectiveBoard);
         return detectBoardDetailDTO;
-
     }
-
     @Transactional
     public Long deleteBoard(Long id, String phoneNumber) {
         User user = getUserOrThrow(phoneNumber);
-
         DetectiveBoard detectiveBoard =null;
         try {
-
             detectiveBoard = detectBoardRepository.getById(id);
         } catch (CustomException e) {
             new CustomException(BOARD_NOT_FOUND);
         }
-
         List<DetectiveBoard> detectiveBoards = user.getDetectiveBoards();
-
         if (!detectiveBoards.contains(detectiveBoard)) {
             throw new CustomException(INVALID_DELETE);
         }
-
         Image image = detectiveBoard.getPet().getImage();
         try {
             fileUploadService.s3DeleteImage(image.getFileName());
         } catch (RuntimeException e) {
             throw new CustomException(FAIL_DELETE_IN_S3);
         }
-
         detectBoardRepository.deleteById(id);
-
         return id;
     }
 
     @Transactional
     public Long deleteBoard(Long id) {
-
         DetectiveBoard detectiveBoard = detectBoardRepository.getById(id);
-
 
         Image image = detectiveBoard.getPet().getImage();
         try {
@@ -172,9 +148,7 @@ public class DetectiveBoardService {
         } catch (RuntimeException e) {
             throw new CustomException(FAIL_DELETE_IN_S3);
         }
-
         detectBoardRepository.deleteById(id);
-
         return id;
     }
 }

@@ -1,7 +1,7 @@
 package com.iospring.pets.petsfinder.image.service;
 
 import com.iospring.pets.petsfinder.commond.entity.BoardForm;
-import com.iospring.pets.petsfinder.image.ImageRepository;
+import com.iospring.pets.petsfinder.image.repository.ImageRepository;
 import com.iospring.pets.petsfinder.image.entity.Image;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

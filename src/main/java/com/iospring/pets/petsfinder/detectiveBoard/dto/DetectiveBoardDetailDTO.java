@@ -10,10 +10,7 @@ import lombok.Data;
 @Data
 @Builder
 public class DetectiveBoardDetailDTO {
-
-
     public static DetectiveBoardDetailDTO createDetectBoardDetailDTO(DetectiveBoard detectiveBoard) {
-
         Pet pet = detectiveBoard.getPet();
         Image image = detectiveBoard.getPet().getImage();
 
@@ -35,12 +32,8 @@ public class DetectiveBoardDetailDTO {
                 .gender(pet.getGender())
                 .userPhoneNumber(detectiveBoard.getUser().getPhoneNumber())
                 .build();
-
         return detectBoardDetailDTO;
-
     }
-
-
     private String userPhoneNumber;
     private String breed;
     private String color;
@@ -57,5 +50,4 @@ public class DetectiveBoardDetailDTO {
     private Long id;
     private String content;
     private Integer money;
-
 }

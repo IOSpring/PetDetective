@@ -18,9 +18,6 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class LoginController {
 
-    private final EntityManager em;
-    private final certificationService cft;
-
     private final UserService userService;
     private final LoginRepository loginRepository;
 

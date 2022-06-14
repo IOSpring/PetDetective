@@ -60,7 +60,6 @@ public class DetectiveBoard extends BaseEntity {
         return detectiveBoard;
     }
 
-
     public void updatePet(BoardForm boardForm) {
         Pet pet = this.getPet();
         pet.update(boardForm.getFeature(),boardForm.getAge(),boardForm.getGender(),boardForm.getDisease(),boardForm.isOperation());
@@ -86,5 +85,4 @@ public class DetectiveBoard extends BaseEntity {
         }
             this.user = user;
     }
-
 }

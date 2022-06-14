@@ -39,27 +39,22 @@ public class FinderBoardService {
     }
 
     @Transactional
-    public FinderBoardDTO addFindBoard(FinderBoardForm finderBoardForm, MultipartFile file, String host,String phoneNumber) {
+    public FinderBoardDTO addFindBoard(FinderBoardForm finderBoardForm, MultipartFile file,String phoneNumber) {
 
         User user = getUserOrThrow(phoneNumber);
 
-        String imageUrl = fileUploadService.s3Upload(file, host,"finder");
+        String imageUrl = fileUploadService.s3Upload(file,"finder");
 
         Image image = imageService.createImage(finderBoardForm, imageUrl);
         Pet pet = petService.createPet(finderBoardForm);
         pet.connectImage(image);
+
         FinderBoard finderBoard = finderBoardForm.toEntity(finderBoardForm);
         finderBoard.setPet(pet);
         finderBoard.setUser(user);
         finderBoardRepository.save(finderBoard);
 
-
         return FinderBoardDTO.createDetectBoardDTO(finderBoard, imageUrl,phoneNumber);
-    }
-
-
-    public List<UserDTO> userListMatchingBreedAndColor(String breed, String color) {
-        return finderBoardRepository.findUserListMatchingBreedAndColor(breed,color);
     }
 
     public long getCareFindBoardPage() {
@@ -103,7 +98,7 @@ public class FinderBoardService {
     }
 
     @Transactional
-    public FinderBoard updateBoardImage(Long id, MultipartFile file, String host,String phoneNumber) {
+    public FinderBoard updateBoardImage(Long id, MultipartFile file, String phoneNumber) {
         User user = getUserOrThrow(phoneNumber);
 
         FinderBoard finderBoard = finderBoardRepository.findById(id)
@@ -114,11 +109,9 @@ public class FinderBoardService {
             throw new CustomException(ErrorCode.INVALID_UPDATE);
         }
 
-
-
         Image image = finderBoard.getPet().getImage();
         fileUploadService.s3DeleteImage(image.getFileName());
-        String newFileName = fileUploadService.s3Upload(file, host,"finder");
+        String newFileName = fileUploadService.s3Upload(file,"finder");
         image.setUrl(newFileName);
         return finderBoard;
     }
