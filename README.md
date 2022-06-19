@@ -1,4 +1,8 @@
-# 펫 탐정소 Server       
+# 펫 탐정소 Server     
+<h3>
+  <a href="https://docs.google.com/presentation/d/1KBlHlEJMoPWHiP5bZy2ViVnBxUouRoL6/edit?usp=sharing&ouid=100246645175953757075&rtpof=true&sd=true">portfolio</a> <br/>
+<a href="https://docs.google.com/presentation/d/1zKrOkAhA9B9OQr9WThakyF4qwp0yUx-X/edit?usp=sharing&ouid=100246645175953757075&rtpof=true&sd=true">ポートフォリオ-日本語</a>
+</h3>
 유실견 문제로 발생하는 사회적 문제에 대한 해결책을 찾고자  
 강아지를 잃어버렷을때 필요한 행동에 대한 기능을 제공하는 유실견 찾기 플랫폼 서비스 **펫 탐정소** 입니다.  
 ![image](https://user-images.githubusercontent.com/68727046/173567700-261ab0a7-fd27-4902-b793-4486c44b6d00.png)
@@ -27,6 +31,10 @@
   2. 커밋 메세지는 로그 확인시 알아볼수 있도록 작성 (한글)
 
 ## :page_with_curl: Dependencies  
+
+<details>
+  <summary>상세 보기 </summary>
+
 <dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -106,3 +114,34 @@
 		</dependency>
 
 	</dependencies>
+</details>
+
+# ERD
+![](https://velog.velcdn.com/images/wonjongseo/post/79e1c49b-45d7-4996-af87-746e54892ed8/image.png)
+
+# Story Board
+
+## 로그인 
+![](https://velog.velcdn.com/images/wonjongseo/post/07242ac3-3af1-4645-8df7-c3ef2cd28683/image.png)
+
+
+## 회원가입
+![](https://velog.velcdn.com/images/wonjongseo/post/9c7c3d93-38bb-4d65-b90e-ef0ab0b24fb0/image.png)
+
+<details>
+  <summary>상세 보기 </summary>
+ 
+
+
+ - 핸드폰 번호 입력 후, 해당 핸드폰에 오는 문자의
+인증번호를 입력한다.
+- 새로운 핸드폰 번호일 경우, 회원가입 절차로 이동하며,
+추가정보( 현재위치, 이메일 주소 ) 등을 받는다.
+
+- 핸드폰 번호, 추가 정보와 함께 Push 알림에 필요한 
+Device Token을 함께 전달한다. 
+</details>
+
+
+## 의뢰 상세보기
+![](https://velog.velcdn.com/images/wonjongseo/post/43e98e61-af03-4d4e-b421-9137d3c3a9ec/image.png)
