@@ -1,7 +1,7 @@
 # 펫 탐정소 Server     
 <h3>
-  <a href="https://docs.google.com/presentation/d/1KBlHlEJMoPWHiP5bZy2ViVnBxUouRoL6/edit?usp=sharing&ouid=100246645175953757075&rtpof=true&sd=true">portfolio</a> <br/>
-<a href="https://docs.google.com/presentation/d/1zKrOkAhA9B9OQr9WThakyF4qwp0yUx-X/edit?usp=sharing&ouid=100246645175953757075&rtpof=true&sd=true">ポートフォリオ-日本語</a>
+  <a href="https://docs.google.com/presentation/d/1KBlHlEJMoPWHiP5bZy2ViVnBxUouRoL6/edit?usp=sharing&ouid=100246645175953757075&rtpof=true&sd=true">portfolioー한국어 <- </a> <br/>
+<a href="https://docs.google.com/presentation/d/1zKrOkAhA9B9OQr9WThakyF4qwp0yUx-X/edit?usp=sharing&ouid=100246645175953757075&rtpof=true&sd=true">ポートフォリオ-日本語 <- </a>
 </h3>
 
 
