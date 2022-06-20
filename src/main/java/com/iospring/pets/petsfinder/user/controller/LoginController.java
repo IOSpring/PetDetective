@@ -20,7 +20,7 @@ public class LoginController {
 
     private final UserService userService;
     private final LoginRepository loginRepository;
-
+    private final certificationService certificationService;
     private final UserRepository userRepository;
 
 
@@ -30,7 +30,7 @@ public class LoginController {
 
         //   수신자 번호 :  phoneNumber
         //   인증번호 :  numStr
-//         String numStr = cft.certifiedPhoneNumber(form.getPhoneNumber());
+//         String numStr = certificationService.certifiedPhoneNumber(form.getPhoneNumber());
         LoginResponseDto loginResponseDto = userService.createLoginResponsedto(form.getPhoneNumber(), "1234");
         loginRepository.updateDeviceToken(form.getPhoneNumber(), form.getDeviceToken());
 
@@ -48,41 +48,16 @@ public class LoginController {
 
         return newUser.getId();
     }
-    @GetMapping("/delete/{phoneNumber}")
+    @DeleteMapping("/delete/{phoneNumber}")
     public void deleteUser(@PathVariable("phoneNumber") String phoneNumber) {
         System.out.println("휴대폰 번호 : " + phoneNumber);
         userService.delete(phoneNumber);
     }
 
-    // Jong Seo
 
 
-    @PostMapping("/login")
-    public void login(String phoneNumber, String deviceToken, HttpSession httpSession) {
-        System.out.println("phoneNumber = " + phoneNumber);
-        User user = userRepository.findByPhoneNumber(phoneNumber)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-        /*
-        if(유저가 입력한 인증번호 != 서버에서 만든 인증번호 ) {
-            throw new RuntimeException("인증번호 일치하지 않습니다.");
-        }
-         */
-        user.checkDeviceToken(deviceToken);
-
-        httpSession.setAttribute("phoneNumber", user.getPhoneNumber());
-
-        System.out.println("httpSession.getAttribute(\"phoneNumber\") = " + httpSession.getAttribute("phoneNumber"));
-
-    }
-
-    @PostMapping("/user/updatepoint")
-    public UserLocationDto updateLocation(@RequestBody UserLocationDto userLocationDto) {
-        userService.updateLocation(userLocationDto);
-        return userLocationDto;
-    }
-
-    @PutMapping("/user/update-point")
-    public void updateLocation2(@RequestBody UserLocationDto userLocationDto) {
+    @PutMapping("/user/update/location")
+    public void updateLocation(@RequestBody UserLocationDto userLocationDto) {
         System.out.println("userLocationDto = " + userLocationDto);
         userService.updateLocation2(userLocationDto);
     }
