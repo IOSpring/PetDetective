@@ -119,6 +119,9 @@
 	</dependencies>
 </details>
 
+## API 명세서
+[API 명세서 보러가기](https://iospring.notion.site/REST-API-ca2f4423404d497893118e058380caac/)
+	  
 # ERD
 ![](https://velog.velcdn.com/images/wonjongseo/post/79e1c49b-45d7-4996-af87-746e54892ed8/image.png)
 
