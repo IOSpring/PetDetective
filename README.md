@@ -123,12 +123,12 @@
 [API 명세서 보러가기](https://iospring.notion.site/REST-API-ca2f4423404d497893118e058380caac/)
 	  
 ## :chart_with_downwards_trend: ERD
-![image](https://user-images.githubusercontent.com/68727046/174724489-f1dd0a73-208f-44fc-b880-2cfb0a727308.png) {: width="100" height="100"}
+<img src = "https://user-images.githubusercontent.com/68727046/174724489-f1dd0a73-208f-44fc-b880-2cfb0a727308.png" width="70%" height="70%">
 	  
 ## :notebook_with_decorative_cover: Story Board
 
 ### 로그인,회원가입 
-![image](https://user-images.githubusercontent.com/68727046/174611838-e7267654-43ad-4cd8-aa24-6edf530c5f7d.png)  ![image](https://user-images.githubusercontent.com/68727046/174612156-c8b04098-5048-4803-a2c3-78ef0913edb8.png)
+<img src = "https://user-images.githubusercontent.com/68727046/174611838-e7267654-43ad-4cd8-aa24-6edf530c5f7d.png" width="30%" height="30%"> <img src = "https://user-images.githubusercontent.com/68727046/174612156-c8b04098-5048-4803-a2c3-78ef0913edb8.png" width="30%" height="30%"> 
 <details>
   <summary>기능 설명 </summary>
  	- 핸드폰 번호 입력 후, 해당 핸드폰에 오는 문자의 인증번호를 입력한다.</br>
@@ -140,7 +140,7 @@
 
 
 ### 게시글
-![image](https://user-images.githubusercontent.com/68727046/174612474-ff008d11-c9d9-49eb-b5ca-1878f8e0169c.png)   ![image](https://user-images.githubusercontent.com/68727046/174611575-9e23e12a-8cd6-423a-ad05-ae038cfded41.png)
+<img src = "https://user-images.githubusercontent.com/68727046/174612474-ff008d11-c9d9-49eb-b5ca-1878f8e0169c.png" width="30%" height="30%"> <img src = "https://user-images.githubusercontent.com/68727046/174611575-9e23e12a-8cd6-423a-ad05-ae038cfded41.png" width="30%" height="30%"> 
 
 <details>
   <summary>기능 설명 </summary>
@@ -149,14 +149,16 @@
 </details>
 
 ### 게시글 상세보기  
-![image](https://user-images.githubusercontent.com/68727046/174612397-7132371b-84f7-42e4-9caa-71daf3417816.png)
+<img src = "https://user-images.githubusercontent.com/68727046/174612397-7132371b-84f7-42e4-9caa-71daf3417816.png" width="30%" height="30%"> 
+
 <details>
   <summary>기능 설명 </summary>
 	- 게시글 상세 내용 을 볼수 있는 페이지이다.</br>
 </details>
 
 ### 게시글 등록  
-![image](https://user-images.githubusercontent.com/68727046/174612891-b7ab4c13-cb55-4bfb-9393-7fd8c604ee8d.png)  ![image](https://user-images.githubusercontent.com/68727046/174612999-6f2b2200-0b97-48d6-812c-207682fea8b3.png)  ![image](https://user-images.githubusercontent.com/68727046/174613083-02bb7e37-c6f5-4c63-aac0-4ae447ca915b.png) ![image](https://user-images.githubusercontent.com/68727046/174613514-390c3f8e-c912-4379-a10b-7eac48b9434a.png)  
+<img src = "https://user-images.githubusercontent.com/68727046/174612891-b7ab4c13-cb55-4bfb-9393-7fd8c604ee8d.png" width="30%" height="30%"> <img src = "https://user-images.githubusercontent.com/68727046/174612999-6f2b2200-0b97-48d6-812c-207682fea8b3.png" width="30%" height="30%">  
+<img src = "https://user-images.githubusercontent.com/68727046/174613083-02bb7e37-c6f5-4c63-aac0-4ae447ca915b.png" width="30%" height="30%"> <img src = "https://user-images.githubusercontent.com/68727046/174613514-390c3f8e-c912-4379-a10b-7eac48b9434a.png" width="30%" height="30%">
 
 <details>
   <summary>기능 설명 </summary>
@@ -167,7 +169,7 @@
 </details>
 
 ### 골든타임 게시글 보기
-![image](https://user-images.githubusercontent.com/68727046/174614276-41be45f0-0037-43da-a8bd-f93df1401eb4.png) 
+<img src = "https://user-images.githubusercontent.com/68727046/174614276-41be45f0-0037-43da-a8bd-f93df1401eb4.png" width="30%" height="30%">
 <details>
   <summary>기능 설명 </summary>
 	- 지도를 통해 게시글을 보여준다. </br>
@@ -176,7 +178,7 @@
 </details>
 
 ### 푸시 알림
-![image](https://user-images.githubusercontent.com/68727046/174615351-e01e5286-7892-48a8-b878-5d569e6c3d2e.png)
+<img src = "https://user-images.githubusercontent.com/68727046/174615351-e01e5286-7892-48a8-b878-5d569e6c3d2e.png" width="30%" height="30%">
 <details>
   <summary>기능 설명 </summary>
 	- 사용자가 글을 작성시 조건에 맞는 사용자들에게 푸시알림을 보내준다.</br>
@@ -186,7 +188,7 @@
 </details>
 
 ### 알림 리스트
-![image](https://user-images.githubusercontent.com/68727046/174616273-6729ed7c-4140-4587-be4e-f695ddc35a22.png)
+<img src = "https://user-images.githubusercontent.com/68727046/174616273-6729ed7c-4140-4587-be4e-f695ddc35a22.png" width="30%" height="30%">
 <details>
   <summary>기능 설명 </summary>
 	- 받을 알림들을 볼수있는 페이지 이다.</br>
