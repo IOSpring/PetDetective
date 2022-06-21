@@ -123,8 +123,8 @@
 [API 명세서 보러가기](https://iospring.notion.site/REST-API-ca2f4423404d497893118e058380caac/)
 	  
 ## :chart_with_downwards_trend: ERD
-![](https://velog.velcdn.com/images/wonjongseo/post/79e1c49b-45d7-4996-af87-746e54892ed8/image.png)
-
+![image](https://user-images.githubusercontent.com/68727046/174724489-f1dd0a73-208f-44fc-b880-2cfb0a727308.png) {: width="100" height="100"}
+	  
 ## :notebook_with_decorative_cover: Story Board
 
 ### 로그인,회원가입 
