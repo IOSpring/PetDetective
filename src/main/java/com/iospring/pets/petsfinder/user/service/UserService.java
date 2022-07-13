@@ -55,7 +55,7 @@ public class UserService {
     public List<UserDTO> findUsersIn3KmWhenUploadFinderBoard(FinderBoardDTO finderBoardDTO, String breed , String color,String missingTime) {
         List<Object[]> getDataInDB = userRepository.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO.getMissingLatitude(), finderBoardDTO.getMissingLongitude(), breed, color,missingTime);
 
-        List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObjectForFindeBoard(getDataInDB);
+        List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObjectForFindBoard(getDataInDB);
 
         return foundIn10KM;
     }

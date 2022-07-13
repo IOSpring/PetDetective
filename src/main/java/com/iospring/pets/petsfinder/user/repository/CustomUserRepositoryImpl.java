@@ -10,7 +10,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomUserRepositoryImpl implements CustomUserRepository{
 
-     public List<UserDTO> createUserDTOFromObjectForFindeBoard(List<Object[]> list) {
+     public List<UserDTO> createUserDTOFromObjectForFindBoard(List<Object[]> list) {
 
         List<UserDTO> userDTOList = new ArrayList<>();
 

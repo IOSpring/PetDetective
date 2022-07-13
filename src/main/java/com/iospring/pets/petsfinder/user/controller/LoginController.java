@@ -45,7 +45,6 @@ public class LoginController {
     @PostMapping("/join")
     public Long joinUser(@RequestBody UserJoinDTO userJoinDTO) {
         User newUser = userService.join(userJoinDTO);
-
         return newUser.getId();
     }
     @DeleteMapping("/delete/{phoneNumber}")
@@ -53,7 +52,6 @@ public class LoginController {
         System.out.println("휴대폰 번호 : " + phoneNumber);
         userService.delete(phoneNumber);
     }
-
 
 
     @PutMapping("/user/update/location")

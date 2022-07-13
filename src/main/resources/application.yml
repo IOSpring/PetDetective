@@ -1,10 +1,16 @@
 
 spring:
   profiles:
-    include:
+#    active: local
+      include:
       - aws
       - credentials
       - apns
+#  datasource:
+#    url: jdbc:h2:tcp://localhost/~/PetDetective
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
