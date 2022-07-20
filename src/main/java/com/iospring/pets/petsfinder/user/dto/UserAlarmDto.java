@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserAlarmDto {
-    private String phone_number;
-    private String device_token;
+    private String phoneNumber;
+    private String deviceToken;
     private String missingTime;
 }
