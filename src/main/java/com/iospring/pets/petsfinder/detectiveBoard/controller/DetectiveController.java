@@ -10,6 +10,7 @@ import com.iospring.pets.petsfinder.detectiveBoard.repository.DetectiveBoardRepo
 import com.iospring.pets.petsfinder.detectiveBoard.service.DetectiveBoardService;
 import com.iospring.pets.petsfinder.exception.CustomException;
 import com.iospring.pets.petsfinder.goldentimemap.service.GoldenTimeService;
+import com.iospring.pets.petsfinder.user.dto.UserAlarmDto;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
 import com.iospring.pets.petsfinder.user.service.UserService;
 import lombok.AllArgsConstructor;
@@ -47,7 +48,7 @@ public class DetectiveController {
     }
 
         @PostMapping("/detect")
-        public CreatedDetectiveBoardDTOAndFoundIn10KmUsers addDetectiveBoard(DetectiveBoardForm detectBoardForm, MultipartFile file,
+        public Long addDetectiveBoard(DetectiveBoardForm detectBoardForm, MultipartFile file,
                                   HttpSession httpSession) {
             String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
 
@@ -55,10 +56,7 @@ public class DetectiveController {
 
             CustomNotification customNotification = new CustomNotification();
 
-            List<UserDTO> userWithIn10KM = userService.findUsersIn3KmWhenUploadDetectiveBoard(detectBoardDTO);
-            for (UserDTO userDTO : userWithIn10KM) {
-                System.out.println("유저 아이디 : "+ userDTO.getId());
-            }
+            List<UserAlarmDto> userWithIn10KM = userService.findUsersIn3KmWhenUploadDetectiveBoard(detectBoardDTO);
 
             customNotification.setAlertBody("현상금 " + detectBoardDTO.getMoney() + "원!");
             customNotification.setAlertTitle("새로운 의뢰");
@@ -72,12 +70,12 @@ public class DetectiveController {
 
             //잃어 버린 시간이 현재시간 -3 시간 초과일 경우 (골든타임)
             if(detectBoardForm.getMissingTime().compareTo(threeHoursAgo)>0){
-                for (UserDTO userDTO : userWithIn10KM) {
+                for (UserAlarmDto userDTO : userWithIn10KM) {
                     if(!userDTO.getPhoneNumber().equals(phoneNumber))
                         apnsConfig.pushCustomNotification(customNotification,userDTO.getDeviceToken());
                 }
             }
-            return new CreatedDetectiveBoardDTOAndFoundIn10KmUsers(detectBoardDTO, userWithIn10KM);
+            return detectBoardDTO.getId();
     }
 
 

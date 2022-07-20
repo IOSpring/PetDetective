@@ -4,10 +4,7 @@ import com.iospring.pets.petsfinder.detectiveBoard.dto.DetectiveBoardDTO;
 import com.iospring.pets.petsfinder.exception.CustomException;
 import com.iospring.pets.petsfinder.exception.ErrorCode;
 import com.iospring.pets.petsfinder.finderBoard.dto.FinderBoardDTO;
-import com.iospring.pets.petsfinder.user.dto.LoginResponseDto;
-import com.iospring.pets.petsfinder.user.dto.UserDTO;
-import com.iospring.pets.petsfinder.user.dto.UserJoinDTO;
-import com.iospring.pets.petsfinder.user.dto.UserLocationDto;
+import com.iospring.pets.petsfinder.user.dto.*;
 import com.iospring.pets.petsfinder.user.entity.User;
 import com.iospring.pets.petsfinder.user.repository.LoginRepository;
 import com.iospring.pets.petsfinder.user.repository.UserRepository;
@@ -44,20 +41,16 @@ public class UserService {
         return user;
     }
 
-    public List<UserDTO> findUsersIn3KmWhenUploadDetectiveBoard(DetectiveBoardDTO detectBoardDTO) {
-        List<Object[]> getDataInDB = userRepository.findUsersIn3KM(detectBoardDTO.getMissingLatitude(), detectBoardDTO.getMissingLongitude());
+    public List<UserAlarmDto> findUsersIn3KmWhenUploadDetectiveBoard(DetectiveBoardDTO detectBoardDTO) {
+        List<UserAlarmDto> foundIn3KM = userRepository.findUsersIn3KM(detectBoardDTO.getMissingLatitude(), detectBoardDTO.getMissingLongitude());
 
-        List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObjectForDetectBoard(getDataInDB);
-
-        return foundIn10KM;
+        return foundIn3KM;
     }
 
-    public List<UserDTO> findUsersIn3KmWhenUploadFinderBoard(FinderBoardDTO finderBoardDTO, String breed , String color,String missingTime) {
-        List<Object[]> getDataInDB = userRepository.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO.getMissingLatitude(), finderBoardDTO.getMissingLongitude(), breed, color,missingTime);
+    public List<UserAlarmDto> findUsersIn3KmWhenUploadFinderBoard(FinderBoardDTO finderBoardDTO, String breed , String color,String missingTime) {
+        List<UserAlarmDto> foundIn3KM = userRepository.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO.getMissingLatitude(), finderBoardDTO.getMissingLongitude(), breed, color,missingTime);
 
-        List<UserDTO> foundIn10KM = userRepository.createUserDTOFromObjectForFindBoard(getDataInDB);
-
-        return foundIn10KM;
+        return foundIn3KM;
     }
     @Transactional
     public void delete(String phoneNumber){
