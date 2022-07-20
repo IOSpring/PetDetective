@@ -26,7 +26,7 @@ public class LoginController {
 
     @GetMapping("/logictest")
     public List<UserAlarmDto> testLogic(){
-        List<UserAlarmDto> usersIn3KM = userRepository.findUsersIn3KM(37.33528365357561,127.11644221092712);
+        List<UserAlarmDto> usersIn3KM = userRepository.findUsersIn3KM2(37.33528365357561,127.11644221092712);
         System.out.println(usersIn3KM.size());
         return usersIn3KM;
     }

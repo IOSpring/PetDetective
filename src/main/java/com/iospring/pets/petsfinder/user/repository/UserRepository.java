@@ -16,6 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long>, CustomUserRep
             "+SIN(RADIANS(:latitude))*SIN(RADIANS(latitude)))) AS distance FROM user  HAVING distance < 3 ORDER BY distance DESC", nativeQuery = true)
     List<UserAlarmDto> findUsersIn3KM(double latitude, double longitude);
 
+
     @Query(value = "SELECT  phone_number, device_token ,db.missing_time,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(db.missing_latitude))*COS(RADIANS(db.missing_longitude)-RADIANS(:longitude))\n" +
             "            +SIN(RADIANS(:latitude))*SIN(RADIANS(db.missing_latitude)))) AS distance\n" +
             "FROM user\n" +
