@@ -40,7 +40,7 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
     @Override
     public List<DetectUserAlarmDto> findUsersIn3KM2(double latitude, double longitude) {
         String SQL = "SELECT phone_number, device_token,(6371*ACOS(COS(RADIANS(37.33528365357561))*COS(RADIANS(latitude))*COS(RADIANS(longitude)-RADIANS(127.11644221092712))+SIN(RADIANS(37.33528365357561))*SIN(RADIANS(latitude)))) AS distance FROM user  HAVING distance < 3 ORDER BY distance DESC";
-        List<DetectUserAlarmDto> detectUserAlarmDtoList =jdbcTemplate.query(SQL,new DetectUserAlarmMapper(),latitude,longitude,latitude);
+        List<DetectUserAlarmDto> detectUserAlarmDtoList =jdbcTemplate.query(SQL,new DetectUserAlarmMapper());
 
         return detectUserAlarmDtoList;
     }
