@@ -32,7 +32,7 @@ public class GoldenTimeController {
     public GoldenTimeDto GoldenTimeRequest(HttpSession httpSession) {
 
 //        String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
-        String phoneNumber ="01034343434"
+        String phoneNumber ="01034343434";
 
         Double petLatitude;
         Double petLongitude;
