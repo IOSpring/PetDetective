@@ -27,7 +27,10 @@ public class LoginController {
         System.out.println("유저 사이즈 : "+usersIn3KM.size());
         return usersIn3KM;
     }
-
+    @GetMapping("/test123")
+    public Long t(){
+        return 1L;
+    }
     @PostMapping("/check/sendSMS")
     public @ResponseBody
     LoginResponseDto sendSMS(@RequestBody LoginRequestDto form, HttpSession httpSession) {
