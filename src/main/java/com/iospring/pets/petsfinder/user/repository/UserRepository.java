@@ -1,5 +1,6 @@
 package com.iospring.pets.petsfinder.user.repository;
 
+
 import com.iospring.pets.petsfinder.user.dto.UserAlarmDto;
 import com.iospring.pets.petsfinder.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,8 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long>, CustomUserRep
 
     Optional<User> findByPhoneNumber(String phoneNumber);
 
-    @Query(value = "SELECT phone_number as phoneNumber, device_token as deviceToken,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(latitude))*COS(RADIANS(longitude)-RADIANS(:longitude))\n" +
-            "+SIN(RADIANS(:latitude))*SIN(RADIANS(latitude)))) AS distance FROM user  HAVING distance < 3 ORDER BY distance DESC", nativeQuery = true)
+    @Query(value = "SELECT new com.iospring.pets.petsfinder.user.dto.UserAlarmDto(phone_number, device_token,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(latitude))*COS(RADIANS(longitude)-RADIANS(:longitude))+SIN(RADIANS(:latitude))*SIN(RADIANS(latitude)))) AS distance)  FROM user  HAVING distance < 3 ORDER BY distance DESC", nativeQuery = true)
     List<UserAlarmDto> findUsersIn3KM(double latitude, double longitude);
 
 
