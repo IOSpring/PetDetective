@@ -31,7 +31,8 @@ public class GoldenTimeController {
     @GetMapping("/goldentime")
     public GoldenTimeDto GoldenTimeRequest(HttpSession httpSession) {
 
-        String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
+//        String phoneNumber = (String) httpSession.getAttribute("phoneNumber");
+        String phoneNumber ="01034343434"
 
         Double petLatitude;
         Double petLongitude;
