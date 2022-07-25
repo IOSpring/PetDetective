@@ -11,7 +11,7 @@ import com.iospring.pets.petsfinder.finderBoard.entity.FinderBoard;
 import com.iospring.pets.petsfinder.finderBoard.repository.FinderBoardRepository;
 import com.iospring.pets.petsfinder.finderBoard.service.FinderBoardService;
 import com.iospring.pets.petsfinder.goldentimemap.service.GoldenTimeService;
-import com.iospring.pets.petsfinder.user.dto.UserAlarmDto;
+import com.iospring.pets.petsfinder.user.dto.DetectUserAlarmDto;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
 import com.iospring.pets.petsfinder.user.service.UserService;
 import lombok.AllArgsConstructor;
@@ -40,7 +40,7 @@ public class FinderController {
 
         FinderBoardDTO finderBoardDTO = finderBoardService.addFindBoard(finderBoardForm, file,phoneNumber);
 
-        List<UserAlarmDto> userDTOList = userService.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO, finderBoardForm.getBreed(), finderBoardForm.getColor(),finderBoardForm.getMissingTime());
+        List<DetectUserAlarmDto> userDTOList = userService.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO, finderBoardForm.getBreed(), finderBoardForm.getColor(),finderBoardForm.getMissingTime());
 
         String threeHoursAgo = goldenTimeService.getThreeHoursAgo();
 
@@ -61,7 +61,7 @@ public class FinderController {
             customNotificationForGoldenTime.createNotificationData("골든타임", "발견", finderBoardDTO.getId() + "");
             customNotificationForNormal.createNotificationData("게시글 작성", "발견", finderBoardDTO.getId() + "");
         }
-        for (UserAlarmDto userDTO : userDTOList) {
+        for (DetectUserAlarmDto userDTO : userDTOList) {
             if (userDTO.getMissingTime().compareTo(threeHoursAgo) > 0) {
                 apnsService.pushCustomNotification(customNotificationForGoldenTime, userDTO.getDeviceToken());
             }

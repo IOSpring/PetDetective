@@ -1,7 +1,5 @@
 package com.iospring.pets.petsfinder.user.controller;
 
-import com.iospring.pets.petsfinder.exception.CustomException;
-import com.iospring.pets.petsfinder.exception.ErrorCode;
 import com.iospring.pets.petsfinder.user.dto.*;
 import com.iospring.pets.petsfinder.user.entity.User;
 import com.iospring.pets.petsfinder.user.repository.LoginRepository;
@@ -11,7 +9,6 @@ import com.iospring.pets.petsfinder.user.service.certificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -25,8 +22,8 @@ public class LoginController {
     private final UserRepository userRepository;
 
     @GetMapping("/logictest")
-    public List<UserAlarmDto> testLogic(){
-        List<UserAlarmDto> usersIn3KM = userRepository.findUsersIn3KM(37.33528365357561,127.11644221092712);
+    public List<FindUserAlarmDto> testLogic(){
+        List<FindUserAlarmDto> usersIn3KM = userRepository.findUsersIn3KM2(37.33528365357561, 127.11644221092712);
         System.out.println("유저 사이즈 : "+usersIn3KM.size());
         return usersIn3KM;
     }

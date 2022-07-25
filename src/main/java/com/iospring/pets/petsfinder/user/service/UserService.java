@@ -41,14 +41,17 @@ public class UserService {
         return user;
     }
 
-    public List<UserAlarmDto> findUsersIn3KmWhenUploadDetectiveBoard(DetectiveBoardDTO detectBoardDTO) {
-        List<UserAlarmDto> foundIn3KM = userRepository.findUsersIn3KM(detectBoardDTO.getMissingLatitude(), detectBoardDTO.getMissingLongitude());
+    // 새롭게 의뢰 글을 쓴 사람의 글에 대한 알람을 보내주기위해
+    // 주변 3km 유저들 (조건x) 을 찾는 서비스
+    // 즉, 의뢰글(detective) 작성시 알람을 보낼때 사용되는 것이다.
+    public List<DetectUserAlarmDto> findUsersIn3KmWhenUploadDetectiveBoard(DetectiveBoardDTO detectBoardDTO) {
+        List<DetectUserAlarmDto> foundIn3KM = userRepository.findUsersIn3KM(detectBoardDTO.getMissingLatitude(), detectBoardDTO.getMissingLongitude());
 
         return foundIn3KM;
     }
-
-    public List<UserAlarmDto> findUsersIn3KmWhenUploadFinderBoard(FinderBoardDTO finderBoardDTO, String breed , String color,String missingTime) {
-        List<UserAlarmDto> foundIn3KM = userRepository.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO.getMissingLatitude(), finderBoardDTO.getMissingLongitude(), breed, color,missingTime);
+    //목격한사람이 글작성시 의뢰 한사람들중 해당 목격 정보와 일치하는 게시글작성자들을 다 뽑아오는 서비스
+    public List<DetectUserAlarmDto> findUsersIn3KmWhenUploadFinderBoard(FinderBoardDTO finderBoardDTO, String breed , String color, String missingTime) {
+        List<DetectUserAlarmDto> foundIn3KM = userRepository.findUsersIn3KmWhenUploadFinderBoard(finderBoardDTO.getMissingLatitude(), finderBoardDTO.getMissingLongitude(), breed, color,missingTime);
 
         return foundIn3KM;
     }

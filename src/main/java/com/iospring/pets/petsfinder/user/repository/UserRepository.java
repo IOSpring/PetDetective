@@ -1,7 +1,6 @@
 package com.iospring.pets.petsfinder.user.repository;
 
-
-import com.iospring.pets.petsfinder.user.dto.UserAlarmDto;
+import com.iospring.pets.petsfinder.user.dto.DetectUserAlarmDto;
 import com.iospring.pets.petsfinder.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,8 +12,8 @@ public interface UserRepository extends JpaRepository<User, Long>, CustomUserRep
 
     Optional<User> findByPhoneNumber(String phoneNumber);
 
-    @Query(value = "SELECT new com.iospring.pets.petsfinder.user.dto.UserAlarmDto(phone_number, device_token,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(latitude))*COS(RADIANS(longitude)-RADIANS(:longitude))+SIN(RADIANS(:latitude))*SIN(RADIANS(latitude)))) AS distance)  FROM user  HAVING distance < 3 ORDER BY distance DESC", nativeQuery = true)
-    List<UserAlarmDto> findUsersIn3KM(double latitude, double longitude);
+    @Query(value = "SELECT phone_number, device_token,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(latitude))*COS(RADIANS(longitude)-RADIANS(:longitude))+SIN(RADIANS(:latitude))*SIN(RADIANS(latitude)))) AS distance FROM user  HAVING distance < 3 ORDER BY distance DESC", nativeQuery = true)
+    List<DetectUserAlarmDto> findUsersIn3KM(double latitude, double longitude);
 
 
     @Query(value = "SELECT  phone_number, device_token ,db.missing_time,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(db.missing_latitude))*COS(RADIANS(db.missing_longitude)-RADIANS(:longitude))\n" +
@@ -24,7 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long>, CustomUserRep
             "    join pet p on p.pet_id = db.d_board_pet_fk\n" +
             "    join image i on i.image_id = p.pet_image_fk where i.color = :color and i.breed = :breed and db.missing_time <= :missingTime " +
             "HAVING distance < 3  ORDER BY distance DESC", nativeQuery = true)
-    List<UserAlarmDto> findUsersIn3KmWhenUploadFinderBoard(double latitude, double longitude, String breed, String color, String missingTime);
+    List<DetectUserAlarmDto> findUsersIn3KmWhenUploadFinderBoard(double latitude, double longitude, String breed, String color, String missingTime);
 
 
 
