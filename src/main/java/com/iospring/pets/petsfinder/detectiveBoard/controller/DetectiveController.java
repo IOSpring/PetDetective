@@ -11,6 +11,7 @@ import com.iospring.pets.petsfinder.detectiveBoard.service.DetectiveBoardService
 import com.iospring.pets.petsfinder.exception.CustomException;
 import com.iospring.pets.petsfinder.goldentimemap.service.GoldenTimeService;
 import com.iospring.pets.petsfinder.user.dto.DetectUserAlarmDto;
+import com.iospring.pets.petsfinder.user.dto.FindUserAlarmDto;
 import com.iospring.pets.petsfinder.user.dto.UserDTO;
 import com.iospring.pets.petsfinder.user.service.UserService;
 import lombok.AllArgsConstructor;

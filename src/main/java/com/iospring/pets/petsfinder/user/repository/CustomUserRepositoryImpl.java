@@ -38,7 +38,15 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
     }
 
     @Override
-    public List<FindUserAlarmDto> findUsersIn3KM2(double latitude, double longitude) {
+    public List<DetectUserAlarmDto> findUsersIn3KM2(double latitude, double longitude) {
+        String SQL = "SELECT phone_number, device_token,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(latitude))*COS(RADIANS(longitude)-RADIANS(:longitude))+SIN(RADIANS(:latitude))*SIN(RADIANS(latitude)))) AS distance FROM user  HAVING distance < 3 ORDER BY distance DESC";
+        List<DetectUserAlarmDto> detectUserAlarmDtoList =jdbcTemplate.query(SQL,new DetectUserAlarmMapper());
+
+        return detectUserAlarmDtoList;
+    }
+
+    @Override
+    public List<FindUserAlarmDto> findUsersIn3KmWhenUploadFinderBoard2(double latitude, double longitude, String breed, String color, String missingTime) {
         String SQL = "SELECT  phone_number, device_token ,db.missing_time,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(db.missing_latitude))*COS(RADIANS(db.missing_longitude)-RADIANS(:longitude))\n" +
                 "            +SIN(RADIANS(:latitude))*SIN(RADIANS(db.missing_latitude)))) AS distance\n" +
                 "FROM user\n" +
@@ -47,14 +55,6 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
                 "    join image i on i.image_id = p.pet_image_fk where i.color = :color and i.breed = :breed and db.missing_time <= :missingTime " +
                 "HAVING distance < 3  ORDER BY distance DESC";
         List<FindUserAlarmDto> findUserAlarmDtoList =jdbcTemplate.query(SQL,new FindUserAlarmMapper());
-        return findUserAlarmDtoList;
-    }
-
-    @Override
-    public List<DetectUserAlarmDto> findUsersIn3KmWhenUploadFinderBoard2(double latitude, double longitude, String breed, String color, String missingTime) {
-        String SQL = "SELECT phone_number, device_token,(6371*ACOS(COS(RADIANS(:latitude))*COS(RADIANS(latitude))*COS(RADIANS(longitude)-RADIANS(:longitude))+SIN(RADIANS(:latitude))*SIN(RADIANS(latitude)))) AS distance FROM user  HAVING distance < 3 ORDER BY distance DESC";
-        List<DetectUserAlarmDto> findUserAlarmDtoList =jdbcTemplate.query(SQL,new DetectUserAlarmMapper());
-
         return findUserAlarmDtoList;
     }
 //    public List<UserDTO> createUserDTOFromObjectForDetectBoard(List<Object[]> list) {
